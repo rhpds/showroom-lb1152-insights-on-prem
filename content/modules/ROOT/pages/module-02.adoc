@@ -1,138 +1,220 @@
-= Managing an Application from GitHub
+= Insights via the Hybrid Cloud Console - Evaluate and remediate CVEs.
 
-In the first half of this workshop, we packaged an application into this portable container format manually using rpms.
-In the second half, we will consider that you may want to manage software from GitHub or some kind of software versioning application.
-Rather than installing rpms, we have individual software files and pull them out of that version control into a group of systems.
+While this is an Insights on premise lab, the Insights on premise software is only a part of the overall Insights offering.  
+In this module you will explore some of the other Insights capabilities which may come to Insights on premise in a future release.
 
-== Install RHEL 8 UBI
+You will expereince these offerings through the managed Insights offering on the https://console.redhat.com[Hybrid Cloud Console].
 
-In this lab, we will be using a different Red Hat Enterprise Linux version in my container. 
+You will start by evaluating common vulnerabilities and exposures (CVEs) that are present in your environment and on your system using the Insights vulnerability service.
 
-. Verify the host system release 
+There are thousands of CVEs - Insights helps you to focus on CVE information that pertains to Red Hat systems and some CVEs have gone through additional evaluation to share impact specific to the version of RHEL your system is running.
 
-+
-[source,bash]
+
+Please use a web browser to navigate to https://console.redhat.com[console.redhat.com]. +
+Log into the Hybrid Cloud Console with the following credentials: +
+
+User:
+[source,sh,role=execute]
 ----
-cat /etc/redhat-release
-----
-+ 
-NOTE: The `bastion` system is Red Hat Enterprise Linux 9, and when you built the previous container, you used the UBI9 image. This means both the image and the container were built off the same Red Hat Enterprise Linux packages. 
-
-. As we did previously in this lab, Use `buildah from` to pull down the Red Hat Enterprise Linux 8 UBI.
-
-+
-[source,bash]
-----
-buildah from registry.access.redhat.com/ubi8/ubi
+lab-EB9A
 ----
 
-NOTE: Because you already pulled one image named `ubi-working-container` this one is called `ubi-working-container-1`. 
-
-[#prerequisites]
-== Install Prerequisites
-
-Now that you have a working container, you will use the same process as before installing all the prerequisites, changing config files, and manipulating the contents of this container to be in the desired state.
-
-The software you will install is a JavaScript-based game that runs on a web browser. As before in the lab, use dnf to install software inside the container. 
-
-. Use `buildah run` and install Apache (`httpd`) into the `ubi-working-container-1` container. 
-+
-[source,bash]
+Password:
+[source,sh,role=execute]
 ----
-buildah run ubi-working-container-1 -- dnf -y install httpd
+R3dh4t2024!
 ----
 
-== Enable Service
+On the left hand navigation bar go to `Security → Vulnerability → CVEs`
 
-The next thing to do is to use a systemctl to enable the service. The ubi-init provides full systemd service to the container.
-This will start up any of the services that are enabled. 
+The summary bar at the top of the page helps you focus on the most impactful issues in your environment.  If you have a high number of CVEs in your environment, this summary bar highlights the biggest risks that you should likely focus on addressing first.  Clicking on any of the numbers in the summary bar will apply filters that will show you these CVEs.
 
-. Enable the `httpd` service using `buildah run`
+image::Vuln_SummaryBar.png[Vuln_SummaryBar,100%,100%]
 
-+
-[source,bash]
-----
-buildah run ubi-working-container-1 -- systemctl enable httpd
-----
+NOTE: The numbers you see may not match what is shown in the screenshot above.
 
-NOTE: The UBI standard image doesn't have systemd installed on it by default. The `ubi-init` container image does include systemd. Plan accordingly to which image you use to build applications.  
+Here is an explanation of the items in the summary bar: +
 
-== Explore Source Materials
+* `CVEs with known exploits` indicate unpatched CVEs with known public exploits.  CVEs with this label should be addressed with high priority due to the risks posed by them. "Known exploit" does not mean we have taken steps to determine if the CVE has been exploited in your environment.
+* `CVEs with Security rules` indicate CVEs that have gone through the "Product Security Incident Response Plan" that takes a deeper look at impactful CVEs and adds deep threat intelligence on how the vulnerability impacts Red Hat systems.  This could include things like executive summaries, alternative mitigation strategies, and related CVEs that need to be considered.  Insights takes this information and makes it more succinct through the use of what we call security rules.  
+* `CVEs with critical severity` are CVEs with critical severity.  Critical ratings are given to flaws that could be easily exploited by a remote unauthenticated attacker and lead to system compromise (arbitrary code execution) without requiring user interaction. These are the types of vulnerabilities that can be exploited by worms. 
+* `CVEs with Important severity` are CVEs with important severity.  Important ratings are given to flaws that can easily compromise the confidentiality, integrity, or availability of resources. These are the types of vulnerabilities that allow local users to gain privileges, allow unauthenticated remote users to view resources that should otherwise be protected by authentication, allow authenticated remote users to execute arbitrary code, or allow remote users to cause a denial of service.
 
-A GitHub repository has already been synchronized to `/home/devops/clumsy-bird/` This repository contains the configurations for your application.
 
-. Verify the repository is cloned inside the `/home/devops/` directory
-+
-[source,bash]
-----
-cd /home/devops/
-----
+The default view also applies a number of filters.
 
-+
-[source,bash]
-----
-git clone https://github.com/ellisonleao/clumsy-bird
-----
-+
-NOTE: The output states that the software has already been checked out. 
-+
-. Explore the JavaScript contents, index files, and everything else that we need for this web-based JavaScript software.
-+
-[source,bash,role=execute]
-----
-ls clumsy-bird
-----
+image::Vuln_DefaultFilters.png[Vuln_SummaryBar,100%,100%]
 
-== Add Source Materials to Container
+* The first filter chips show you only CVEs that affect `1 or more systems` in your infrastructure.  This could be a Conventional (RPM-DNF based) system or an Immutable (OSTree based) system.  
+* The second filter only shows you CVEs with an `advisory available`.  That means you are looking at vulnerabilities that you can fix.
 
-. Now that you have verified the source materials exist, you will put the software inside of my container image using the `buildah copy` command.
-+
-[source,bash]
-----
-buildah copy ubi-working-container-1 clumsy-bird /var/www/html
-----
+Combining these two filters together means that the initial focus is on CVEs that are affecting your system AND CVEs that you can remediate.
 
-[#container]
-== Enable Container in Background
+== List all systems with a specific CVE
 
-In the previous section of this lab, you ran the game natively through interactive mode. Because you are now building a web application you will need to run the container in the background and access it through a web address. 
+Let’s say your security team recently heard about a vulnerability that affects SQLlite3 and they want to know if we have any systems with this vulnerability.  The CVE number is   `CVE-2023-7104`.
 
-. Execute `buildah config` to specify a port and initialize the container. 
+From the vulnerability page the default filter is CVE (located to the right of the empty checkbox in the image above).  You can type the CVE number in the search box OR even a common search term that might be present in the CVE description like `sqlite`.   +
 
-+
-[source,bash]
-----
-buildah config --port 80 --cmd "/usr/sbin/init" ubi-working-container-1
-----
+* In the search box type `7104`. +
+* This will return `CVE-2023-7104` (and possibly others). +
+* Notice that a new filter chip has been added for `Search term: 7104` +
+* In the row with the CVE ID you will see basic information about the CVE including the number of systems that are impacted by the CVE. +
+* Click on the CVE ID.
 
-NOTE: The command makes a configuration change to this container. I'm configuring this container to accept connections to its port 80. When the container starts up, it should run the init command, which, in this case, is going to be the Apache daemon right from earlier when I enabled it.
+image::Vuln_CVE20237104.png[Vuln_SummaryBar,100%,100%]
 
-== Commit Container and Deploy
+In the image above you will see that this CVE impacts 34 total systems in the environment.  + 
 
-. Now that we have a container in a working configured state, it is time to make that permanent by committing it to a container image called `clumsy-bird`
-+
-[source,bash]
-----
-buildah commit ubi-working-container-1 clumsy-bird
-----
+NOTE: You will see a different number and that is expected!  The next few steps will reference the number in the screenshot above.
 
-. Verify that the image was created with `podman`
-+
-[source,bash]
-----
-podman images
-----
-+
-. Run the container Now it's time to run the container. 
-+
-[source,bash]
-----
-podman run -d -p 8500:80 clumsy-bird
-----
+With 34 total systems, 17 of them are conventional systems.  If you were to click Immutable there would be an additional 17 systems.
 
-== Verify Application
+In the upper right of the page you will see a `Business risk` and a `Status`.  In the screenshot above they are shown as `Not defined` and `Not reviewed` respectively.  
 
-Verify that the application is running by navigating to
+NOTE: You may see a different Business risk or Status than `Not defined` or `Not reviewed`.  That is ok.
 
-http://bastion.{guid}.example.opentlc.com:8500
+`Business risk` is intended for you to be able to define a risk that is specific to your business - this CVE is tagged with a severity of moderate, but if you have a workload that is deeply affected by this vulnerability, then this may be a more critical issue for you.   +
 
+Click `Actions` in the upper right. You will have the option to `Edit business risk`.  Click this option. +
+You can set the business risk to: 
+
+* Critical
+* High
+* Medium
+* Low
+* Not defined  
+
+You can also add a justification note as to why you set the business risk.   +
+Click `Cancel` so that you make no changes at this time.
+
+NOTE: You aren't making any changes so that you don't impact what other people taking the lab might see.  If you change the status of the CVE then it will change for other people
+
+Similarly, click `Actions` in the upper right. You will have the option to `Edit status`. Click this option. +
+You can use the status field to identify where you are in the mitigation process.   +
+Status options are:
+
+* Not reviewed
+* In review
+* On-hold
+* Scheduled for patch
+* Resolved
+* No action - risk accepted
+* Resolved via mitigation
+
+You can also add a justification note to indicate any details about the status that you select. +
+Click `Cancel` so that you make no changes at this time.
+
+Locate the export button (just to the right of the Remediate button).  It looks like this:
+
+image::Insights_Export_Button.png[ExportButton,85%,85%] 
+
+Click the export button which will give you the option to export this list into CSV or JSON formats. +
+The export view is WYSIWYG (what you see is what you get), so an export on the `Conventional (RPM-DNF)` tab will show you only the RPM/DNF based systems.
+
+In other words, getting a list of systems impacted by a vulnerability takes just seconds - search for the CVE then export the list of impacted systems.
+
+== Generating a remediation playbook
+
+If you want to take this a step further, you can also go ahead and create a remediation plan for this CVE.   +
+You can select specific systems in the list of affected hosts, or, just click the checkbox at the top of the page (to the left of the Name filter in the screenshot above) then choose `Select all`.  
+
+NOTE: The following steps are for Conventional (RPM-DNF) based systems.  Immutable (OSTree) systems are image based and you update the image vs making system changes.
+
+Once you have hosts selected, click the `Remediate` button which will launch a wizard that will create a playbook for you.
+
+You can add this fix to an existing playbook or you can create a new playbook.  Insights defaults to Create new playbook.   Give your playbook a name like: `7104 fix <yourhostname>`
+
+Reminder: your system name is: {bastion_hostname}
+
+NOTE: Please add some sort of unique identifier to the playbook name.  Above we suggest using your host’s unique hostname even though we are selecting multiple hosts.  
+
+Click `Next`. +
+At this time you are fixing this issue on all affected systems.  Click `Next`. +
+Review the summary.  Notice that a reboot is required to resolve this issue.  
+You do have the option to disable the reboot in the playbook by clicking the `Turn off autoreboot` text in blue. +
+Click `Submit`.
+
+At the bottom of the wizard there is a link that will allow you to `Open playbook <name>`.   +
+Click the link.  This will redirect you to the Remediations section of the Hybrid Cloud Console. +
+For context, in the left hand navigation bar you have just been redirected to `Automation Toolkit → Remediations`.
+
+For the remediations page, while looking at your remediation you created, you have a couple of options in the upper right. +
+The `Execute playbook` button is unavailable.  Your user in this lab does not have permission to execute remediation.  No user gets this permission by default - it has to be explicitly provided, With so many people potentially taking this lab at the same time we have opted to not enable this feature.  Your facilitator can demonstrate how this feature works.
+
+However you are able to use the `Download playbook` button.   Go ahead and click this now. +
+The playbook is downloaded via your browser.  You will need to extract the file then open the .yaml.
+
+This playbook can help simplify the resolution of this issue - you could easily adapt this to run via ansible automation or sync this playbook with Ansible Automation Platform (AAP) - this is covered in the AAP documentation but we are not covering it in this lab.
+
+Close the playbook and return to the Hybrid Cloud Console browser window.
+
+== List all CVEs impacting your system
+
+Let’s return to the vulnerability page and look at your specific host with the goal of getting a list of all CVEs that affect your specific host.
+
+On the left hand navigation bar go to `Security → Vulnerability → Systems` +
+
+NOTE: Depending on your screen resolution the left hand navigation bar may automatically minimize.  You may need to click the hamburger menu (3 lines stacked on top of each other) in the upper left corner in order to see the menu bar.
+
+Locate your host and select it. +
+Reminder: your system name is: {bastion_hostname} 
+
+This view will show you all of the vulnerabilities present on this specific host.    +
+Notice that the default filter applied is `Advisory: Available`.   +
+This means we are showing you all CVEs that have an advisory available (in other words - we are showing you all of the vulnerabilities that you can fix). +
+Because we are showing you only CVEs with advisories, in the remediation column on the far right, almost every CVE has the option for a remediation playbook - meaning Insights can generate a playbook for almost all of these CVEs.
+
+If you just need the list of CVEs that you can fix - exporting this list will get you what you need. +
+However, sometimes you need a complete list of system vulnerabilities - the CVEs with and without errata. + 
+Insights can show you this information as well.
+
+Take note of the number of CVEs listed for the host.  These are shown in the upper right side of the list of CVEs. +
+Now - click the `x` to the right of the `Advisory: Available` filter chip to remove it.   +
+This will show you all CVEs in the database that affect this system - with and without advisories. +
+Look again at the number of CVEs - the number is significantly larger, probably more than double!
+
+The advisory column will tell you if the CVE has an advisory available to resolve the CVE.  
+
+If you click the export button (just to the right of the Remediate button) you have the option to export this list into CSV or JSON formats.
+
+Again - you can get a list of all of the CVEs that impact a specific system very quickly.
+
+== Reporting on CVEs
+
+
+The vulnerability service has some built in reporting capability - you will finish up this module by generating some reports.
+
+On the left hand navigation bar go to `Security → Vulnerability → Reports`
+
+There are two types of reports - an executive report and a customizable CVE report.
+
+Start with the executive report - click `Download PDF`. +
+The PDF file will be downloaded via your browser.   Locate and open the report. +
+The executive report shows you a summary of the systems, CVEs, and security rules. +
+The report then breaks down the CVEs by CVSS (Common Vulnerability Scoring System) score, identifies the top 3 CVEs in your environment, and the top 3 security rules. +
+This is a nice pre canned report that you can send to your management or security team.  +
+Close the report and return to the reports page of the Hybrid Cloud Console.
+
+The information in the executive report may not exactly meet your needs, which is where the customizable report comes in.   +
+Let’s say you have been asked to provide your security team with a list of all vulnerabilities with a CVSS score from 6-10 that have been released in the last 90 days.
+
+Under `Report by CVEs` click `Create report`.
+
+This opens a window where you can identify what you want the report to contain. +
+
+image::Vuln_CustomReport.png[Vuln_SummaryBar,100%,100%]
+
+If desired you can change the `Report title`.
+
+* Locate the `CVSS base score` filter and change this to read 6.0 - 10 (you can type in the number or use the arrows). +
+* Locate `Publish date` and select the `Last 90 days`. +
+* Add `User notes` if desired. +
+* Click `Export report`. +
+
+The PDF file will be downloaded via your browser.   Locate and open the report. +
+This report will show you the information that you selected - in this case all CVEs with a CVSS base score between 6.0 and 10 within the last 90 days.
+
+When finished reviewing, close the report and return to the Hybrid Cloud Console.
+
+This module is complete.

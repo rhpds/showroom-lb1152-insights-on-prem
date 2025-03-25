@@ -1,149 +1,49 @@
-= Building an Application with rpms
+= Lab Environment Overview
 
-== Downloading the UBI
+In this lab we have already provided for you a pre-configured Red Hat Satellite 6.17 which has two Red Hat Enterprise Linux (RHEL) 9 hosts registered.  
 
-In this lab, you will be installing software into the container 
-image running as an interactive application. To do this you will
-need `yum`, but do not need `systemd` for managing services within the
-container environment.  For that reason, you will be using the *Standard*
-UBI image (as opposed to the Minimal or Multi-service images).
+During this lab you will:
 
-Using the "buildah from" command will download and meld the container image. This particular image we are using is the Red Hat Universal Base Image or UBI. From the ourput of the command, you will notice that we are pulling down the latest one, which is for RHEL 9. 
+* Learn about and use some of the features and capabilities of Red Hat Insights using the services available on console.redhat.com.  This is considered a connected experience and requires that a small amount of data (less than 1MB on average) is sent to Red Hat for analysis.  If you want to know more about what is collected, please ask one of our instructors or visit the https://www.redhat.com/en/technologies/management/insights/data-application-security[Red Hat Insights data and application security page] (specifically the article on https://access.redhat.com/articles/1598863[System Information Collected by Red Hat Insights]) for more details.
 
-. Execute the  download the Standard UBI
-image from Red Hat's registry.
+NOTE: For this exercise, the RHEL host will be the primary focus, and you will be using an Insights user account that has access to all of the services of Insights, however to provide the best experience for all users there are some actions you will not be able to do in the lab.  
 
-+
-[source,sh,role=execute]
-----
-buildah from registry.access.redhat.com/ubi9/ubi
-----
+* Explore the capabilities of Insights inside of the Satellite user interface.  This is a more limited view with access to only the Advisor service of Insights, but it has the benefit of being in a place where you are already working - The Satellite UI.  
 
-[#repositories]
-== Installing Repositories
-In this lab, you are going to containerize a software package that is already
-packaged in RPM format and stored in the Extra Packages for Enterprise Linux
-(EPEL) repository.
+* Log into the Satellite server and install the newest tech preview feature - `Insights on premise`.  This is a podman container that we will need to install on the Satellite which in turn will handle the Insights analysis.   Once this is configured your Satellite will no longer be sending any data to console.redhat.com - the local Satellite handles the analysis without sending any data.  Insights on premise is being released as technical preview software, and in this initial release only the Insights advisor capability is available on premise.  
 
-Software often has requirements for prerequisite software that must be installed
-on the machine for it to work properly.  `yum` will resolve those
-dependencies for you, as long as it can locate the required packages in
-repositories defined on the machine.  The Red Hat Universal Base Image (UBI)
-downloaded in the previous step has access to some Red Hat Enterprise Linux
-repositories.  However, the target package for the lab is from EPEL.  
+* Use the same Satellite user interface as you used in module 3 to identify and resolve issues found on hosts using the Insights advisor service, without sending any data thanks to Insights on premise capabilities with Satellite. 
 
-. In the command below, `buildah` is going to run a command on the
-`ubi-working-container` image.  The `--` indicates that the command should be
-executed from within the container, which means the results will be applied into
-the container image.  Lastly, you are providing the `yum` command to install a
-package that defines all of the repositories from EPEL, `epel-release-latest-9`.
-
-+
-[source,bash]
-----
-buildah run ubi-working-container -- yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
-----
+* Recap what you achieved and learn a little about what is coming next.
 
 
-. You can verify that the above command did not install the RPM on the host system.
 
-+
-[source,bash]
-----
-rpm -q epel-release
-----
+### Insights connectivity options.
+With the introduction of Insights on premise, there are now three high level modes for Insights.
 
-NOTE: If your repository configurations are not distributed as an RPM, but instead as
-individual `.repo` files, you could use the `buildah copy` command to copy
-files from the host operating system into the container image.  You will see
-an example of using `buildah copy` later in this lab.
-
-[#software]
-== Installing Software
+* Not using Insights.  In this state you are not using any of the services of capabilities of Insights.  Data may be still being sent to Red Hat for telemtry, subscription manager, or other similar capabilities outside of Insights.
+* Connected to Insights.  Your systems are connected to Insights and you are sending a small amount of metadata to Red Hat that is analyzed and information is returned to you via the Hybrid Cloud Console or via third party integrations. This could take one of several forms:
+** Host directly connected to Insights.  In this case a host is directly connected to Insights over port 443.
+** Host connected via Red Hat Satellite.  In this case the host is connected to a Satellite and the Satellite is acting as a proxy to send the data to Insights.  Data flows from the host, to a capsule server, to the Satellite server, and to Insights.
+** Host is connected via Insights proxy or a web proxy.  The host is connected to a proxy or to the Insights proxy) and the proxy routes the traffic to the internet.
+* Insights on premise (Technical preview feature).  Insights data is processed on a Satellite server.  No data is sent to Red Hat.  
 
 
-. Now that the yum repositories are defined within the container, execute 
-another `yum install`, within the container, to install the target
-software: `moon-buggy`.
-
-+
-[source,bash]
-----
-buildah run ubi-working-container -- yum -y install moon-buggy
-----
+=== Insights on premise - a new technical preview feature!
+This lab introduces a tech preview capability, Insights on premise.  
+Insights will use Red Hat Satellite to process and deliver the Insights on premise capability.
+In its tech preview state, only the Adviser capability of Insights will be avaialble through the Satellite user interface. 
+Other services and capabilities will be added in future releases, but feature parity with Insights at console.redhat.com should not be expected.
+Insights on premise does not send any data outside of the Satellite for the processing of Insights data.  
 
 
-== Committing the Container Image
 
-. At this point, the container is configured.  It is time to transition from a
-working container into a committed image.  In the command below, you will use
-the `buildah` command to commit the working container to an image called:
-`moon-buggy`.
+=== Data Collection and Security information for Insights at console.redhat.com 
+One of the most common questions about Insights has to do with the data collected, so the Insights team wanted to include a brief discussion on data collection and security information +
+It should be reiterated that you have complete control over what information Insights for RHEL gathers - while we have exposed the hostname and IP addresses of the systems in the lab, this information is easily obfuscated via a switch in the client.   Additional information can also be obfuscated including keywords, patterns, and specific files.
 
-+
-[source,bash]
-----
-buildah commit ubi-working-container moon-buggy
-----
+Information about data collection can be found on the https://www.redhat.com/en/technologies/management/insights/data-application-security[Red Hat Insights data and application security page].
 
-+
-. The output of `podman image list` should confirm the image was created.
+This page also will tell you how to do things like obfuscate data or perform a collection for inspection to see everything that Insights collects.
 
-+
-[source,bash]
-----
-podman image list
-----
-
-
-== Deploy the Container
-
-Now the software has been installed and a new container image created.  It is
-time to spawn a runtime of the container image and validate the software.  The
-software we are using is a command line command.  
-
-. When you `run` the container,
-it will be in interactive (`-it`) mode, based on the `moon-buggy` container
-image and the command run interactively will be `/usr/bin/moon-buggy`.
-
-+
-[source,bash]
-----
-podman run -it moon-buggy /usr/bin/moon-buggy
-----
-
-+
-[source,textinfo]
-----
-
-<<< OUTPUT ABRIDGED >>>
-               MM     MM   OOOOO    OOOOO   NN     N
-               M M   M M  O     O  O     O  N N    N
-               M  M M  M  O     O  O     O  N  N   N
-               M   M   M  O     O  O     O  N   N  N
-               M       M  O     O  O     O  N    N N
-               M       M   OOOOO    OOOOO   N     NN
-
-                     BBBBBB   U     U   GGGGG    GGGGG   Y     Y
-                     B     B  U     U  G     G  G     G   Y   Y
-                     BBBBBB   U     U  G        G          Y Y
-                     B     B  U     U  G   GGG  G   GGG     Y
-                     B     B  U     U  G     G  G     G    Y
-                     BBBBBB    UUUUU    GGGGG    GGGGG   YY
-
-<<< OUTPUT ABRIDGED >>>
-----
-
-. You can now play the Moon Buggy game, which is a text-based version of the
-popular Moon Patrol.  When you are finished, use the `q` command to quit the
-game, which will terminate the container.
-
-+
-Alternatively, you can use `podman` to kill the running container from
-*Terminal 2*.
-
-+
-[source,bash]
-----
-podman kill $(podman ps | grep -v CONTAINER | cut -f1 -d" " )
-----
+Additional information can be found in the http://redhat.com/insightsfaq[frequently asked questions document].

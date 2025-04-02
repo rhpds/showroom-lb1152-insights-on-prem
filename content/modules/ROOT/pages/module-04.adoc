@@ -52,36 +52,35 @@ Let’s look at a host specific view. +
 * You have two moderate and two important risks, but no low or critical risks. +
 * Scroll back to the top of the page if necessary, and click the `Insights` tab. +
 * Here you see the four recommendations listed that are specific to this host.
-
-You will see a recommendation for postgresql listed: +
+* You will see a recommendation for postgresql listed: +
 `The postgresql database performance decreases when the tuned best practices are not applied` +
 The Satellite view doesn’t provide much information - the name of the recommendation, the severity of the risk, and if the recommendation has a playbook available to resolve the issue.  +
 Not every recommendation or issue that Insights finds has a playbook, but most do.
 
 If you want to see more details you either need to go to Insights on the Hybrid Cloud Console or view the associated knowledgebase article. +
-At the end of the row, to the right of `Playbook`, you will see three vertical dots - click this then select `View in Red Hat Insights`. +
-This will open a new browser tab and prompt you to log in if you are not already logged in. +
+* At the end of the row, to the right of `Playbook`, you will see three vertical dots - click this then select `View in Red Hat Insights`. +
+* This will open a new browser tab and prompt you to log in if you are not already logged in. +
 Once logged in you will see the view of your host in the Advisor service in Insights. + 
 This looks similar to what you saw in the Satellite UI, but more information is available. +
-Locate the postgresql database recommendation. +
-Click on the arrow to the left of the recommendation name to expand the details. +
-
+* Locate the postgresql database recommendation. +
+* Click on the arrow to the left of the recommendation name to expand the details. +
 This will show you:
 
 * Why the issue was detected
 * What you need to do to resolve the issue
 * Any related knowledge base articles
 
-
 In this case, the postgresql server was started, but a tuned profile was not applied which means that the performance of the database isn’t optimal.
 
-To fix this, we install then apply the tuned profile. + 
-The step by step directions are included, or you can generate an ansible playbook inside of Insights. +
-Return to Red Hat Satellite and we will perform a remediation of this issue.
+Insights tells you to fix this, you need to install the tuned package then apply the tuned profile for postgresql. + 
+Insights includes step by step directions, or you can generate an ansible playbook inside of Insights. +
+You will return to Red Hat Satellite to perform a remediation of this issue.
 
 === Fixing an issue that Insights finds
 
-To start the process of fixing an issue, select the checkbox next to the recommendation. 
+Return to your Satellite UI.  
+Hopefully this puts you at the Insights tab of the RHEL 9.1 host.
+To start the process of fixing an issue, select the checkbox next to the postgresql recommendation. 
 In this case, click the checkbox to the left of `The postgresql database performance decreases when the tuned best practices are not applied`.
 
 Notice that the Remediate button at the top turns blue once a Recommendation is selected. +
@@ -93,7 +92,7 @@ In this case the resolution is to install the tuned package and set the proper t
 Click Remediate.
 
 This will redirect you to `Monitor → Jobs` where you can see the job running that you just initiated. 
-This job may take 3-5 minutes to complete.
+This job may take 2-5 minutes to complete.  Wait for the results to show success.
 
 At the bottom of the page you will see a table that lists Host, Status, and Actions.
 Click the Host name in the Host column.  This will show you the Ansible playbook that was run as part of this remote execution job.

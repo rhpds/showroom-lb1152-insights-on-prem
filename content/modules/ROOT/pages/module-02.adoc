@@ -25,6 +25,7 @@ Password:
 R3dh4t2024!
 ----
 
+On the main page locate the `Red Hat Enterprise Linux` tile in the upper left and click https://console.redhat.com/insights/[Insights for RHEL]. +
 On the left hand navigation bar go to `Security → Vulnerability → CVEs`
 
 The summary bar at the top of the page helps you focus on the most impactful issues in your environment.  If you have a high number of CVEs in your environment, this summary bar highlights the biggest risks that you should likely focus on addressing first.  Clicking on any of the numbers in the summary bar will apply filters that will show you these CVEs.
@@ -57,7 +58,7 @@ Let’s say your security team recently heard about a vulnerability that affects
 From the vulnerability page the default filter is CVE (located to the right of the empty checkbox in the image above).  You can type the CVE number in the search box OR even a common search term that might be present in the CVE description like `sqlite`.   +
 
 * In the search box type `7104`. +
-* This will return `CVE-2023-7104` (and possibly others). +
+* This will return `CVE-2023-7104` (as well as others). +
 * Notice that a new filter chip has been added for `Search term: 7104` +
 * In the row with the CVE ID you will see basic information about the CVE including the number of systems that are impacted by the CVE. +
 * Click on the CVE ID.
@@ -105,7 +106,7 @@ Status options are:
 You can also add a justification note to indicate any details about the status that you select. +
 Click `Cancel` so that you make no changes at this time.
 
-Locate the export button (just to the right of the Remediate button).  It looks like this:
+Locate the export button (just to the right of the `Plan remediation` button).  It looks like this:
 
 image::Insights_Export_Button.png[ExportButton,85%,85%] 
 
@@ -121,7 +122,7 @@ You can select specific systems in the list of affected hosts, or, just click th
 
 NOTE: The following steps are for Conventional (RPM-DNF) based systems.  Immutable (OSTree) systems are image based and you update the image vs making system changes.
 
-Once you have hosts selected, click the `Remediate` button which will launch a wizard that will create a playbook for you.
+Once you have hosts selected, click the `Plan remediation` button which will launch a wizard that will create a playbook for you.
 
 You can add this fix to an existing playbook or you can create a new playbook.  Insights defaults to Create new playbook.   Give your playbook a name like: `7104 fix <yourhostname>`
 
@@ -139,7 +140,7 @@ At the bottom of the wizard there is a link that will allow you to `Open playboo
 Click the link.  This will redirect you to the Remediations section of the Hybrid Cloud Console. +
 For context, in the left hand navigation bar you have just been redirected to `Automation Toolkit → Remediations`.
 
-For the remediations page, while looking at your remediation you created, you have a couple of options in the upper right. +
+For the remediations page, while looking at your remediation plan you created, you have a couple of options in the upper right. +
 The `Execute playbook` button is unavailable.  Your user in this lab does not have permission to execute remediation.  No user gets this permission by default - it has to be explicitly provided, With so many people potentially taking this lab at the same time we have opted to not enable this feature.  Your facilitator can demonstrate how this feature works.
 
 However you are able to use the `Download playbook` button.   Go ahead and click this now. +
@@ -176,7 +177,7 @@ Look again at the number of CVEs - the number is significantly larger, probably 
 
 The advisory column will tell you if the CVE has an advisory available to resolve the CVE.  
 
-If you click the export button (just to the right of the Remediate button) you have the option to export this list into CSV or JSON formats.
+If you click the export button (just to the right of the Plan remediation button) you have the option to export this list into CSV or JSON formats.
 
 Again - you can get a list of all of the CVEs that impact a specific system very quickly.
 

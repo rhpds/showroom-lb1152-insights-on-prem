@@ -28,35 +28,13 @@ Initiate yara by running the malware detection collector command: +
 sudo insights-client --collector malware-detection
 ----
 
-
 Since Insights malware detection had never been run before on this system the malware detection service performed some setup including the creation of a config file.  
-You will need to edit the config file to make scans live. + 
-Edit the config file:
+You would normally need to edit the config file to make scans live, but we have already done this for you in the lab. + 
+The file we edited was `/etc/insights-client/malware-detection-config.yml` +
+Inside the file you would need to locate the section on test scan (this is near the top of the file) and change
+`test_scan: true` to:`test_scan: false`.  
 
-[source,sh,role=execute]
-----
-sudo vi /etc/insights-client/malware-detection-config.yml
-----
-
-
-Inside the file you need to locate the section on test scan (this is near the top of the file). +
-Change: +
-`test_scan: true` +
-To: +
-`test_scan: false`
-
-Save and exit the text editor.
-
-If you aren’t familiar with vi:
-
-* Go to the end of the line and press `i` to enter editing mode. 
-* Delete “true” then type in “false” 
-* Press the "esc" key to exit editing mode. 
-* Type:
- `:wq`
-* This will write the file and quit the editor.
-
-The Malware detection service is now setup. +
+The Malware detection service is now set up. +
 Since this is a new system, there is nothing to find - yet.
 
 On your host you should be in your user’s home directory.  +
@@ -67,7 +45,7 @@ To do this we will use the eicar set of test files.
 
 More information about eicar is available here if you would like to learn more:  https://www.eicar.org/download-anti-malware-testfile/[https://www.eicar.org/download-anti-malware-testfile/] 
 
-This set of test files includes 4 different files that tests the detection of malware in 4 different ways.   +
+This set of test files includes 4 different files that test the detection of malware in 4 different ways.   +
 On your host we will use the curl command to copy the files from the eicar webpage onto your host.
 
 Run the following commands: +

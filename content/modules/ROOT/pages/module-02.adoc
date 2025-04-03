@@ -3,7 +3,7 @@
 While this is an Insights on premise lab, the Insights on premise software is only a part of the overall Insights offering.  
 In this module you will explore some of the other Insights capabilities which may come to Insights on premise in a future release.
 
-You will expereince these offerings through the managed Insights offering on the https://console.redhat.com[Hybrid Cloud Console].
+You will experience these offerings through the managed Insights offering on the https://console.redhat.com[Hybrid Cloud Console].
 
 You will start by evaluating common vulnerabilities and exposures (CVEs) that are present in your environment and on your system using the Insights vulnerability service.
 

@@ -1,4 +1,4 @@
-= Predictive and proactive recommendations in Satellite while connected.
+= Advisor in Satellite while connected.
 
 In this module you will look at the advisor service of Insights.   
 Advisor is the original Insights service that focuses on predictive and proactive recommendations that can help keep your systems running smoothly.

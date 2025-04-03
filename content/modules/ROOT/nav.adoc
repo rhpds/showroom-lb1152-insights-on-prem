@@ -1,7 +1,6 @@
-* xref:module-01.adoc[1. RPM Native Container]
-** xref:module-01.adoc#repositories[Repositories]
-** xref:module-01.adoc#software[Software]
-
-* xref:module-02.adoc[2. GitHub Sourced Container]
-** xref:module-02.adoc#prerequisites[Install Prerequisites]
-** xref:module-02.adoc#container[Enable Container]
+* xref:module-01.adoc[1. Lab Environment Overview]
+* xref:module-02.adoc[2. Insights via the Hybrid Cloud Console - Evaluate and remediate CVEs]
+* xref:module-03.adoc[3. Insights via the Hybrid Cloud Console - Detect Malware]
+* xref:module-04.adoc[4. Advisor in Satellite while connected]
+* xref:module-05.adoc[5. Advisor in Satellite when using Insights on premise]
+* xref:module-06.adoc[6. Recap]

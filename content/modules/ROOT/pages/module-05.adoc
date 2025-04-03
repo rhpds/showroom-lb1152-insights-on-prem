@@ -1,0 +1,40 @@
+= Setup Insights on premise
+
+In the first several modules of this lab you have done Insights exercises while your system is connected to the Hybrid Cloud Console.  However Red Hat is aware that this connectivity can be challenging for some industries or geographies due to company or even governmental policies that restrict the sharing of data.  
+
+The Insights on premise feature that we are releasing in tech preview does not have all of the features and capabilities that Insights on the Hybrid Cloud Console has.  In its tech preview status the Insights on premise feature only offers the Advisor capability that is already available in the Satellite UI, much like what you saw in module 4.  
+
+However once Insights on premise is enabled the Satellite will no longer be able to send any data to Red Hat.  This will remove some of the UI elements of the Satellite UI as they are no longer needed.  
+
+Insights on premise is only enabled through the use of Red Hat Satellite and it is delivered as a podman container that runs on the Satellite.  Since this is delivered as a container, the installation is very simple.
+
+* Go to your terminal window. +
+* ssh into the bastion host using your lab credentials
+* ssh into your satellite server
+* run the following command:
+
+[source,sh,role=execute]
+----
+sudo satellite-installer --foreman-plugin-rh-cloud-enable-iop-advisor-engine true
+----
+
+This will take about two minutes to complete.  
+Once completed your Satellite is running in the Insights on premise mode and Insights analysis are running locally.  
+
+Return to the Satellite UI in your browser.
+If you’ve been following along you should still be in the Insights → Recommendations menu.
+Refresh your browser.
+If you previously saw the Inventory Upload menu you should notice this is now gone from the UI.  
+With Insights on premise configured there is no information being sent to the Hybrid Cloud Console, so this menu is no longer needed.
+
+While in the Remediations section, locate the postgresql issue that remains from the other host.  
+Select the checkbox to the left of the issue.
+Notice that the Remediate button at the top turns blue once a Recommendation is selected.
+Click the Remediate button.
+
+This will open a window that will summarize the recommendation, the resolution, and will let you know if a reboot of the system is needed.
+In this case the resolution is to install the tuned package and set the proper tuned profile which does not require a reboot.
+
+Click Remediate.
+
+This will redirect you to Monitor → Jobs where you can see the job running that you just initiated. This job may take 2-5 minutes to complete. Wait for the results to show success.

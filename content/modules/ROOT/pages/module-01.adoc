@@ -28,6 +28,8 @@ With the introduction of Insights on premise, there are now three high level mod
 ** Host is connected via Insights proxy or a web proxy.  The host is connected to a proxy or to the Insights proxy) and the proxy routes the traffic to the internet.
 * Insights on premise (Technical preview feature).  Insights data is processed on a Satellite server.  No data is sent to Red Hat.  
 
+image::Insights_Connectivity_Options.png[Insights_Connectivity_Options.png,100%,100%]
+
 
 === Insights on premise - a new technical preview feature!
 This lab introduces a tech preview capability, Insights on premise.  

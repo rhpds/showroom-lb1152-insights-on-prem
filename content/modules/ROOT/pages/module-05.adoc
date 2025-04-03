@@ -1,4 +1,4 @@
-= Setup Insights on premise
+= Advisor in Satellite when using Insights on premise
 
 In the first several modules of this lab you have done Insights exercises while your system is connected to the Hybrid Cloud Console.  However Red Hat is aware that this connectivity can be challenging for some industries or geographies due to company or even governmental policies that restrict the sharing of data.  
 

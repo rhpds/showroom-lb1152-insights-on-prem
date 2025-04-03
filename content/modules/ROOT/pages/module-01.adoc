@@ -21,7 +21,7 @@ NOTE: For this exercise, the RHEL host will be the primary focus, and you will b
 ### Insights connectivity options.
 With the introduction of Insights on premise, there are now three high level modes for Insights.
 
-* Not using Insights.  In this state you are not using any of the services of capabilities of Insights.  Data may be still being sent to Red Hat for telemtry, subscription manager, or other similar capabilities outside of Insights.
+* Not using Insights.  In this state you are not using any of the services of capabilities of Insights.  Data may be still being sent to Red Hat for telemetry, subscription manager, or other similar capabilities outside of Insights.
 * Connected to Insights.  Your systems are connected to Insights and you are sending a small amount of metadata to Red Hat that is analyzed and information is returned to you via the Hybrid Cloud Console or via third party integrations. This could take one of several forms:
 ** Host directly connected to Insights.  In this case a host is directly connected to Insights over port 443.
 ** Host connected via Red Hat Satellite.  In this case the host is connected to a Satellite and the Satellite is acting as a proxy to send the data to Insights.  Data flows from the host, to a capsule server, to the Satellite server, and to Insights.
@@ -32,7 +32,7 @@ With the introduction of Insights on premise, there are now three high level mod
 === Insights on premise - a new technical preview feature!
 This lab introduces a tech preview capability, Insights on premise.  
 Insights will use Red Hat Satellite to process and deliver the Insights on premise capability.
-In its tech preview state, only the Adviser capability of Insights will be avaialble through the Satellite user interface. 
+In its tech preview state, only the Adviser capability of Insights will be available through the Satellite user interface. 
 Other services and capabilities will be added in future releases, but feature parity with Insights at console.redhat.com should not be expected.
 Insights on premise does not send any data outside of the Satellite for the processing of Insights data.  
 

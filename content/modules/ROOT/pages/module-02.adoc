@@ -28,6 +28,8 @@ R3dh4t2024!
 On the main page locate the `Red Hat Enterprise Linux` tile in the upper left and click https://console.redhat.com/insights/[Insights for RHEL]. +
 On the left hand navigation bar go to `Security → Vulnerability → CVEs`
 
+NOTE: Depending on your screen resolution the left hand navigation bar may automatically minimize.  You may need to click the hamburger menu (3 lines stacked on top of each other) in the upper left corner in order to see the menu bar.
+
 The summary bar at the top of the page helps you focus on the most impactful issues in your environment.  If you have a high number of CVEs in your environment, this summary bar highlights the biggest risks that you should likely focus on addressing first.  Clicking on any of the numbers in the summary bar will apply filters that will show you these CVEs.
 
 image::Vuln_SummaryBar.png[Vuln_SummaryBar,100%,100%]
@@ -65,11 +67,11 @@ From the vulnerability page the default filter is CVE (located to the right of t
 
 image::Vuln_CVE20237104.png[Vuln_SummaryBar,100%,100%]
 
-In the image above you will see that this CVE impacts 34 total systems in the environment.  + 
+In the image above you will see that this CVE impacts 37 total systems in the environment.  + 
 
 NOTE: You will see a different number and that is expected!  The next few steps will reference the number in the screenshot above.
 
-With 34 total systems, 17 of them are conventional systems.  If you were to click Immutable there would be an additional 17 systems.
+With 37 total systems, 22 of them are conventional systems.  If you were to click Immutable there would be an additional 15 systems.
 
 In the upper right of the page you will see a `Business risk` and a `Status`.  In the screenshot above they are shown as `Not defined` and `Not reviewed` respectively.  
 
@@ -89,7 +91,7 @@ You can set the business risk to:
 You can also add a justification note as to why you set the business risk.   +
 Click `Cancel` so that you make no changes at this time.
 
-NOTE: You aren't making any changes so that you don't impact what other people taking the lab might see.  If you change the status of the CVE then it will change for other people
+NOTE: You aren't making any changes so that you don't impact what other people taking the lab might see.  If you change the status of the CVE then it will change for other people.
 
 Similarly, click `Actions` in the upper right. You will have the option to `Edit status`. Click this option. +
 You can use the status field to identify where you are in the mitigation process.   +
@@ -117,18 +119,18 @@ In other words, getting a list of systems impacted by a vulnerability takes just
 
 == Generating a remediation playbook
 
-If you want to take this a step further, you can also go ahead and create a remediation plan for this CVE.   +
+To fix this issue you will need to create a remediation plan for this CVE.   +
 You can select specific systems in the list of affected hosts, or, just click the checkbox at the top of the page (to the left of the Name filter in the screenshot above) then choose `Select all`.  
 
 NOTE: The following steps are for Conventional (RPM-DNF) based systems.  Immutable (OSTree) systems are image based and you update the image vs making system changes.
 
 Once you have hosts selected, click the `Plan remediation` button which will launch a wizard that will create a playbook for you.
 
-You can add this fix to an existing playbook or you can create a new playbook.  Insights defaults to Create new playbook.   Give your playbook a name like: `7104 fix <yourhostname>`
+You can add this fix to an existing playbook or you can create a new playbook.  Insights defaults to Create new playbook.   Give your playbook a name like: `7104 fix {guid}`
 
-Reminder: your system name is: {bastion_hostname}
+Reminder: your system name is: node1-{guid}.example.com
 
-NOTE: Please add some sort of unique identifier to the playbook name.  Above we suggest using your host’s unique hostname even though we are selecting multiple hosts.  
+NOTE: Please add some sort of unique identifier to the playbook name.  Above we suggest using your environment’s unique ID even if you are selecting multiple hosts.  
 
 Click `Next`. +
 At this time you are fixing this issue on all affected systems.  Click `Next`. +
@@ -159,7 +161,7 @@ On the left hand navigation bar go to `Security → Vulnerability → Systems` +
 NOTE: Depending on your screen resolution the left hand navigation bar may automatically minimize.  You may need to click the hamburger menu (3 lines stacked on top of each other) in the upper left corner in order to see the menu bar.
 
 Locate your host and select it. +
-Reminder: your system name is: {bastion_hostname} 
+Reminder: your system name is: node1-{guid}.example.com
 
 This view will show you all of the vulnerabilities present on this specific host.    +
 Notice that the default filter applied is `Advisory: Available`.   +

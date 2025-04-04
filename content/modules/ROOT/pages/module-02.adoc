@@ -16,13 +16,13 @@ Log into the Hybrid Cloud Console with the following credentials: +
 User:
 [source,sh,role=execute]
 ----
-lab-EB9A
+lab-434C
 ----
 
 Password:
 [source,sh,role=execute]
 ----
-R3dh4t2024!
+R3dh4t2025!
 ----
 
 On the main page locate the `Red Hat Enterprise Linux` tile in the upper left and click https://console.redhat.com/insights/[Insights for RHEL]. +
@@ -46,7 +46,7 @@ Here is an explanation of the items in the summary bar: +
 
 The default view also applies a number of filters.
 
-image::Vuln_DefaultFilters.png[Vuln_SummaryBar,100%,100%]
+image::Vuln_DefaultFilters.png[Vuln_DefaultFilters,100%,100%]
 
 * The first filter chips show you only CVEs that affect `1 or more systems` in your infrastructure.  This could be a Conventional (RPM-DNF based) system or an Immutable (OSTree based) system.  
 * The second filter only shows you CVEs with an `advisory available`.  That means you are looking at vulnerabilities that you can fix.
@@ -65,7 +65,7 @@ From the vulnerability page the default filter is CVE (located to the right of t
 * In the row with the CVE ID you will see basic information about the CVE including the number of systems that are impacted by the CVE. +
 * Click on the CVE ID.
 
-image::Vuln_CVE20237104.png[Vuln_SummaryBar,100%,100%]
+image::Vuln_CVE20237104.png[Vuln_CVE20237104,100%,100%]
 
 In the image above you will see that this CVE impacts 37 total systems in the environment.  + 
 
@@ -206,7 +206,7 @@ Under `Report by CVEs` click `Create report`.
 
 This opens a window where you can identify what you want the report to contain. +
 
-image::Vuln_CustomReport.png[Vuln_SummaryBar,100%,100%]
+image::Vuln_CustomReport.png[Vuln_CustomerReport,100%,100%]
 
 If desired you can change the `Report title`.
 

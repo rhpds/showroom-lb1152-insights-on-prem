@@ -6,7 +6,7 @@ nav:
 
 asciidoc:
   attributes:
-    lab_name: "I'm the lab_name var"
+    lab_name: "LB1152: Red Hat Insights On-Premise - Hands on Lab for Insights' new Footprint"
     release-version: master
     page-pagination: true
     my_var: "foo"

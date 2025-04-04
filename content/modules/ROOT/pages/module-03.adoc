@@ -8,9 +8,15 @@ Red Hat has partnered with IBM X-Force Threat Intelligence to access their malwa
 Insights uses YARA to evaluate the system for the presence of malware. +
 This requires additional setup above and beyond Insights registration.
 
-=== Setting up Malware Detection
+== Setting up Malware Detection
 
-Go to your host’s terminal window.
+Log into your host using the terminal window on the right side of your showroom. 
+The Terminal is logged into your bastion host - you will need to log into node1-{guid}.example.com.
+
+[source,sh,role=execute]
+----
+ssh lab-user@node1-{guid}.example.com
+----
 
 In your environment you would need to install the yara client.  This is part of the appstream in RHEL 8 and 9. +
 In the lab this has already been done for you, but the command is as follows: +
@@ -28,7 +34,7 @@ Initiate yara by running the malware detection collector command: +
 sudo insights-client --collector malware-detection
 ----
 
-Since Insights malware detection had never been run before on this system the malware detection service performed some setup including the creation of a config file.  
+Since Insights malware detection had never been run before on this system the malware detection service performed some setup including the creation of a config file.  +
 You would normally need to edit the config file to make scans live, but we have already done this for you in the lab. + 
 The file we edited was `/etc/insights-client/malware-detection-config.yml` +
 Inside the file you would need to locate the section on test scan (this is near the top of the file) and change
@@ -85,7 +91,7 @@ Now you can see malware detected inside of Insights.
 
 WARNING: Wait until the command is completely finished running and you are returned to the terminal prompt before continuing.
 
-=== Reviewing Malware Detection Results
+== Reviewing Malware Detection Results
 
 Return to the Hybrid Cloud Console. +
 On the left hand navigation bar go to `Security → Malware → Signatures`
@@ -102,15 +108,33 @@ Scroll down the page and you will see the matched signature - `XFTI_EICAR_AV_Tes
 Click on `XFTI_EICAR_AV_Test`.  You will see the details of the signature and which systems have matched this malware.
 
 Locate your system. + 
-Reminder: your system name is: {bastion_hostname}
+Reminder: your system name is: node1-{guid}.example.com
 
 You should notice that you have the date of the last match and the total number of matches.  The total number of matches should be `4` assuming that you only ran the commands as described in the exercise - that is because the eicar package included 4 test files - one match for each of the files.
 
-Click the arrow to the left of your system’s name to expand the details. +
-Here you can see the details of the match.  You can download this as a text file or copy it to your clipboard for the purposes of sending these details to your security team.  
+Click on your system’s name to view the details. +
+Here you can see the details of the match.  Click the arrow to the left of the Malware signature match to view more information.
+For each match you can set the match status. +
 
-If you look through the output you should see 4 different “Match Source” entries - one for each of the eicar files that you put onto the system.  
+Your user in the lab doesn’t have access to these options to provide a better experience for all users, but the options are:
+
+* Not Reviewed
+* In review
+* On hold
+* Benign - not malicious malware
+* Malware detection test
+*No action - risk accepted
+* Resolved - malware removed
+
+image::Malware_MatchStatus_Options.png[Vuln_SummaryBar,100%,100%]
+
+If you scroll down the page you can download the details as a text file or copy it to your clipboard for the purposes of sending these details to your security team.  
+
+As you look through the output you should see 4 different “Match Source” entries - one for each of the eicar files that you put onto the system.  
 
 The Malware detection service does not include any remediation.  This is because each business likely has their own policies and procedures on how malware on systems should be handled once detected.
+
+Since this is a Malware detection test, scroll back up a little and set the status of each match as `Malware detection test`.  That clears the `New matches` flag which looks like a bell. +
+If desired you could type a note into each match to give more details on the test.
 
 This module is complete.

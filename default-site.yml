@@ -1,7 +1,7 @@
 ---
 site:
-  title: Showroom Template Demo
-  url: https://redhat-scholars.github.io/course-template
+  title: "LB1152: Red Hat Insights On-Premise - Hands on Lab for Insights' new Footprint"
+  url: https://github.com/rhpds/showroom-lb1152-insights-on-prem
   start_page: modules::index.adoc
 
 content:

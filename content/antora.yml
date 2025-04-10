@@ -1,5 +1,5 @@
 name: modules
-title: Default Title
+title: "LB1152: Red Hat Insights On-Premise - Hands on Lab for Insights' new Footprint"
 version: master
 nav:
   - modules/ROOT/nav.adoc

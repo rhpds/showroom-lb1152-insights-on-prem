@@ -4,48 +4,55 @@ In this lab we have already provided for you a pre-configured Red Hat Satellite 
 
 During this lab you will:
 
-* Learn about and use some of the features and capabilities of Red Hat Insights using the services available on console.redhat.com.  This is considered a connected experience and requires that a small amount of data (less than 1MB on average) is sent to Red Hat for analysis.  If you want to know more about what is collected, please ask one of our instructors or visit the https://www.redhat.com/en/technologies/management/insights/data-application-security[Red Hat Insights data and application security page] (specifically the article on https://access.redhat.com/articles/1598863[System Information Collected by Red Hat Insights]) for more details.
+* Learn about and use some of the features and capabilities of Red Hat Insights using the services available on console.redhat.com.  This is considered a connected experience and requires that a small amount of data (less than 1MB on average) is sent to Red Hat for analysis.  If you want to know more about what is collected, please ask one of our instructors or visit the https://www.redhat.com/en/technologies/management/insights/data-application-security[Red Hat Insights data and application security page^] (specifically the article on https://access.redhat.com/articles/1598863[System Information Collected by Red Hat Insights^]) for more details.
 
 NOTE: For this exercise, the RHEL host will be the primary focus, and you will be using an Insights user account that has access to all of the services of Insights, however to provide the best experience for all users there are some actions you will not be able to do in the lab.  
 
 * Explore the capabilities of Insights inside of the Satellite user interface.  This is a more limited view with access to only the Advisor service of Insights, but it has the benefit of being in a place where you are already working - The Satellite UI.  
 
-* Log into the Satellite server and install the newest tech preview feature - `Insights on premise`.  This is a podman container that we will need to install on the Satellite which in turn will handle the Insights analysis.   Once this is configured your Satellite will no longer be sending any data to console.redhat.com - the local Satellite handles the analysis without sending any data.  Insights on premise is being released as technical preview software, and in this initial release only the Insights advisor capability is available on premise.  
+* Log into the Satellite server and install the newest tech preview feature - `Insights on premise`.  
+Customers have been specifically asking for Insights on premise for several years, but to really draw a distinction between what Red Hat manages on the Hybrid Cloud Console and what you would manage in your own environment, throughout the lab guide you will see this new feature referred to as self-managed Insights.
 
-* Use the same Satellite user interface as you used in module 3 to identify and resolve issues found on hosts using the Insights advisor service, without sending any data thanks to Insights on premise capabilities with Satellite. 
+
+This is a podman container that we will need to install on the Satellite which in turn will handle the Insights analysis.   Once this is configured your Satellite will no longer be sending any data to console.redhat.com - the local Satellite handles the analysis without sending any data.  For this technical preview, only the Insights advisor service is included, to provide configuration analysis for your RHEL hosts.
+
+* Use the same Satellite user interface as you used in module 3 to identify and resolve issues found on hosts using the Insights advisor service, without sending any data thanks to self-managed Insights capabilities with Satellite. 
 
 * Recap what you achieved and learn a little about what is coming next.
 
 
 
 ### Insights connectivity options.
-With the introduction of Insights on premise, there are now three high level modes for Insights.
+With the introduction of self-managed Insights capabilities in Satellite, there are now three high level modes for Insights.
 
 * Not using Insights.  In this state you are not using any of the services of capabilities of Insights.  Data may be still being sent to Red Hat for telemetry, subscription manager, or other similar capabilities outside of Insights.
 * Connected to Insights.  Your systems are connected to Insights and you are sending a small amount of metadata to Red Hat that is analyzed and information is returned to you via the Hybrid Cloud Console or via third party integrations. This could take one of several forms:
 ** Host directly connected to Insights.  In this case a host is directly connected to Insights over port 443.
 ** Host connected via Red Hat Satellite.  In this case the host is connected to a Satellite and the Satellite is acting as a proxy to send the data to Insights.  Data flows from the host, to a capsule server, to the Satellite server, and to Insights.
 ** Host is connected via Insights proxy or a web proxy.  The host is connected to a proxy or to the Insights proxy) and the proxy routes the traffic to the internet.
-* Insights on premise (Technical preview feature).  Insights data is processed on a Satellite server.  No data is sent to Red Hat.  
+* Self-managed Insights on Satellite (Technical preview feature).  Insights data is processed on a Satellite server.  No data is sent to Red Hat.  
 
 image::Insights_Connectivity_Options.png[Insights_Connectivity_Options.png,100%,100%]
 
 
-=== Insights on premise - a new technical preview feature!
-This lab introduces a tech preview capability, Insights on premise.  
-Insights will use Red Hat Satellite to process and deliver the Insights on premise capability.
+=== Self-managed Insights on Satellite - a new technical preview feature!
+This lab introduces a tech preview capability, self-managed Insights on Satellite.  
+Insights will use Red Hat Satellite to process and deliver the self-managed Insights capability.
 In its tech preview state, only the Adviser capability of Insights will be available through the Satellite user interface. 
 Other services and capabilities will be added in future releases, but feature parity with Insights at console.redhat.com should not be expected.
-Insights on premise does not send any data outside of the Satellite for the processing of Insights data.  
+Self-managed Insights does not send any data outside of the Satellite for the processing of Insights data.  
 
+In the image below you see a representation of the lab environment with Self-managed Insights enabled.  The Insights advisor capability is a podman container on the Satellite server. When the two RHEL hosts connected to the Satellite perform an analysis, that analysis is done on the Satellite server, in the container, without sending any data to Red Hat.
+
+image::Self-managed_Insights.png[Self-managed_Insights.png,100%,100%]
 
 
 === Data Collection and Security information for Insights at console.redhat.com 
 One of the most common questions about Insights has to do with the data collected, so the Insights team wanted to include a brief discussion on data collection and security information +
 It should be reiterated that you have complete control over what information Insights for RHEL gathers - while we have exposed the hostname and IP addresses of the systems in the lab, this information is easily obfuscated via a switch in the client.   Additional information can also be obfuscated including keywords, patterns, and specific files.
 
-Information about data collection can be found on the https://www.redhat.com/en/technologies/management/insights/data-application-security[Red Hat Insights data and application security page].
+Information about data collection can be found on the https://www.redhat.com/en/technologies/management/insights/data-application-security[Red Hat Insights data and application security page^].
 
 This page also will tell you how to do things like obfuscate data or perform a collection for inspection to see everything that Insights collects.
 
-Additional information can be found in the http://redhat.com/insightsfaq[frequently asked questions document].
+Additional information can be found in the http://redhat.com/insightsfaq[frequently asked questions document^].

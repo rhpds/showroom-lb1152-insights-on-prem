@@ -12,21 +12,20 @@ Your RHEL hosts are RHEL 9 systems that were created with a few packages pre-ins
 
 == Viewing system recommendations
 
-Please use a web browser to navigate to your Satellite’s user interface. +
-
+Please use a web browser to navigate to Satellite’s user interface at: workshop_satellite_url. +
 
 Log into the Satellite with the following credentials: +
 
 User:
 [source,sh,role=execute]
 ----
-admin
+workshop_satellite_user_name
 ----
 
 Password:
 [source,sh,role=execute]
 ----
-GUID Password
+workshop_satellite_user_password
 ----
 
 Once logged in, on the left hand navigation bar expand the Insights menu. 
@@ -43,26 +42,28 @@ If your page was already populated you may not see any difference.  If your page
 These are the same ones that you would see in the Advisor service of the Hybrid Cloud Console.  
 In this instance the analysis is being done on the Hybrid Cloud Console and the results are being synchronized with your Red Hat Satellite.
 
-NOTE: While you see results from both hosts, only work on the node1-{guid}.example.com in this module.  You  will use the node2-{guid}.example.com in the next module.
+NOTE: While you see results from both hosts, only work on node-{guid}-1.example.com in this module.  You  will use node-{guid}-2.example.com in the next module.
 
 == Recommendations on your system
 
 Let’s look at a host specific view. +
 
-* In the left hand navigation menu of Red Hat Satellite, slick `Hosts → All Hosts` +
-* Look at the recommendations column on node1-{guid}.example.com. +
+* In the left hand navigation menu of Red Hat Satellite, click Hosts then All Hosts +
+* Look at the recommendations column on node-{guid}-1.example.com. +
 * You should see 4 recommendations listed in the table. +
 
 image::Sat_Insights_Connected_AllHosts.png[Sat_Insights_Connected_AllHosts.png,80%,80%]
 
-* Click the host name.
-* The overview shows you details about the host.  One of the widgets shown is called `Total risks`. (You will likely need to scroll down the page to see this widget.) +
+* Click on node-{guid}-1.example.com. +
+* The overview shows you details about the host.  Near the bottom of the page (You will likely need to scroll down), one of the widgets shown is called `Total risks`. +
+
 
 image::Sat_Insights_Connected_Widget.png[Sat_Insights_Connected_Widget.png,60%,60%]
 
-* This information is being populated by the Insights Advisor service. 
+* This information is being populated by the Insights Advisor service. +
 * You have two moderate and two important risks, but no low or critical risks. +
-* Scroll back to the top of the page if necessary, and click the `Insights` tab. +
+* Observe that the risk levels are hyperlinks - do not click, but you should know that you could select the risk category from this widget to see a filtered view of the risks. +
+* Scroll back to the top of the page, and click the `Insights` tab. +
 
 image::Sat_Insights_Connected_InsightsTab.png[Sat_Insights_Connected_InsightsTab.png,100%,100%]
 
@@ -96,10 +97,16 @@ Insights tells you to fix this, you need to install the tuned package then apply
 Insights includes step by step directions, or you can generate an ansible playbook inside of Insights. +
 You will return to Red Hat Satellite to perform a remediation of this issue.
 
+Before leaving, take note of the `Last seen` time and date of this system right above the word `Recommendations`, near the host name of the system.   This was the last time the host checked in with Insights.  By default this is a systemd process that happens once daily.
+
+Do not close the Hybrid Cloud Console tab as you will return to it shortly.
+
 == Fixing an issue that Insights finds
 
 Return to your Satellite UI.  
-Hopefully this puts you at the Insights tab of the node1-{guid}.example.com host.
+Hopefully this puts you at the Insights tab of the node-{guid}-1.example.com host. +
+If not, repeat the earlier steps of going to Hosts → All hosts then selecting node-{guid}-1.example.com and then the Insights tab. +
+
 To start the process of fixing an issue, select the checkbox next to the postgresql recommendation. 
 In this case, click the checkbox to the left of `The postgresql database performance decreases when the tuned best practices are not applied`.
 
@@ -118,16 +125,33 @@ image::Sat_Insights_Connected_Remediate2.png[Sat_Insights_Connected_Remediate2.p
 This will redirect you to `Monitor → Jobs` where you can see the job running that you just initiated. 
 This job may take 2-5 minutes to complete.  Wait for the results to show success.
 
+image::Sat_Insights_Connected_JobSuccess.png[Sat_Insights_Connected_JobSuccess.png,60%,60%]
+
 At the bottom of the page you will see a table that lists Host, Status, and Actions.
 Click the Host name in the Host column.  This will show you the Ansible playbook that was run as part of this remote execution job.
 
+image::Sat_Insights_Connected_JobDetails.png[Sat_Insights_Connected_JobDetails.png,60%,60%]
+
 This job made sure the right repo was enabled, it installed the necessary package, it enabled the tuned profile, then it re-ran insights to detect that the issue was resolved.
 
-On the Satellite left hand navigation bar, select `Insights → Recommendations`.+
-It is likely in this lab that the recommendations have not been synchronized from Insights on the Hybrid Cloud Console, so you can manually do this by clicking the three dots and selecting `Sync recommendations`.
+Hopefully you still have the previous Hybrid Cloud Console tab open.  +
+If not, open a new tab and go to the https://console.redhat.com/insights/advisor/systems[Systems page in the Advisor service^] and select node-{guid}-1.example.com. +
+
+Take a look at the `Last seen` time.  Notice that has been updated and the system has recently checked in with Insights.  In the remediation playbook the very last step was to `run insights`.  +
+This had the system check back into Insights after making a fix and as a result if you look at the list of Recommendations, the postgresql issue that you resolved is no longer showing. +
+
+Another way to check this is by going to the system inventory. +
+On the left-hand navigation bar, click Inventory then Systems. +
+Look through the list of systems and locate yours: node-{guid}-1.example.com
+
+To the right of the name there is a `Last seen` time that should be within the last few minutes. +
+Return to the Satellite UI.
+
+On the Satellite left hand navigation bar, select Insights then Recommendations. +
+Look at the number of risks listed - it is probably still 8 - the remediation that you just completed is not synchronized from Insights.  By default this only happens once daily, so you need to manually do this by clicking the three dots and selecting `Sync recommendations`.
 
 After the recommendations have been synchronized the postgresql issue that you fixed on the 9.1 host is no longer listed.  You will still see the issue for the other host which we will resolve in the next module.
 
-You have identified a situation that is outside of the best practices for your workload, you have resolved the issue, and Insights no longer reports it.
+You have identified a situation that is outside of the best practices for your workload, you have resolved the issue, and Insights no longer reports it as being an issue for node-{guid}-1.example.com. 
 
 This module is complete.

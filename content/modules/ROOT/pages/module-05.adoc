@@ -1,16 +1,24 @@
-= Advisor in Satellite when using Insights on premise
+= Advisor in Satellite when using self-managed Insights
 
 In the first several modules of this lab you have done Insights exercises while your system is connected to the Hybrid Cloud Console.  However Red Hat is aware that this connectivity can be challenging for some industries or geographies due to company or even governmental policies that restrict the sharing of data.  
 
-The Insights on premise feature that we are releasing in tech preview does not have all of the features and capabilities that Insights on the Hybrid Cloud Console has.  In its tech preview status the Insights on premise feature only offers the Advisor capability that is already available in the Satellite UI, much like what you saw in module 4.  
+The self-managed Insights feature that we are releasing in tech preview does not have all of the features and capabilities that Insights on the Hybrid Cloud Console has.  In its tech preview status the self-managed Insights feature only offers the Advisor capability that is already available in the Satellite UI, much like what you saw in module 4.  
 
-However once Insights on premise is enabled the Satellite will no longer be able to send any data to Red Hat.  This will remove some of the UI elements of the Satellite UI as they are no longer needed.  
+However once self-managed Insights is enabled the Satellite will no longer be able to send any data to Red Hat.  +
+This will remove some of the UI elements of the Satellite UI as they are no longer needed.  +
+It should also be noted that since we are no longer connecting to Insights, this means capabilities like the subscription service in the Hybrid Cloud Console will stop working.  This is an all or nothing change.
 
-Insights on premise is only enabled through the use of Red Hat Satellite and it is delivered as a podman container that runs on the Satellite.  Since this is delivered as a container, the installation is very simple.
+Self-managed Insights is only enabled through the use of Red Hat Satellite and it is delivered as a podman container that runs on the Satellite.  Since this is delivered as a container, the installation is very simple.
 
 * Go to your terminal window. +
 * ssh into the bastion host using your lab credentials
-* ssh into your satellite server
+* ssh into your satellite server:
+
+[source,sh,role=execute]
+----
+ssh lab-user@satellite.example.com
+----
+
 * run the following command:
 
 [source,sh,role=execute]
@@ -19,13 +27,38 @@ sudo satellite-installer --foreman-plugin-rh-cloud-enable-iop-advisor-engine tru
 ----
 
 This will take about two minutes to complete.  
-Once completed your Satellite is running in the Insights on premise mode and Insights analysis are running locally.  
+Once completed your Satellite is running in the self-managed Insights mode and the analytics are performed locally.  
 
-Return to the Satellite UI in your browser.
-If you’ve been following along you should still be in the Insights → Recommendations menu.
-Refresh your browser.
-If you previously saw the Inventory Upload menu you should notice this is now gone from the UI.  
-With Insights on premise configured there is no information being sent to the Hybrid Cloud Console, so this menu is no longer needed.
+While in self-hosted mode, you can manually perform a system analysis by running the insights-client command on the host. +  
+This should already be scheduled to be done automatically, but for the purposes of the lab we will go ahead and log into the second RHEL host and manually run this command.
+
+WARNING: Skipping this step will cause a failure in Tech Preview mode.
+
+* From your showroom environment, ssh into your node 2 RHEL 9 host:
+
+[source,sh,role=execute]
+----
+ssh lab-user@node-{guid}-2.example.com
+----
+
+* run the following command:
+
+[source,sh,role=execute]
+----
+sudo insights-client
+----
+
+Running the insights-client command will run the Advisor analysis locally on the Satellite. 
+
+
+
+Return to the Satellite UI in your browser. +
+If you’ve been following along you should still be in the Insights → Recommendations menu. +
+Previously The Insights menu contained both Inventory Upload and Recommendations sub menus. This might still be visible in your browser.+
+Refresh your browser. +
+You should notice that the `Inventory Upload` sub menu is now gone from the UI.  +
+With self-managed Insights configured there is no information being sent to the Hybrid Cloud Console, so this menu is no longer needed.
+
 
 While in the Remediations section, locate the postgresql issue that remains from the other host.  
 Select the checkbox to the left of the issue.

@@ -42,19 +42,19 @@ If your page was already populated you may not see any difference.  If your page
 These are the same ones that you would see in the Advisor service of the Hybrid Cloud Console.  
 In this instance the analysis is being done on the Hybrid Cloud Console and the results are being synchronized with your Red Hat Satellite.
 
-NOTE: While you see results from both hosts, only work on node-{guid}-1.example.com in this module.  You  will use node-{guid}-2.example.com in the next module.
+NOTE: While you see results from both hosts, only work on `node-{guid}-1.example.com` in this module.  You  will use `node-{guid}-2.example.com` in the next module.
 
 == Recommendations on your system
 
 Let’s look at a host specific view. +
 
 * In the left hand navigation menu of Red Hat Satellite, click Hosts then All Hosts +
-* Look at the recommendations column on node-{guid}-1.example.com. +
+* Look at the recommendations column on `node-{guid}-1.example.com`. +
 * You should see 4 recommendations listed in the table. +
 
 image::Sat_Insights_Connected_AllHosts.png[Sat_Insights_Connected_AllHosts.png,80%,80%]
 
-* Click on node-{guid}-1.example.com. +
+* Click on `node-{guid}-1.example.com`. +
 * The overview shows you details about the host.  Near the bottom of the page (You will likely need to scroll down), one of the widgets shown is called `Total risks`. +
 
 
@@ -103,9 +103,8 @@ Do not close the Hybrid Cloud Console tab as you will return to it shortly.
 
 == Fixing an issue that Insights finds
 
-Return to your Satellite UI.  
-Hopefully this puts you at the Insights tab of the node-{guid}-1.example.com host. +
-If not, repeat the earlier steps of going to Hosts → All hosts then selecting node-{guid}-1.example.com and then the Insights tab. +
+Return to your Satellite UI.  Hopefully this puts you at the Insights tab of the `node-{guid}-1.example.com` host. + 
+If not, repeat the earlier steps of going to Hosts → All hosts then selecting `node-{guid}-1.example.com` and then the Insights tab. +
 
 To start the process of fixing an issue, select the checkbox next to the postgresql recommendation. 
 In this case, click the checkbox to the left of `The postgresql database performance decreases when the tuned best practices are not applied`.
@@ -135,14 +134,14 @@ image::Sat_Insights_Connected_JobDetails.png[Sat_Insights_Connected_JobDetails.p
 This job made sure the right repo was enabled, it installed the necessary package, it enabled the tuned profile, then it re-ran insights to detect that the issue was resolved.
 
 Hopefully you still have the previous Hybrid Cloud Console tab open.  +
-If not, open a new tab and go to the https://console.redhat.com/insights/advisor/systems[Systems page in the Advisor service^] and select node-{guid}-1.example.com. +
+If not, open a new tab and go to the https://console.redhat.com/insights/advisor/systems[Systems page in the Advisor service^] and select `node-{guid}-1.example.com`.
 
 Take a look at the `Last seen` time.  Notice that has been updated and the system has recently checked in with Insights.  In the remediation playbook the very last step was to `run insights`.  +
 This had the system check back into Insights after making a fix and as a result if you look at the list of Recommendations, the postgresql issue that you resolved is no longer showing. +
 
 Another way to check this is by going to the system inventory. +
 On the left-hand navigation bar, click Inventory then Systems. +
-Look through the list of systems and locate yours: node-{guid}-1.example.com
+Look through the list of systems and locate yours: `node-{guid}-1.example.com`
 
 To the right of the name there is a `Last seen` time that should be within the last few minutes. +
 Return to the Satellite UI.
@@ -152,6 +151,6 @@ Look at the number of risks listed - it is probably still 8 - the remediation th
 
 After the recommendations have been synchronized the postgresql issue that you fixed on the 9.1 host is no longer listed.  You will still see the issue for the other host which we will resolve in the next module.
 
-You have identified a situation that is outside of the best practices for your workload, you have resolved the issue, and Insights no longer reports it as being an issue for node-{guid}-1.example.com. 
+You have identified a situation that is outside of the best practices for your workload, you have resolved the issue, and Insights no longer reports it as being an issue for `node-{guid}-1.example.com`. 
 
 This module is complete.

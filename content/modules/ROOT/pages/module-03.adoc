@@ -11,11 +11,11 @@ This requires additional setup above and beyond Insights registration.
 == Setting up Malware Detection
 
 Log into your host using the terminal window on the right side of your showroom. 
-The Terminal is logged into your bastion host - you will need to log into node1-{guid}.example.com.
+The Terminal is logged into your bastion host - you will need to log into `node-{guid}-1.example.com`.
 
 [source,sh,role=execute]
 ----
-ssh lab-user@node1-{guid}.example.com
+ssh lab-user@node-{guid}-1.example.com
 ----
 
 In your environment you would need to install the yara client.  This is part of the appstream in RHEL 8 and 9. +
@@ -110,7 +110,7 @@ Scroll down the page and you will see the matched signature - `XFTI_EICAR_AV_Tes
 Click on `XFTI_EICAR_AV_Test`.  You will see the details of the signature and which systems have matched this malware.
 
 Locate your system. + 
-Reminder: your system name is: node1-{guid}.example.com
+Reminder: your system name is: `node-{guid}-1.example.com`
 
 You should notice that you have the date of the last match and the total number of matches.  The total number of matches should be `4` assuming that you only ran the commands as described in the exercise - that is because the eicar package included 4 test files - one match for each of the files.
 

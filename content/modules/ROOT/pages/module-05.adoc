@@ -52,6 +52,16 @@ Running the insights-client command will run the Advisor analysis locally on the
 
 image::self-managed_insights-client_output.png[self-managed_insights-client_output.png,80%,80%]
 
+NOTE: Due to the tech preview status of this feature, the insights-client will still report some information as if it is connected to console.redhat.com. 
+
+Hopefully you still have the previous Hybrid Cloud Console tab open.  
+On the left-hand navigation bar, click Inventory then Systems. 
+Look through the list of systems and locate yours: `node-{guid}-2.example.com`
+
+To the right of the name there is a `Last seen` time.  The last seen time should be from much earlier in the day, when the environment was first instantiated. + 
+The timestamp did not update when you ran the insights-client command since the system is no longer connected to console.redhat.com.
+
+
 Return to the Satellite UI in your browser. +
 If you’ve been following along you should still be in the Insights → Recommendations menu. +
 Previously The Insights menu contained both Inventory Upload and Recommendations sub menus. This might still be visible in your browser.+

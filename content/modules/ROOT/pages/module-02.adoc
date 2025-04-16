@@ -256,5 +256,22 @@ allowfullscreen>
 </iframe>
 ++++
 
+Additional links:
+Works: 
+You will experience these offerings through the managed Insights offering on the https://console.redhat.com[Hybrid Cloud Console^].
+
+Doesn't work:
+You will experience these offerings through the managed Insights offering on the https://console.redhat.com[Hybrid Cloud Console].
+
+Haven't tried a non-secure page:
+http://redhat.com[Red Hat homepage]
+
+Or 
+http://redhat.com[Red Hat homepage^]
+
+https://www.redhat.com/insightsinfo[Insights Info Page]
+
+https://www.redhat.com/insightsinfo[Insights Info Page^]
+
 
 END TEST

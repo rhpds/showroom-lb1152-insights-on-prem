@@ -241,6 +241,11 @@ This module is complete.
 
 TEST - IGNORE
 
+Open link in showroom:
+If you want to see this work end-to-end including the remediation, please check out this https://app.arcade.software/share/Rj6M0j5j34kdlq5KGiAz?embed&embed_mobile=tab&embed_desktop=inline&show_copy_link=true[interactive demo on Evaluating systems for Common Vulnerabilities and Exposures (CVEs)]: +
+
+Arcade iframe:
+
 ++++
 <iframe
 src="https://app.arcade.software/share/Rj6M0j5j34kdlq5KGiAz?embed&embed_mobile=tab&embed_desktop=inline&show_copy_link=true"

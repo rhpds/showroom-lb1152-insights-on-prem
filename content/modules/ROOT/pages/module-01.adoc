@@ -1,396 +1,59 @@
-= Section 2 - Remediation Workflow
+= Lab Environment Overview
 
-== Objective
+In this lab we have already provided for you a pre-configured Red Hat Satellite 6.17 which has two Red Hat Enterprise Linux (RHEL) 9.1 hosts registered.  
 
-For this section, we will build another workflow called the **Remediation Workflow**. The goal for this workflow is to take the information we learned from Section 1 with Red Hat AI and now prompt Ansible Lightspeed to automatically create an Ansible Playbook to fix the issue. By combining these two workflows, we can create an AIOps workflow capable of self-healing infrastructure.
+During this lab you will:
 
-image::remediation_workflow.png[remediation_workflow]
+* Learn about and use some of the features and capabilities of Red Hat Insights using the services available on the https://console.redhat.com/[Red Hat Hybrid Cloud Console^].  
 
-By separating these two parts into distinct workflows, we allow for manual review of the response from Red Hat AI and can take corrective action if necessary. This creates a natural stopping point in our automation workflow where we can ensure the automation is performing as expected.
+NOTE: For this exercise, the RHEL host will be the primary focus, and you will be using an Insights user account that has access to all of the services of Insights, however to provide the best experience for all users there are some actions you will not be able to do in the lab.  
 
-[quote]
-⚠️ Before we get started you need to make sure you have run the first workflow.
+* Explore the capabilities of Insights inside of the Satellite user interface. +  
+This is a more limited view with access to only the Advisor service of Insights, but it has the benefit of being in a place where you are already working - The Satellite UI.  
 
-[quote]
-⚠️ Reminder that the way we purposely broke httpd with the *❌ Break Apache* Job Template was by inserting *InvalidDirectiveHere* into the configuration file and restarting the service.  This crashed the httpd service as you can see by running the *systemctl status httpd.service* Linux command.
+* Log into the Satellite server and install the newest tech preview feature - `Insights on premise`.  +
+Customers have been specifically asking for Insights on premise for several years, but to really draw a distinction between what Red Hat manages on the Hybrid Cloud Console and what you would manage in your own environment, throughout the lab guide you will see this new feature referred to as `Insights advisor in Satellite`.
 
-== Verify webserver failure
+This is a podman container that we will need to install on the Satellite which in turn will handle the Insights analysis.   Once this is configured your Satellite will no longer be sending any data to the Hybrid Cloud Console - the local Satellite handles the analysis without sending any data.  For this technical preview, only the Insights advisor service is included, which provides configuration analysis for your RHEL hosts including best practice, performance, and recommendations from Red Hat’s experience supporting RHEL hosts..  
 
-1. Connect to your bastion host either via SSH or Visual Studio Code.  The connection information is provided by your instructor.
+* Use the same Satellite user interface to identify and resolve issues found on hosts using the Insights advisor service, without sending any data thanks to Insights advisor in Satellite capabilities with Satellite. 
 
-2. SSH over to node1
+* Recap what you achieved and learn a little about what is coming next.
 
-[source,bash]
-----
-[lab-user@bastion ~]$ ssh node1
-Last login: Tue Apr  8 15:56:41 2025 from 192.168.0.37
-[ec2-user@node1 ~]$
-----
+### Insights connectivity options.
+With the introduction of Insights advisor in Satellite capabilities in Satellite, there are now three high level modes for Insights.
 
-[start=3]
-3. Verify httpd is down with the *systemctl status httpd.service* command
+1. Not using Insights.  In this state you are not using any of the services of capabilities of Insights.  Data may be still being sent to Red Hat for telemetry, subscription manager, or other similar capabilities outside of Insights.
+2. Connected to Insights.  Your systems are connected to Insights and you are sending a small amount of metadata to Red Hat that is analyzed and information is returned to you via the Hybrid Cloud Console or via third party integrations. This could take one of several forms:
+** Host directly connected to Insights.  In this case a host is directly connected to Insights over port 443.
+** Host connected via Red Hat Satellite.  In this case the host is connected to a Satellite and the Satellite is acting as a proxy to send the data to Insights.  Data flows from the host, to a capsule server, to the Satellite server, and to Insights.
+** Host is connected via Insights proxy or a web proxy.  The host is connected to a proxy or to the Insights proxy) and the proxy routes the traffic to the internet.
+3. Insights advisor in Satellite (Technical preview feature).  Insights analysis is performed on your Satellite server.  No data is sent to Red Hat including data for subscription management.
 
-[source,bash]
-----
-[ec2-user@node1 ~]$ sudo systemctl status httpd.service
-× httpd.service - The Apache HTTP Server
-     Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; preset: disabled)
-     Active: failed (Result: exit-code) since Tue 2025-04-08 15:56:15 UTC; 1h 11min ago
-   Duration: 1min 9.506s
-       Docs: man:httpd.service(8)
-    Process: 4099 ExecStart=/usr/sbin/httpd $OPTIONS -DFOREGROUND (code=exited, status=1/FAILURE)
-   Main PID: 4099 (code=exited, status=1/FAILURE)
-     Status: "Reading configuration..."
-        CPU: 58ms
+The table below highlights the different ways that you can connect to Insights and the high level connectivity required.  
 
-Apr 08 15:56:15 node1.example.com systemd[1]: Starting The Apache HTTP Server...
-Apr 08 15:56:15 node1.example.com httpd[4099]: AH00526: Syntax error on line 35 of /etc/httpd/conf/httpd.conf:
-Apr 08 15:56:15 node1.example.com httpd[4099]: Invalid command 'InvalidDirectiveHere', perhaps misspelled or defined by a module not included in the server configuration
-Apr 08 15:56:15 node1.example.com systemd[1]: httpd.service: Main process exited, code=exited, status=1/FAILURE
-Apr 08 15:56:15 node1.example.com systemd[1]: httpd.service: Failed with result 'exit-code'.
-Apr 08 15:56:15 node1.example.com systemd[1]: Failed to start The Apache HTTP Server.
-[ec2-user@node1 ~]$
-----
+image::Insights_Connectivity_Options.png[Insights_Connectivity_Options.png,100%,100%]
 
-As you can see in the above output, the httpd.service has failed.
 
-== Create Remediation Workflow
+=== Insights advisor in Satellite - a new technical preview feature!
+This lab introduces a tech preview capability, Insights advisor in Satellite.  
+Insights will use Red Hat Satellite to process and deliver the Insights advisor in Satellite capability.
+In its tech preview state, only the Adviser capability of Insights will be available through the Satellite user interface. 
+Other services and capabilities may be added in future releases, but feature parity with the Insights experience at the https://console.redhat.com/[Red Hat Hybrid Cloud Console^] should not be expected.
+Insights advisor in Satellite does not send any data outside of the Satellite for the processing of Insights data.  
 
-1. Log in to the web UI for Ansible Automation Platform if you are not already logged in.
-2. In the left navigation menu, click on *Automation Execution* → *Templates*.
+In the image below you see a representation of the lab environment with Insights advisor in Satellite enabled.  The Insights advisor capability is a podman container on the Satellite server. When the two RHEL hosts connected to the Satellite perform an analysis, that analysis is done on the Satellite server, in the container, without sending any data to Red Hat.
 
-image::automation_execution_templates.png[automation_execution_templates]
 
-[start=3]
-3. Scroll down and select the *Remediation Workflow* Workflow job template
+image::Self-managed_Insights.png[Self-managed_Insights.png,100%,100%]
 
-image::remediation_workflow_list.png[create_workflow]
 
-[quote]
-💡 The last workflow (specifically the job template *Build Ansible Lightspeed Job Template*) used the *ansible.controller.workflow_job_template* module to automatically create this blank workflow. We could have Ansible automatically create the entire workflow but we want to illustrate each part and what it is doing.  The most important part is that Ansible automatically created a survey with output from Red Hat AI.  You will see this called out below when we run the workflow.  Ask your instructor if you need clarification.
+=== Data Collection and Security information for Insights at the Hybrid Cloud Console 
+One of the most common questions about Insights has to do with the data collected, so the Insights team wanted to include a brief discussion on data collection and security information +
 
-[start=4]
-4. Click on the blue *View workflow visualizer* button
+Insights on the https://console.redhat.com/[Red Hat Hybrid Cloud Console^] is considered a connected experience and requires that a small amount of data (around 500 kb on average) is sent to Red Hat for analysis.  If you want to know more about what is collected, please ask one of our instructors or visit the https://www.redhat.com/en/technologies/management/insights/data-application-security[Red Hat Insights data and application security page^] (specifically the article on https://access.redhat.com/articles/1598863[System Information Collected by Red Hat Insights^]) for more details.
 
-image::view_workflow_visualizer_button.png[visualizer_button,300]
+This page also will tell you how to do things like obfuscate data or perform a collection for inspection to see everything that Insights collects. +
+It should be reiterated that you have complete control over what information Insights for RHEL gathers - while we have exposed the hostname and IP addresses of the systems in the lab, this information is easily obfuscated via a switch in the client.   Additional information can also be obfuscated including keywords, patterns, and specific files.
 
-[start=5]
-5. Verify you have a window that looks like this:
-
-image::currently_no_nodes_workflow.png[currently_no_nodes_workflow,400]
-
-[start=6]
-6. Click on the blue *Add step*
-
-7. Fill out the following values
-
-[options="header"]
-|===
-| Parameter | Value
-| Node type | Job Template
-| Job Template | 🧠 Lightspeed Remediation Playbook Generator
-| Convergence | Any
-| Node alias | (You can leave this blank)
-|===
-
-image::add_step_lightspeed_remediation.png[add_step_lightspeed_remediation,500]
-
-[start=8]
-8. Click on the blue *Next*.
-
-image::blue_next_button.png[blue_next_button,150]
-
-[start=9]
-9. Review and click the blue *Finish* button.
-
-image::blue_finish_button.png[blue_finish_button,150]
-
-Your workflow will now look like this:
-
-image::remediation_workflow_part_one.png[remediation_workflow_part_one,500]
-
-[start=10]
-10. Click on the three dots (kebab menu) next to the *🧠 Lightspeed Remediation Playbook Generator* node
-
-11. Click on *⊕ Add step and link*
-
-image::workflow_add_step_and_link.png[workflow_add_step_and_link,200]
-
-[start=12]
-12. Fill out the following values
-
-[options="header"]
-|===
-| Parameter | Value
-| Node type | Job Template
-| Job Template | 🧾 Commit Fix to Gitea
-| Status | Run on success
-| Convergence | Any
-| Node alias | (You can leave this blank)
-|===
-
-image::remediation_workflow_part_two.png[remediation_workflow_part_two,500]
-
-[start=13]
-13. Click on the blue *Next*.
-
-image::blue_next_button.png[blue_next_button,150]
-
-[start=14]
-14. Review and click the blue *Finish* button
-
-image::blue_finish_button.png[blue_finish_button,150]
-
-Your workflow will now look like this:
-
-image::remediation_workflow_part_two_final.png[remediation_workflow_part_two_final,500]
-
-[start=15]
-15. Click on the three dots (kebab menu) next to the *🧾 Commit Fix to Gitea* node
-
-16 Click on *⊕ Add step and link*
-
-image::workflow_add_step_and_link.png[workflow_add_step_and_link,200]
-
-[start=17]
-17. Fill out the following values
-
-[options="header"]
-|===
-| Parameter | Value
-| Node type | Project Sync
-| Job Template | Lightspeed-Playbooks
-| Status | Run on success
-| Convergence | Any
-| Node alias | (You can leave this blank)
-|===
-
-image::remediation_workflow_part_three.png[remediation_workflow_part_three,500]
-
-[quote]
-⚠️ Notice this node type is different.  This is a *built-in* node type that will force a **Project Sync** to the repository that will hold our auto-generated Ansible Playbooks.  This is effectively a *git pull*  The previous node: *🧾 Commit Fix to Gitea*  synced the Ansible Playbook from Ansible Lightspeed to Gitea, now we are retrieving that playbook from Gitea to use in Ansible Automation Platform.
-
-[start=18]
-18. Click on the blue *Next*.
-
-image::blue_next_button.png[blue_next_button,150]
-
-[start=19]
-19. Review and click the blue *Finish* button.
-
-image::blue_finish_button.png[blue_finish_button,150]
-
-Your workflow will now look like this:
-
-image::remediation_workflow_part_three_final.png[remediation_workflow_part_three_final,500]
-
-[start=20]
-20. Click on the three dots (kebab menu) next to the *🧠 Lightspeed-Playbooks* node
-
-21. Click on *⊕ Add step and link*
-
-image::workflow_add_step_and_link.png[workflow_add_step_and_link,200]
-
-[start=22]
-22. Fill out the following values
-
-[options="header"]
-|===
-| Parameter | Value
-| Node type | Job Template
-| Job Template | ⚙️ Build HTTPD Remediation Template
-| Status | Run on success
-| Convergence | Any
-| Node alias | (You can leave this blank)
-|===
-
-image::remediation_workflow_part_four.png[remediation_workflow_part_four,500]
-
-[start=23]
-23. Click on the blue *Next*.
-
-image::blue_next_button.png[blue_next_button,150]
-
-[start=24]
-24. Review and click the blue *Finish* button
-
-image::blue_finish_button.png[blue_finish_button,150]
-
-Your workflow will now look like this:
-
-image::remediation_workflow_part_four_final.png[remediation_workflow_part_four_final,500]
-
-You are now done creating the workflow!
-
-[start=25]
-25. Click on the blue **Save** button at the top.
-
-image::save_button.png[save_button,150]
-
-[start=26]
-26. Exit out of the Workflow Visualizer by clicking the *x* at the top right
-
-27. Click the *🚀 Launch template* button to execute the *Remediation Workflow*
-
-image::launch_template_button.png[launch_template_button,150]
-
-[quote]
-💡 This is the really cool part!  There are two text boxes here.  The top one is the value we use to prompt Ansible Lightspeed to generate an Ansible Playbook.  This value was manually created by the Ansible Tech Marketing team. The 2nd text box was dynamically created from the last workflow by Red Hat AI.  If you are happy with the Red Hat AI prompt, feel free to copy and paste it over the first text box to test out the solution.  By separating AIOps into two workflows, it gives us (the administrator) the ability to review AI responses for accuracy before we deploy the next workflow!
-
-image::workflow_prompt.png[workflow_prompt]
-
-[start=28]
-28. Review the prompt AI generated (right side) and correct the left side with the red required asterick *. Feel free to copy and paste from the right side to the left side.
-
-[quote]
-This is the step that allows us to course correct any output that AI has provided us.  We can review what it showed us before we prompt Ansible Lightspeed to make sure the prompt is legitimate.
-
-[start=29]
-29. Click on the blue *Next*.
-
-image::blue_next_button.png[blue_next_button,150]
-
-[start=29]
-29. Review and click the blue *Finish* button.
-
-image::blue_finish_button.png[blue_finish_button,150]
-
-[start=30]
-30. Wait for the workflow to complete
-
-When the workflow completes you will see a green ✅ Success
-
-image::remediation_workflow_success.png[remediation_workflow_success,150]
-
-[quote]
-🎉 You have used Ansible Automation Platform in an AIOps workflow to automatically create an Ansible Job Template to fix your issue. This has created an Ansible Job Template called *🔧✅ Execute HTTPD Remediation*. You could also add this to the workflow, but it might be another natural breakpoint where you schedule this job template during an approved change window. For example, some organizations might only want to apply changes to production servers on Sundays at 3AM.
-
-== Review the AI-Generated Playbook in Gitea
-
-Before we proceed with executing the final job, let’s take a step back and review what was automatically created for us.
-
-Red Hat AI was able to:
-
-* Analyze the Apache failure logs collected by Filebeat and forwarded to RHEL AI
-* Generate a root cause explanation for the issue (RCA)
-* Create a concise and relevant prompt based on the RCA
-* Use that prompt to call Ansible Lightspeed
-* Ansible Lightspeed with IBM watsonx Code Assistant, generated an Ansible Playbook to fix the issue
-* The playbook was automatically pushed to Gitea in the `lightspeed-playbooks` repository
-
-This showcases a complete AI-driven automation loop — from incident detection to automated remediation content generation — all before a human steps in. Gitea here acts as the version control source of truth, where you can review the generated fix.
-
-=== How to Review the Playbook
-
-=== Gitea Access Details
-
-Use the following information to log in to Gitea and review the generated playbook:
-
-[cols="2,2", options="header"]
-|===
-| Component
-| Value
-
-| Gitea URL
-| link:https://{targethost}:{gitea_web_ui_port}[Gitea Web UI,window=_blank]
-
-| Username
-| `{lab_username}`
-
-| Password
-| `{ssh_password}`
-|===
-
-
-1. Login using the credentials provided.
-2. Navigate to the `lightspeed-playbooks` repository.
-3. Review the most recent commits — you should see one that corresponds to the Lightspeed-generated fix.
-
-[quote]
-💡 You can open the playbook file and inspect the contents. This is your opportunity to validate the AI-generated output before executing it. Just like in production systems, automated changes should be reviewed—either manually or through automated policy enforcement tools.
-
-[quote]
-*Pro Tip:* If you're planning to use this in a real-world setup, consider inserting an approval step here or sending the commit as a Pull Request to a `staging` branch. This way, your remediation workflow includes guardrails for human validation before running automated fixes.
-
-== Fix webserver issue
-
-1. In the left navigation menu, click on *Automation Execution* → *Templates*.
-
-image::automation_execution_templates.png[automation_execution_templates]
-
-[start=2]
-2. Scroll down to the *🔧✅ Execute HTTPD Remediation* job template and click the 🚀 to launch the job.
-
-3. Type in `node1` for the Limit
-
-image::limit_node1.png[limit_node1,300]
-
-[quote]
-💡 A limit in Ansible Automation Platform is equivalent to `--limit` with the `ansible-playbook` command.  The limit specifies the host or hosts you want to run the Ansible Job on versus the entire inventory, effectively *limiting* it to only running on those host(s).
-
-[start=4]
-4. Click on the blue *Next*.
-
-image::blue_next_button.png[blue_next_button,150]
-
-[start=5]
-5 Review and click the blue *Finish* button.
-
-image::blue_finish_button.png[blue_finish_button,150]
-
-== Check Success
-
-1. Connect to your bastion host either via SSH or Visual Studio Code.  The connection information is provided by your instructor.
-
-2. SSH over to node1
-
-[source,bash]
-----
-[lab-user@bastion ~]$ ssh node1
-Last login: Tue Apr  8 15:56:41 2025 from 192.168.0.37
-[ec2-user@node1 ~]$
-----
-
-3. Verify httpd is fixed with the *systemctl status httpd.service* command
-
-[source,bash]
-----
-[ec2-user@node1 ~]$ sudo systemctl status httpd.service
-● httpd.service - The Apache HTTP Server
-     Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; preset: disabled)
-     Active: active (running) since Tue 2025-04-08 17:16:02 UTC; 1min 55s ago
-       Docs: man:httpd.service(8)
-   Main PID: 6024 (httpd)
-     Status: "Total requests: 0; Idle/Busy workers 100/0;Requests/sec: 0; Bytes served/sec:   0 B/sec"
-      Tasks: 177 (limit: 48028)
-     Memory: 23.5M
-        CPU: 193ms
-     CGroup: /system.slice/httpd.service
-             ├─6024 /usr/sbin/httpd -DFOREGROUND
-             ├─6025 /usr/sbin/httpd -DFOREGROUND
-             ├─6026 /usr/sbin/httpd -DFOREGROUND
-             ├─6027 /usr/sbin/httpd -DFOREGROUND
-             └─6028 /usr/sbin/httpd -DFOREGROUND
-
-Apr 08 17:16:02 node1.example.com systemd[1]: Starting The Apache HTTP Server...
-Apr 08 17:16:02 node1.example.com httpd[6024]: Server configured, listening on: port 80
-Apr 08 17:16:02 node1.example.com systemd[1]: Started The Apache HTTP Server.
-[ec2-user@node1 ~]$
-----
-
-If you see *(running)* above it means httpd has been fixed!  You have successfully completed the lab.
-
-== Takeaways
-
-You have
-
-* Created a Workflow template that automatically creates an Ansible Playbook, pushes the Ansible Playbook to Gitea and then automatically creates a Job Template to fix the issue.
-* Fixed the httpd service using the prompt generated by Red Hat AI
-* Completed an AIOps workflow, by utilizing two different AI endpoints
-* Used the *limit* feature in a Job Template
-
-image::aiops-cool.gif[aiops-cool]
-
-== Complete
-
-You have completed module 01.
+Additional information can be found in the http://redhat.com/insightsfaq[Insights frequently asked questions document^].

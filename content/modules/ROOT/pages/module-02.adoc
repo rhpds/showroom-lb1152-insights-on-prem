@@ -1,242 +1,240 @@
-= Section 3 - Summary and Call to Actions
+= Insights via the Hybrid Cloud Console - Evaluate and remediate CVEs.
 
-You have completed the lab. This section will help you go further by documenting all the Ansible Playbooks and showing you how they work!
+While this is an Insights advisor in Satellite lab, that software is only a part of the overall Insights offering.  
+In this module you will explore some of the other Insights capabilities which may come to Satellite via Insights in a future release.
 
-image::thumbs-up.gif[thumbsup!]
+You will experience these offerings through the managed Insights offering on the https://console.redhat.com[Hybrid Cloud Console^].
 
-== Summary of Job Templates
+You will start by evaluating common vulnerabilities and exposures (CVEs) that are present in your environment and on your system using the Insights vulnerability service.
 
-Here's a recap of the job templates and rulebooks used in the lab:
-(in chronological order):
+There are thousands of CVEs - Insights helps you to focus on CVE information that pertains to Red Hat systems and some CVEs have gone through additional evaluation to share impact specific to the version of RHEL your system is running.
 
-Glossary:
 
-*RB* = Rulebook (for Event-Driven Ansible)
-*JT* = Job Template (for executing Ansible Playbooks)
+Please use a web browser to navigate to the https://console.redhat.com[Hybrid Cloud Console^] . +
+Log into the Hybrid Cloud Console with the following credentials: +
 
-|===
-| Name | Purpose
-| `❌ Break Apache` | JT simulates a failure in the Apache config
-| `Web App` | RB that watches Kafka queue for httpd disruption
-| `⚙️ Apache Service Status Check` | JT that checks the current state of Apache
-| `🤖 RHEL AI: Analyze Incident` | JT that uses RHEL AI to understand the error
-| `📣 Notify via Mattermost` | JT sends incident details to a chat system
-| `⚙️ Build Ansible Lightspeed Job Template` | JT that creates a JT to generate playbooks
-| `🧠 Lightspeed Remediation Playbook Generator` | JT that uses Lightspeed to generate the fix
-| `🧾 Commit Fix to Gitea` | JT pushes the generated playbook to Git
-| `Sync Project` | Workflow node that syncs Gitea project with dynamically created playbooks
-| `⚙️ Build HTTPD Remediation Template` | JT that creates another JT to apply the AI-generated fix
-| `✅ Execute HTTPD Remediation` | JT for Final fix (launched manually)
-| `✅ Restore Apache` | JT that Restores Apache to a known-good config
-|===
-
-Now here is a walkthrough in the same chronological order:
-
-=== `❌ Break Apache`
-*Purpose:* Introduces a known bad directive in `/etc/httpd/conf/httpd.conf` to cause Apache failure
-
-*What happens next:*
-
-- Filebeat detects the service issue
-- Kafka forwards the event
-- EDA rulebook matches and triggers `AI Insights and Lightspeed prompt generation` workflow
-
-*Ansible Playbook:*
-https://github.com/ansible-tmm/aiops-summitlab/blob/main/playbooks/httpd_break.yml[Github Link,window=_blank]
-
-== EDA Reponse
-
-image::eda_response.png[eda response,500]
-
-=== `Web App`
-
-*Purpose:*
-Checks for httpd disruption in a Kafka queue
-
-https://github.com/ansible-tmm/aiops-summitlab/blob/main/rulebooks/web_app.yml[Ansible Rulebook]
-
-== AI Insights and Lightspeed prompt generation workflow
-
-Also known as the `Enrichment Workflow` for short!
-
-image::enrichment_workflow_diagram.png[enrichment_workflow]
-
-=== `⚙️ Apache Service Status Check`
-
-*Purpose:*
-Checks whether Apache is active and logs its status.
-
-*What it does:*
-
-- Runs `systemctl status httpd`
-- Collects output and logs it
-- Output is consumed by the next steps (Red Hat AI and Mattermost)
-
-*Ansible Playbook:*
-https://github.com/ansible-tmm/aiops-summitlab/blob/main/playbooks/systemd_check_status.yml[Github Link,window=_blank]
-
-
-=== `🤖 RHEL AI: Analyze Incident`
-
-*Purpose:*
-Uses Red Hat AI inference service to understand the failure message.
-
-*What it does:*
-
-- Sends logs
-- Returns a natural-language description of the error
-- Suggests what kind of automation could fix it
-
-*Ansible Playbook:*
-https://github.com/ansible-tmm/aiops-summitlab/blob/main/playbooks/rhelai_inference_survey.yml[Github Link,window=_blank]
-
-=== `📣 Notify via Mattermost`
-
-*Purpose:*
-Sends a human-readable incident message to a Mattermost channel.
-
-*What it does:*
-
-- Formats the AI response and Apache status
-- Pushes it to a channel using Mattermost Webhook
-- Simulates integration with a real ITSM tool like ServiceNow
-
-*Ansible Playbook:*
-https://github.com/ansible-tmm/aiops-summitlab/blob/main/playbooks/mattermost_first_message.yml[Github Link,window=_blank]
-
-=== `⚙️ Build Ansible Lightspeed Job Template`
-
-*Purpose:* Creates a new job template for the second workflow
-
-*What it does:*
-
-- Create a job template with a survey that includes:
-
-  * A user-defined prompt field
-  * A pre-filled prompt from Red Hat AI output
-
-*Why this is important:*
-
-This allows Ansible Lightspeed to generate a remediation playbook without writing code manually. The job template created here will be used in the second workflow.
-
-*Ansible Playbook:*
-https://github.com/ansible-tmm/aiops-summitlab/blob/main/playbooks/aap_create_job_template.yml[Github Link,window=_blank]
-
-== Remediation Workflow
-
-image::remediation_workflow.png[remedation_workflow]
-
-=== `🧠 Lightspeed Remediation Playbook Generator`
-
-*Purpose:*
-Runs the job template created in the previous workflow `AI Insights and Lightspeed prompt generation` to generate a playbook from the AI prompt.
-
-*What it does:*
-
-- Uses Lightspeed to turn a prompt into a YAML playbook
-- Stores the result locally as `lightspeed-response.yml`
-
-*Ansible Playbook:*
-https://github.com/ansible-tmm/aiops-summitlab/blob/main/playbooks/lightspeed_generate.yml[Github Link,window=_blank]
-
-=== `🧾 Commit Fix to Gitea`
-
-*Purpose:*
-Pushes the generated playbook to the Gitea Git repository.
-
-*What it does:*
-
-- Authenticates with Gitea
-- Commits `lightspeed-response.yml`
-- Makes the playbook available for automation use
-
-*Ansible Playbook:*
-https://github.com/ansible-tmm/aiops-summitlab/blob/main/playbooks/scm_pr.yml[Github Link,window=_blank]
-
-=== `Sync Project to Lightspeed-Playbooks`
-
-*Purpose:*
-Syncs the git project from Gitea to Ansible Automation Platform
-
-[quote]
-💡 This is not a Job Template, but a built-in node that will sync Git projects within the workflow visualizer
-
-=== `⚙️ Build HTTPD Remediation Template`
-
-*Purpose:*
-Creates a new job template that uses the playbook pushed by Ansible Lightspeed to fix the Apache (httpd) service.
-
-*What it does:*
-
-- Creates a new Job Template called `Execute HTTPD Remediation`
-- Uses the dynamically generated `lightspeed-response.yml` playbook
-- Sets up the credentials, inventory and prompt for limit
-
-*Ansible Playbook:*
-https://github.com/ansible-tmm/aiops-summitlab/blob/main/playbooks/httpd_remediation_job_template.yml[Github Link,window=_blank]
-
-== `Execute HTTPD Remediation`
-
-*Purpose*
-Fix httpd on the RHEL webserver
-
-*What is does*
-
-- Removes the bad syntax from the httpd configuration file
-- Restarts the httpd service
-
-*Ansible Playbook:*
-This Job Template is dynamically generated from Ansible Lightspeed and stored in your Gitea instance.  The Ansible Playbook should look similar to this:
-
-[source,yaml]
+User:
+[source,sh,role=execute]
 ----
-- name: Fix httpd
-  become: true
-  hosts: all
-  tasks:
-
-    - name: Remove line that contains InvalidDirectiveHere
-      ansible.builtin.lineinfile:
-        path: /etc/httpd/conf/httpd.conf
-        regexp: ^InvalidDirectiveHere
-        state: absent
-
-    - name: Restart httpd
-      ansible.builtin.service:
-        name: httpd
-        state: restarted
+lab-434C
 ----
 
-=== `✅ Restore Apache`
+Password:
+[source,sh,role=execute]
+----
+R3dh4t2025!
+----
 
-[quote]
-💡 This Job Template is optional
+On the main page locate the `Red Hat Enterprise Linux` tile in the upper left and click https://console.redhat.com/insights/[Insights for RHEL^]. +
 
-*Purpose*
-If you want to return Apache to a good state (without running AIOps workflows), you can run the `✅ Restore Apache` job template.
+image::HCC_HomePage_RHEL.png[HCC_HomePage_RHEL,80%,80%]
 
-*What it does*
+On the left hand navigation bar go to `Security → Vulnerability → CVEs`
 
-- Should be mostly identical to what you see above for the `Execute HTTPD Remediation`
+NOTE: Depending on your screen resolution the left hand navigation bar may automatically minimize.  You may need to click the hamburger menu (3 lines stacked on top of each other) in the upper left corner in order to see the menu bar.
+
+The summary bar at the top of the page helps you focus on the most impactful issues in your environment.  If you have a high number of CVEs in your environment, this summary bar highlights the biggest risks that you should likely focus on addressing first.  Clicking on any of the numbers in the summary bar will apply filters that will show you these CVEs.
+
+image::Vuln_SummaryBar.png[Vuln_SummaryBar,100%,100%]
+
+NOTE: The numbers you see may not match what is shown in the screenshot above.  That is expected.
+
+Here is an explanation of the items in the summary bar: +
+
+* `CVEs with known exploits` indicate unpatched CVEs with known public exploits.  CVEs with this label should be addressed with high priority due to the risks posed by them. "Known exploit" does not mean we have taken steps to determine if the CVE has been exploited in your environment.
+* `CVEs with Security rules` indicate CVEs that have gone through the "Product Security Incident Response Plan" that takes a deeper look at impactful CVEs and adds deep threat intelligence on how the vulnerability impacts Red Hat systems.  This could include things like executive summaries, alternative mitigation strategies, and related CVEs that need to be considered.  Insights takes this information and makes it more succinct through the use of what we call security rules.  
+* `CVEs with critical severity` are CVEs with critical severity.  Critical ratings are given to flaws that could be easily exploited by a remote unauthenticated attacker and lead to system compromise (arbitrary code execution) without requiring user interaction. These are the types of vulnerabilities that can be exploited by worms. 
+* `CVEs with Important severity` are CVEs with important severity.  Important ratings are given to flaws that can easily compromise the confidentiality, integrity, or availability of resources. These are the types of vulnerabilities that allow local users to gain privileges, allow unauthenticated remote users to view resources that should otherwise be protected by authentication, allow authenticated remote users to execute arbitrary code, or allow remote users to cause a denial of service.
 
 
-*Ansible Playbook:*
-https://github.com/ansible-tmm/aiops-summitlab/blob/main/playbooks/httpd_fix.yml[Github Link,window=_blank]
+The default view also applies a number of filters.
 
-== Call to action
+image::Vuln_DefaultFilters.png[Vuln_DefaultFilters,100%,100%]
 
-image::ansible-aiops.jpeg[picture of homer,300]
+* The first filter chips show you only CVEs that affect `1 or more systems` in your infrastructure.  This could be a Conventional (RPM-DNF based) system or an Immutable (OSTree based) system.  
+* The second filter only shows you CVEs with an `Advisory Available`.  That means you are looking at vulnerabilities that you can fix.
 
-Here are some recommended nexst steps in your Ansible AIOps journey:
+Combining these two filters together means that the initial focus is on CVEs that are affecting your system AND CVEs that you can remediate.
 
-- https://youtube.com/ansibleautomation?sub_confirmation=1[Subscribe to our YouTube page]
+== List all systems with a specific CVE
 
-  * Check out the AI + Ansible YouTube https://youtube.com/playlist?list=PLdu06OJoEf2Y9-d7vPaKSh6ED_rO6AQFF&si=AFgrSb_FDHrU_TE6[playlist]
+Let’s say your security team knows about a vulnerability that affects SQLlite3 and they want to know if we have any systems with this vulnerability.  The CVE number is   `CVE-2023-7104`.
 
-- https://labs.demoredhat.com/[Bookmark our technical workshops page]
-- https://developers.redhat.com/products/ansible/overview[Check out developers.redhat.com] and get a home lab license.
-- https://www.redhat.com/en/services/training/do007-ansible-essentials-simplicity-automation-technical-overview[Sign up for free Red Hat training]
+From the vulnerability page the default filter is CVE (located to the right of the empty checkbox in the image above).  You can type the CVE number in the search box OR even a common search term that might be present in the CVE description like `sqlite`.   +
 
-Are you ready to implement now?
+* In the search box type `7104`. +
+* This will return `CVE-2023-7104` (as well as others). +
+* Notice that a new filter chip has been added for `Search term: 7104` +
+* In the row with the CVE ID you will see basic information about the CVE including the number of systems that are impacted by the CVE. +
+* Click on the CVE ID for https://console.redhat.com/insights/vulnerability/cves/CVE-2023-7104[CVE-2023-7104^] 
 
-- https://www.redhat.com/en/contact[Contact Red Hat]
+image::Vuln_CVE20237104.png[Vuln_CVE20237104,100%,100%]
+
+NOTE: The next few steps will reference the number in the screenshot above - not the number you see in your environment. You will see a different number and that is expected!  
+
+In the image above you will see that this CVE impacts 37 total systems in the environment.  + 
+
+With 37 total systems, 22 of them are conventional systems.  If you were to click the `Immutable (OSTree)` tab there would be an additional 15 systems.
+
+In the upper right of the page you will see a `Business risk` and a `Status`.  In the screenshot above they are shown as `Not defined` and `Not reviewed` respectively.  
+
+NOTE: You may see a different Business risk or Status than `Not defined` or `Not reviewed`.  That is ok.
+
+`Business risk` is intended for you to be able to define a risk that is specific to your business - this CVE is tagged with a severity of moderate, but if you have a workload that is deeply affected by this vulnerability, then this may be a more critical issue for you.   +
+
+Click `Actions` in the upper right. You will have the option to `Edit business risk`.  Click this option. +
+You can set the business risk to: 
+
+* Critical
+* High
+* Medium
+* Low
+* Not defined  
+
+You can also add a justification note as to why you set the business risk.   +
+Click `Cancel` so that you make no changes at this time.
+
+NOTE: You aren't making any changes so that you don't impact what other people taking the lab might see.  If you change the status of the CVE then it will change for other people.
+
+Similarly, click `Actions` in the upper right. You will have the option to `Edit status`. Click this option. +
+You can use the status field to identify where you are in the mitigation process.   +
+Status options are:
+
+* Not reviewed
+* In review
+* On-hold
+* Scheduled for patch
+* Resolved
+* No action - risk accepted
+* Resolved via mitigation
+
+You can also add a justification note to indicate any details about the status that you select. +
+Click `Cancel` so that you make no changes at this time.
+
+Locate the export button (just to the right of the `Plan remediation` button).  It looks like this:
+
+image::Insights_Export_Button.png[ExportButton,85%,85%] 
+
+Click the export button which will give you the option to export this list into CSV or JSON formats. +
+The export view is WYSIWYG (what you see is what you get), so an export on the `Conventional (RPM-DNF)` tab will show you only the RPM/DNF based systems.
+
+In other words, getting a list of systems impacted by a vulnerability takes just seconds - search for the CVE then export the list of impacted systems.
+
+== Generating a remediation playbook
+
+To fix this issue you will need to create a remediation plan for this CVE.   +
+You can select specific systems in the list of affected hosts, or, just click the checkbox at the top of the page (to the left of the Name filter in the screenshot above) then choose `Select all`.  
+
+NOTE: The following steps are for Conventional (RPM-DNF) based systems.  Immutable (OSTree) systems are image based and you update the image vs making system changes.
+
+Once you have hosts selected, click the `Plan remediation` button which will launch a wizard that will create a playbook for you.
+
+You can add this fix to an existing playbook or you can create a new playbook.  Insights defaults to Create new playbook.   Give your playbook a name like: `7104 fix {guid}`
+
+Reminder: your system name is: `node-{guid}-1.example.com`
+
+NOTE: Please add some sort of unique identifier to the playbook name.  Above we suggest using your environment’s unique ID even if you are selecting multiple hosts.  
+
+Click `Next`. +
+At this time you are fixing this issue on all affected systems.  Click `Next`. +
+Review the summary.  Notice that a reboot is required to resolve this issue.  
+You do have the option to disable the reboot in the playbook by clicking the `Turn off autoreboot` text in blue. +
+Click `Submit`.
+
+At the bottom of the wizard there is a link that will allow you to `Open playbook 7104 fix {guid}`.   +
+Click the link.  This will redirect you to the Remediations section of the Hybrid Cloud Console. +
+For context, in the left hand navigation bar you have just been redirected to `Automation Toolkit → Remediations`.
+
+For the remediations page, while looking at your remediation plan you created, you have a couple of options in the upper right. +
+The `Execute playbook` button is unavailable.  Your user in this lab does not have permission to execute remediation.  No user gets this permission by default - it has to be explicitly provided, With so many people taking this lab at the same time we have opted to not enable this feature. +
+
+We do have an interactive demo that can show you how this works, end to end that will be at the end of this module. +
+
+However you are able to use the `Download playbook` button.   Go ahead and click this now. +
+The playbook is downloaded via your browser.  You will need to extract the file then open the .yaml.
+
+This playbook can help simplify the resolution of this issue - you could easily adapt this to run via ansible automation or sync this playbook with Ansible Automation Platform (AAP) - this is covered in the AAP documentation but we are not covering it in this lab.
+
+Close the playbook and return to the Hybrid Cloud Console browser window.
+
+== List all CVEs impacting your system
+
+Let’s return to the vulnerability page and look at your specific host with the goal of getting a list of all CVEs that affect your specific host.
+
+On the left hand navigation bar go to `Security → Vulnerability → Systems` +
+
+NOTE: Depending on your screen resolution the left hand navigation bar may automatically minimize.  You may need to click the hamburger menu (3 lines stacked on top of each other) in the upper left corner in order to see the menu bar.
+
+Locate your host and select it. +
+Reminder: your system name is: `node-{guid}-1.example.com`
+
+This view will show you all of the vulnerabilities present on this specific host.    +
+Notice that the default filter applied is `Advisory: Available`.   +
+This means we are showing you all CVEs that have an advisory available (in other words - we are showing you all of the vulnerabilities that you can fix). +
+Because we are showing you only CVEs with advisories, in the remediation column on the far right, almost every CVE has the option for a remediation playbook - meaning Insights can generate a playbook for almost all of these CVEs.
+
+If you just need the list of CVEs that you can fix - exporting this list will get you what you need. +
+However, sometimes you need a complete list of system vulnerabilities - the CVEs with and without errata. + 
+Insights can show you this information as well.
+
+Take note of the number of CVEs listed for the host.  These are shown in the upper right side of the list of CVEs. +
+
+In the image below there are 1241 CVEs with errata on the host in the image - the number you see may differ.
+
+image::Vuln-CVE_w_errata.png[Vuln-CVE_w_errata,85%,85%] 
+
+
+Now - click the `x` to the right of the `Advisory: Available` filter chip to remove it.   +
+This will show you all CVEs in the database that affect this system - with and without advisories. +
+Look again at the number of CVEs - the number is significantly larger, probably more than double!
+
+In the image below there are 3440 CVEs when looking at the full picture - these are CVEs with and without errata.  Having this information gives us a full view of all of the issues that affect your RHEL hosts - the ones you can fix as well as the ones you can’t.
+
+image::Vuln-CVE_wo_errata.png[Vuln-CVE_wo_errata,85%,85%] 
+
+The advisory column will tell you if the CVE has an advisory available to resolve the CVE.  
+
+If you click the export button (just to the right of the Plan remediation button) you have the option to export this list into CSV or JSON formats.
+
+Again - you can get a list of all of the CVEs that impact a specific system very quickly.
+
+== Reporting on CVEs
+
+
+The vulnerability service has some built in reporting capability - you will finish up this module by generating some reports.
+
+On the left hand navigation bar go to `Security → Vulnerability → Reports`
+
+There are two types of reports - an executive report and a customizable CVE report.
+
+Start with the executive report - click `Download PDF`. +
+The PDF file will be downloaded via your browser.   Locate and open the report. +
+The executive report shows you a summary of the systems, CVEs, and security rules. +
+The report then breaks down the CVEs by CVSS (Common Vulnerability Scoring System) score, identifies the top 3 CVEs in your environment, and the top 3 security rules. +
+This is a nice pre canned report that you can send to your management or security team.  +
+Close the report and return to the reports page of the Hybrid Cloud Console.
+
+The information in the executive report may not exactly meet your needs, which is where the customizable report comes in.   +
+Let’s say you have been asked to provide your security team with a list of all vulnerabilities with a CVSS score from 6-10 that have been released in the last 90 days.
+
+Under `Report by CVEs` click `Create report`.
+
+This opens a window where you can identify what you want the report to contain. +
+
+image::Vuln_CustomReport.png[Vuln_CustomerReport,100%,100%]
+
+If desired you can change the `Report title`.
+
+* Locate the `CVSS base score` filter and change this to read 6.0 - 10 (you can type in the number or use the arrows). +
+* Locate `Publish date` and select the `Last 90 days`. +
+* Add `User notes` if desired. +
+* Click `Export report`. +
+
+The PDF file will be downloaded via your browser.   Locate and open the report. +
+This report will show you the information that you selected - in this case all CVEs with a CVSS base score between 6.0 and 10 within the last 90 days.
+
+When finished reviewing, close the report and return to the Hybrid Cloud Console.
+
+If you want to see this work end-to-end including the remediation, please check out this https://app.arcade.software/share/Rj6M0j5j34kdlq5KGiAz?embed&embed_mobile=tab&embed_desktop=inline&show_copy_link=true[interactive demo on Evaluating systems for Common Vulnerabilities and Exposures (CVEs)^]: +
+
+This module is complete.

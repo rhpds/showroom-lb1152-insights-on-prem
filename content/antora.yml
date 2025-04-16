@@ -1,27 +1,23 @@
 name: modules
-title: Introduction to AI-Driven Ansible Automation
+title: "LB1152: Red Hat Insights On-Premise - Hands on Lab for Insights' new Footprint"
 version: master
 nav:
   - modules/ROOT/nav.adoc
 
 asciidoc:
   attributes:
-    lab_name: "Introduction to AI-Driven Ansible Automation"
-    page-pagination: true
+    lab_name: "LB1152: Red Hat Insights On-Premise - Hands on Lab for Insights' new Footprint"
     release-version: master
-
-    # Core user/environment vars
-    guid: MYGUID
-    sandbox_zone: MYSANDBOX
-    lab_username: lab-user
-    lab_password: "{ssh_password}"
-
-    # Raw service ports
-    gitea_web_ui_port: 488
-    vscode_web_ui_port: 8443
-    mattermost_port: 8065
-
-    # Optional links (Showroom UI dropdown)
+    page-pagination: true
+    experimental: true
+    my_var: "foo"
+    guid: "{guid}"
+    workshop_satellite_url: "https://{lb1152_hol_satellite_reconfigure_external_fqdn}"
+    workshop_satellite_user_name: "{lb1152_hol_satellite_reconfigure_user_name}"
+    workshop_satellite_user_password: "{lb1152_hol_satellite_reconfigure_user_password}"
+    ssh_user: devops
+    ssh_password: devops
+    ssh_command: ssh someone@example.com
     page-links:
-      - url: https://redhat.com
-        text: Red Hat
+    - url: https://redhat.com
+      text: Red Hat

@@ -2,7 +2,7 @@
 
 In this lab we have already provided for you a pre-configured Red Hat Satellite 6.17 which has two Red Hat Enterprise Linux (RHEL) 9.1 hosts registered.  
 
-During this lab you will:
+### During this lab you will:
 
 * Learn about and use some of the features and capabilities of Red Hat Insights using the services available on the https://console.redhat.com/[Red Hat Hybrid Cloud Console^].  
 
@@ -13,8 +13,8 @@ This is a more limited view with access to only the Advisor service of Insights,
 
 * Log into the Satellite server and install the newest tech preview feature - `Insights on premise`.  +
 Customers have been specifically asking for Insights on premise for several years, but to really draw a distinction between what Red Hat manages on the Hybrid Cloud Console and what you would manage in your own environment, throughout the lab guide you will see this new feature referred to as `Insights advisor in Satellite`.
-
-This is a podman container that we will need to install on the Satellite which in turn will handle the Insights analysis.   Once this is configured your Satellite will no longer be sending any data to the Hybrid Cloud Console - the local Satellite handles the analysis without sending any data.  For this technical preview, only the Insights advisor service is included, which provides configuration analysis for your RHEL hosts including best practice, performance, and recommendations from Red Hat’s experience supporting RHEL hosts..  
++
+There is a podman container that we will need to install on the Satellite which in turn will handle the Insights analysis.   Once this is configured, your Satellite will no longer be sending any data to the Hybrid Cloud Console - the local Satellite handles the analysis without sending any data.  For this technical preview, only the Insights advisor service is included, which provides configuration analysis for your RHEL hosts including best practices, identifying misconfigurations, workload optimization, and performance recommendations from Red Hat’s years of expertise supporting our customers.   
 
 * Use the same Satellite user interface to identify and resolve issues found on hosts using the Insights advisor service, without sending any data thanks to Insights advisor in Satellite capabilities with Satellite. 
 
@@ -23,12 +23,12 @@ This is a podman container that we will need to install on the Satellite which i
 ### Insights connectivity options.
 With the introduction of Insights advisor in Satellite capabilities in Satellite, there are now three high level modes for Insights.
 
-1. Not using Insights.  In this state you are not using any of the services of capabilities of Insights.  Data may be still being sent to Red Hat for telemetry, subscription manager, or other similar capabilities outside of Insights.
-2. Connected to Insights.  Your systems are connected to Insights and you are sending a small amount of metadata to Red Hat that is analyzed and information is returned to you via the Hybrid Cloud Console or via third party integrations. This could take one of several forms:
+1. *Not using Insights.*  In this state you are not using any of the services of capabilities of Insights.  Data may be still being sent to Red Hat for telemetry, subscription manager, or other similar capabilities outside of Insights.
+2. *Connected to Insights.*  Your systems are connected to Insights and you are sending a small amount of metadata to Red Hat that is analyzed and information is returned to you via the Hybrid Cloud Console or via third party integrations. This could take one of several forms:
 ** Host directly connected to Insights.  In this case a host is directly connected to Insights over port 443.
 ** Host connected via Red Hat Satellite.  In this case the host is connected to a Satellite and the Satellite is acting as a proxy to send the data to Insights.  Data flows from the host, to a capsule server, to the Satellite server, and to Insights.
 ** Host is connected via Insights proxy or a web proxy.  The host is connected to a proxy or to the Insights proxy) and the proxy routes the traffic to the internet.
-3. Insights advisor in Satellite (Technical preview feature).  Insights analysis is performed on your Satellite server.  No data is sent to Red Hat including data for subscription management.
+3. *Insights advisor in Satellite* (Technical preview feature).  Insights analysis is performed on your Satellite server.  No data is sent to Red Hat including data for subscription management.
 
 The table below highlights the different ways that you can connect to Insights and the high level connectivity required.  
 

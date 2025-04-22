@@ -36,7 +36,7 @@ image::Sat_Insights_Connected_Menu.png[Sat_Insights_Connected_Menu.png,80%,80%]
 Depending on how long your lab has been running, the page might be empty - We want to sync the Recommendations with the ones on the Hybrid Cloud Console.
 To do this, locate the Remediate button in the upper right.  Next to that are three vertical dots - click the three dots and select `Sync recommendations`.
 
-image::Sat_Insights_Connected_Sync.png[Sat_Insights_Connected_Sync.png,100%,100%]
+image::Sat_Insights_Connected_Sync_zoomed.png[Sat_Insights_Connected_Sync.png,100%,100%]
 
 If your page was already populated you may not see any difference.  If your page was blank, after a few seconds the view will update and Advisor recommendations will be displayed in the Satellite UI.  +  
 These are the same ones that you would see in the Advisor service of the Hybrid Cloud Console.  

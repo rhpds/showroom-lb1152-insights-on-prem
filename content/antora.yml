@@ -1,12 +1,12 @@
 name: modules
-title: "LB1152: Red Hat Insights On-Premise - Hands on Lab for Insights' new Footprint"
+title: "LB1152: Red Hat Insights advisor in Red Hat Satellite: Bringing valuable insight on-premise"
 version: master
 nav:
   - modules/ROOT/nav.adoc
 
 asciidoc:
   attributes:
-    lab_name: "LB1152: Red Hat Insights On-Premise - Hands on Lab for Insights' new Footprint"
+    lab_name: "LB1152: Red Hat Insights advisor in Red Hat Satellite: Bringing valuable insight on-premise"
     release-version: master
     page-pagination: true
     experimental: true

@@ -117,7 +117,7 @@ For each match you can set the match status. +
 * On hold
 * Benign - not malicious malware
 * Malware detection test
-*No action - risk accepted
+* No action - risk accepted
 * Resolved - malware removed
 
 image::Malware_MatchStatus_Options.png[Malware_MatchStatus_Options.png,100%,100%]

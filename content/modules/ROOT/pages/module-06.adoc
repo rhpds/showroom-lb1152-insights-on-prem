@@ -7,12 +7,12 @@ In modules 2 (Insights via the Hybrid Cloud Console - Evaluate and remediate CVE
 These two services are not part of the Insights advisor in Satellite technical preview capabilities, but they are services that are being considered for inclusion for a future release.  
 The Insights team wanted you to get a feel for the capabilities and how they work.
 
-In module 4 (Advisor recommendations in Satellite while connected) you experienced what the Insights advisor capability looks like inside of Red Hat Satellite.  This experience has been there since approximately Satellite 6.4 and lets you see some of the value of Insights inside of the Red Hat Satellite user interface.   This is also just the Advisor service using the Satellite user interface.
+In module 4 (Advisor recommendations in Satellite while connected) you experienced what the Insights advisor capability looks like inside of Red Hat Satellite.  This experience has been there since approximately Satellite 6.4 and lets you see some of the value of Insights inside of the Red Hat Satellite user interface.   This is also just the advisor service using the Satellite user interface.
 
 In module 5 you installed the Insights advisor in Satellite technical preview.  This is a podman container that disables some of the connectivity menu items inside of the Satellite user interface, but otherwise looks very similar to what you experienced in module 4.   The Insights analysis happens right on the Satellite and no information leaves the Satellite.   
 
 Insights advisor in Satellite is available as a technical preview with the release of Satellite 6.17.
-Updates to Insights advisor in Satellite will be delivered in future Satellite releases - to get new Advisor recommendations or newer Insights capabilities in future releases you will need to upgrade to the latest Satellite z-stream.  
+Updates to Insights advisor in Satellite will be delivered in future Satellite releases - to get new advisor recommendations or newer Insights capabilities in future releases you will need to upgrade to the latest Satellite z-stream.  
 
 We encourage you to use Insights advisor in Satellite and share your feedback with the Insights team by emailing us at insights@redhat.com.  
 

@@ -160,40 +160,34 @@ We do have an interactive demo that can show you how this works, end to end that
 
 Let’s return to the vulnerability page and look at your specific host with the goal of getting a list of all CVEs that affect your specific host.
 
-On the left hand navigation bar go to `Security → Vulnerability → Systems` +
-
 NOTE: Depending on your screen resolution the left hand navigation bar may automatically minimize.  You may need to click the hamburger menu (3 lines stacked on top of each other) in the upper left corner in order to see the menu bar.
 
-Locate your host and select it. +
-Reminder: your system name is: `node-{guid}-1.example.com`
-
+1. On the left hand navigation bar go to `Security → Vulnerability → Systems` +
+2. Locate your host and select it. +
+Reminder: your system name is: `node-{guid}-1.example.com` +
 This view will show you all of the vulnerabilities present on this specific host.    +
-Notice that the default filter applied is `Advisory: Available`.   +
+3. Notice that the default filter applied is `Advisory: Available`.   +
 This means we are showing you all CVEs that have an advisory available (in other words - we are showing you all of the vulnerabilities that you can fix). +
-Because we are showing you only CVEs with advisories, in the remediation column on the far right, almost every CVE has the option for a remediation playbook - meaning Insights can generate a playbook for almost all of these CVEs.
-
+Because we are showing you only CVEs with advisories, in the remediation column on the far right, almost every CVE has the option for a remediation playbook - meaning Insights can generate a playbook for almost all of these CVEs. +
 If you just need the list of CVEs that you can fix - exporting this list will get you what you need. +
 However, sometimes you need a complete list of system vulnerabilities - the CVEs with and without errata. + 
-Insights can show you this information as well.
-
-Take note of the number of CVEs listed for the host.  These are shown in the upper right side of the list of CVEs. +
-
-In the image below there are 1241 CVEs with errata on the host in the image - the number you see may differ.
+Insights can show you this information as well. +
+4. Take note of the number of CVEs listed for the host.  These are shown in the upper right side of the list of CVEs. +
+In the image below there are 1241 CVEs with errata on the host in the image - the number you see may differ. +
 
 image::Vuln-CVE_w_errata.png[Vuln-CVE_w_errata,85%,85%] 
 
-
-Now - click the `x` to the right of the `Advisory: Available` filter chip to remove it.   +
+[start=5]
+5. Now - click the `x` to the right of the `Advisory: Available` filter chip to remove it.   +
 This will show you all CVEs in the database that affect this system - with and without advisories. +
-Look again at the number of CVEs - the number is significantly larger, probably more than double!
-
+6. Look again at the number of CVEs - the number is significantly larger, probably more than double! +
 In the image below there are 3440 CVEs when looking at the full picture - these are CVEs with and without errata.  Having this information gives us a full view of all of the issues that affect your RHEL hosts - the ones you can fix as well as the ones you can’t.
 
 image::Vuln-CVE_wo_errata.png[Vuln-CVE_wo_errata,85%,85%] 
 
 The advisory column will tell you if the CVE has an advisory available to resolve the CVE.  
-
-If you click the export button (just to the right of the Plan remediation button) you have the option to export this list into CSV or JSON formats.
+[start=7]
+7. Click the export button (just to the right of the Plan remediation button) you have the option to export this list into CSV or JSON formats.
 
 Again - you can get a list of all of the CVEs that impact a specific system very quickly.
 
@@ -202,37 +196,36 @@ Again - you can get a list of all of the CVEs that impact a specific system very
 
 The vulnerability service has some built in reporting capability - you will finish up this module by generating some reports.
 
-On the left hand navigation bar go to `Security → Vulnerability → Reports`
-
-There are two types of reports - an executive report and a customizable CVE report.
-
-Start with the executive report - click `Download PDF`. +
-The PDF file will be downloaded via your browser.   Locate and open the report. +
+1. On the left hand navigation bar go to `Security → Vulnerability → Reports` +
+There are two types of reports - an executive report and a customizable CVE report. +
+2. Start with the executive report - click `Download PDF`. +
+The PDF file will be downloaded via your browser.   +
+3. Locate and open the report. +
 The executive report shows you a summary of the systems, CVEs, and security rules. +
 The report then breaks down the CVEs by CVSS (Common Vulnerability Scoring System) score, identifies the top 3 CVEs in your environment, and the top 3 security rules. +
 This is a nice pre canned report that you can send to your management or security team.  +
-Close the report and return to the reports page of the Hybrid Cloud Console.
+4. Close the report and return to the reports page of the Hybrid Cloud Console. +
+
 
 The information in the executive report may not exactly meet your needs, which is where the customizable report comes in.   +
 Let’s say you have been asked to provide your security team with a list of all vulnerabilities with a CVSS score from 6-10 that have been released in the last 90 days.
 
-Under `Report by CVEs` click `Create report`.
-
+1. Under `Report by CVEs` click `Create report`. +
 This opens a window where you can identify what you want the report to contain. +
 
 image::Vuln_CustomReport.png[Vuln_CustomerReport,100%,100%]
 
-If desired you can change the `Report title`.
-
+[start=2]
+2. Complete the report wizard +
+* If desired you can change the `Report title`.
 * Locate the `CVSS base score` filter and change this to read 6.0 - 10 (you can type in the number or use the arrows). +
 * Locate `Publish date` and select the `Last 90 days`. +
 * Add `User notes` if desired. +
 * Click `Export report`. +
-
-The PDF file will be downloaded via your browser.   Locate and open the report. +
-This report will show you the information that you selected - in this case all CVEs with a CVSS base score between 6.0 and 10 within the last 90 days.
-
-When finished reviewing, close the report and return to the Hybrid Cloud Console.
+The PDF file will be downloaded via your browser.   
+3. Locate and open the report. +
+This report will show you the information that you selected - in this case all CVEs with a CVSS base score between 6.0 and 10 within the last 90 days. +
+4. When finished reviewing, close the report and return to the Hybrid Cloud Console.
 
 If you want to see this work end-to-end including the remediation, please check out this https://app.arcade.software/share/Rj6M0j5j34kdlq5KGiAz?embed&embed_mobile=tab&embed_desktop=inline&show_copy_link=true[interactive demo on Evaluating systems for Common Vulnerabilities and Exposures (CVEs)^]: +
 

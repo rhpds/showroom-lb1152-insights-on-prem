@@ -32,8 +32,7 @@ With the introduction of Insights advisor in Satellite capabilities in Satellite
 
 The table below highlights the different ways that you can connect to Insights and the high level connectivity required.  
 
-image::Insights_Connectivity_Options.png[Insights_Connectivity_Options.png,100%,100%]
-
+image::Insights_Connectivity_Options.png[link=self, window=blank, width=100%]
 
 === Insights advisor in Satellite - a new technical preview feature!
 This lab introduces a tech preview capability, Insights advisor in Satellite.  

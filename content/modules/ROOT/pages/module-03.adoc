@@ -37,11 +37,6 @@ sudo insights-client --collector malware-detection
 
 Since Insights malware detection had never been run before on this system the malware detection service performed some setup including the creation of a config file.  +
 You would normally need to edit the config file to make scans live, but we have already done this for you in the lab. + 
-The file we edited was `/etc/insights-client/malware-detection-config.yml` +
-Inside the file you would need to locate the section on test scan (this is near the top of the file) and change: +
-`test_scan: true` +
-to: +
-`test_scan: false` +
 
 *The Malware detection service is now set up*. +
 Since this is a new system, there is nothing to find - yet.

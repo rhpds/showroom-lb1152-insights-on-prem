@@ -98,7 +98,9 @@ This looks similar to what you saw in the Satellite UI, but more information is 
 [start=8]
 8. Locate the postgresql database recommendation. +
 9. Click on the arrow to the left of the recommendation name to expand the details. +
+
 This will show you: +
+
 * Why the issue was detected
 * What you need to do to resolve the issue
 * Any related knowledge base articles

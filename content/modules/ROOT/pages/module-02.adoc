@@ -1,17 +1,15 @@
 = Insights via the Hybrid Cloud Console - Evaluate and remediate CVEs.
 
-While this is an Insights advisor in Satellite lab, that software is only a part of the overall Insights offering.  
-In this module you will explore some of the other Insights capabilities which may come to Satellite via Insights in a future release.
-
-You will experience these offerings through the managed Insights offering on the https://console.redhat.com[Hybrid Cloud Console^].
+While this is an Insights advisor in Satellite lab, this software is only a part of the overall Insights offering.  
+In this module and the next you will explore some of the Insights capabilities on the https://console.redhat.com[Hybrid Cloud Console^].
 
 You will start by evaluating common vulnerabilities and exposures (CVEs) that are present in your environment and on your system using the Insights vulnerability service.
 
 There are thousands of CVEs - Insights helps you to focus on CVE information that pertains to Red Hat systems and some CVEs have gone through additional evaluation to share impact specific to the version of RHEL your system is running.
 
 
-Please use a web browser to navigate to the https://console.redhat.com[Hybrid Cloud Console^] . +
-Log into the Hybrid Cloud Console with the following credentials: +
+1. Please use a web browser to navigate to the https://console.redhat.com[Hybrid Cloud Console^] . +
+2. Log into the Hybrid Cloud Console with the following credentials: +
 
 User:
 [source,sh,role=execute]
@@ -25,11 +23,13 @@ Password:
 R3dh4t2025!
 ----
 
-On the main page locate the `Red Hat Enterprise Linux` tile in the upper left and click https://console.redhat.com/insights/[Insights for RHEL^]. +
+[start=3]
+3. On the main page locate the `Red Hat Enterprise Linux` tile in the upper left and click https://console.redhat.com/insights/[Insights for RHEL^]. +
 
 image::HCC_HomePage_RHEL.png[HCC_HomePage_RHEL,80%,80%]
 
-On the left hand navigation bar go to `Security → Vulnerability → CVEs`
+[start=4]
+4. On the left hand navigation bar go to `Security → Vulnerability → CVEs`
 
 NOTE: Depending on your screen resolution the left hand navigation bar may automatically minimize.  You may need to click the hamburger menu (3 lines stacked on top of each other) in the upper left corner in order to see the menu bar.
 
@@ -62,19 +62,17 @@ Let’s say your security team knows about a vulnerability that affects SQLlite3
 
 From the vulnerability page the default filter is CVE (located to the right of the empty checkbox in the image above).  You can type the CVE number in the search box OR even a common search term that might be present in the CVE description like `sqlite`.   +
 
-* In the search box type `7104`. +
-* This will return `CVE-2023-7104` (as well as others). +
-* Notice that a new filter chip has been added for `Search term: 7104` +
-* In the row with the CVE ID you will see basic information about the CVE including the number of systems that are impacted by the CVE. +
-* Click on the CVE ID for https://console.redhat.com/insights/vulnerability/cves/CVE-2023-7104[CVE-2023-7104^] 
+1. In the search box type `7104`. +
+2. This will return `CVE-2023-7104` (as well as others). + Notice that a new filter chip has been added for `Search term: 7104` +
+3. In the row with the CVE ID you will see basic information about the CVE including the number of systems that are impacted by the CVE. +
+4. Click on the CVE ID for https://console.redhat.com/insights/vulnerability/cves/CVE-2023-7104[CVE-2023-7104^] 
 
 image::Vuln_CVE20237104.png[Vuln_CVE20237104,100%,100%]
 
 NOTE: The next few steps will reference the number in the screenshot above - not the number you see in your environment. You will see a different number and that is expected!  
 
-In the image above you will see that this CVE impacts 37 total systems in the environment.  + 
-
-With 37 total systems, 22 of them are conventional systems.  If you were to click the `Immutable (OSTree)` tab there would be an additional 15 systems.
+In the image above you will see that this CVE impacts 37 total systems in the environment.  You will have a different number. + 
+Some of these are conventional systems.  If you were to click the ‘Immutable (OSTree)` tab there would be an additional systems. +
 
 In the upper right of the page you will see a `Business risk` and a `Status`.  In the screenshot above they are shown as `Not defined` and `Not reviewed` respectively.  
 
@@ -82,7 +80,8 @@ NOTE: You may see a different Business risk or Status than `Not defined` or `Not
 
 `Business risk` is intended for you to be able to define a risk that is specific to your business - this CVE is tagged with a severity of moderate, but if you have a workload that is deeply affected by this vulnerability, then this may be a more critical issue for you.   +
 
-Click `Actions` in the upper right. You will have the option to `Edit business risk`.  Click this option. +
+[start=5]
+5. Click `Actions` in the upper right. You will have the option to `Edit business risk`.  Click this option. +
 You can set the business risk to: 
 
 * Critical
@@ -92,11 +91,14 @@ You can set the business risk to:
 * Not defined  
 
 You can also add a justification note as to why you set the business risk.   +
-Click `Cancel` so that you make no changes at this time.
+
+[start=6]
+6. Click `Cancel` so that you make no changes at this time.
 
 NOTE: You aren't making any changes so that you don't impact what other people taking the lab might see.  If you change the status of the CVE then it will change for other people.
 
-Similarly, click `Actions` in the upper right. You will have the option to `Edit status`. Click this option. +
+[start=7]
+7. Similarly, click `Actions` in the upper right. You will have the option to `Edit status`. Click this option. +
 You can use the status field to identify where you are in the mitigation process.   +
 Status options are:
 
@@ -109,53 +111,50 @@ Status options are:
 * Resolved via mitigation
 
 You can also add a justification note to indicate any details about the status that you select. +
-Click `Cancel` so that you make no changes at this time.
 
-Locate the export button (just to the right of the `Plan remediation` button).  It looks like this:
+[start=8]
+8. Click `Cancel` so that you make no changes at this time.
+
+9. Locate the export button (just to the right of the `Plan remediation` button).  It looks like this:
 
 image::Insights_Export_Button.png[ExportButton,85%,85%] 
 
-Click the export button which will give you the option to export this list into CSV or JSON formats. +
-The export view is WYSIWYG (what you see is what you get), so an export on the `Conventional (RPM-DNF)` tab will show you only the RPM/DNF based systems.
+[start=10]
+10. Click the export button which will give you the option to export this list into CSV or JSON formats. +
+You should know that the exported data is WYSIWYG (what you see is what you get), so an export on the `Conventional (RPM-DNF)` tab will show you only the RPM/DNF based systems.  If you apply any filters to the view, those filters will affect what is exported.
 
 In other words, getting a list of systems impacted by a vulnerability takes just seconds - search for the CVE then export the list of impacted systems.
 
 == Generating a remediation playbook
 
 To fix this issue you will need to create a remediation plan for this CVE.   +
-You can select specific systems in the list of affected hosts, or, just click the checkbox at the top of the page (to the left of the Name filter in the screenshot above) then choose `Select all`.  
+
+1. Click the checkbox at the top of the page (to the left of the Name filter in the screenshot above) then choose `Select all`.  
 
 NOTE: The following steps are for Conventional (RPM-DNF) based systems.  Immutable (OSTree) systems are image based and you update the image vs making system changes.
 
-Once you have hosts selected, click the `Plan remediation` button which will launch a wizard that will create a playbook for you.
-
-You can add this fix to an existing playbook or you can create a new playbook.  Insights defaults to Create new playbook.   Give your playbook a name like: `7104 fix {guid}`
+[start=2]
+2. Once you have hosts selected, click the `Plan remediation` button which will launch a wizard that will create a playbook for you. + You can add this fix to an existing playbook or you can create a new playbook.  Insights defaults to Create new playbook.   
+3. Give your playbook a name like: `7104 fix {guid}`
 
 Reminder: your system name is: `node-{guid}-1.example.com`
 
 NOTE: Please add some sort of unique identifier to the playbook name.  Above we suggest using your environment’s unique ID even if you are selecting multiple hosts.  
 
-Click `Next`. +
-At this time you are fixing this issue on all affected systems.  Click `Next`. +
-Review the summary.  Notice that a reboot is required to resolve this issue.  
-You do have the option to disable the reboot in the playbook by clicking the `Turn off autoreboot` text in blue. +
-Click `Submit`.
+[start=4]
+4. Click `Next`. + At this time you are fixing this issue on all affected systems.  
+5. Click `Next`. + Review the summary.  Notice that a reboot is required to resolve this issue. + You do have the option to disable the reboot in the playbook by clicking the `Turn off autoreboot` text in blue. +
+6. Click `Submit`. +At the bottom of the wizard there is a link that will allow you to `Open playbook 7104 fix {guid}`.   +
+7. Click the link.  This will redirect you to the Remediations section of the Hybrid Cloud Console. + For context, in the left hand navigation bar you have just been redirected to `Automation Toolkit → Remediations`. +
 
-At the bottom of the wizard there is a link that will allow you to `Open playbook 7104 fix {guid}`.   +
-Click the link.  This will redirect you to the Remediations section of the Hybrid Cloud Console. +
-For context, in the left hand navigation bar you have just been redirected to `Automation Toolkit → Remediations`.
-
-For the remediations page, while looking at your remediation plan you created, you have a couple of options in the upper right. +
+From the remediations page, while looking at your remediation plan you created, you have a couple of options in the upper right. +
 The `Execute playbook` button is unavailable.  Your user in this lab does not have permission to execute remediation.  No user gets this permission by default - it has to be explicitly provided, With so many people taking this lab at the same time we have opted to not enable this feature. +
 
 We do have an interactive demo that can show you how this works, end to end that will be at the end of this module. +
+[start=8]
+8. Click the Download playbook button. + The playbook is downloaded via your browser.  You will need to extract the file then open the .yaml. + This playbook can help simplify the resolution of this issue - you could easily adapt this to run via ansible automation or sync this playbook with Ansible Automation Platform (AAP) - this is covered in the AAP documentation but we are not covering it in this lab.
 
-However you are able to use the `Download playbook` button.   Go ahead and click this now. +
-The playbook is downloaded via your browser.  You will need to extract the file then open the .yaml.
-
-This playbook can help simplify the resolution of this issue - you could easily adapt this to run via ansible automation or sync this playbook with Ansible Automation Platform (AAP) - this is covered in the AAP documentation but we are not covering it in this lab.
-
-Close the playbook and return to the Hybrid Cloud Console browser window.
+9. Close the playbook and return to the Hybrid Cloud Console browser window.
 
 == List all CVEs impacting your system
 

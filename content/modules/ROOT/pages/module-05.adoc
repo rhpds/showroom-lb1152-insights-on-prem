@@ -33,7 +33,8 @@ ssh lab-user@satellite.example.com
 sudo satellite-installer --foreman-plugin-rh-cloud-enable-iop-advisor-engine true
 ----
 
-This will take about 2-5 minutes to complete.  +
+NOTE: This will take about 2-5 minutes to complete.  
+
 The 'satellite-installer' command only adds the advisor engine and reconfigures the Satellite server to use it. +
 Once completed your Satellite is running in the Insights advisor in Satellite mode and the analytics are performed locally. +
 

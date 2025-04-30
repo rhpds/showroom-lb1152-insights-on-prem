@@ -65,7 +65,7 @@ NOTE: you will see either 3 or 4 Recommendations listed.  This seems to vary dep
 
 [start=4]
 4. Click on `node-{guid}-1.example.com`. +
-5.* The overview shows you details about the host.  Near the bottom of the page (You will likely need to scroll down), one of the widgets shown is called `Total risks`. +
+5. The overview shows you details about the host.  Near the bottom of the page (You will likely need to scroll down), one of the widgets shown is called `Total risks`. +
 
 
 image::Sat_Insights_Connected_Widget.png[Sat_Insights_Connected_Widget.png,60%,60%]
@@ -83,8 +83,7 @@ image::Sat_Insights_Connected_InsightsTab.png[Sat_Insights_Connected_InsightsTab
 * You will see a recommendation for postgresql listed: +
 `The postgresql database performance decreases when the tuned best practices are not applied` +
 The Satellite view doesn’t provide much information - the name of the recommendation, the severity of the risk, and if the recommendation has a playbook available to resolve the issue.  +
-Not every recommendation or issue that Insights finds has a playbook, but most do.
-
+Not every recommendation or issue that Insights finds has a playbook, but most do. +
 If you want to see more details you either need to go to Insights on the Hybrid Cloud Console or view the associated knowledgebase article. +
 
 [start=7]
@@ -158,7 +157,6 @@ If not, open a new tab and go to the https://console.redhat.com/insights/advisor
 
 7. Take a look at the `Last seen` time.  Notice that has been updated and the system has recently checked in with Insights.  In the remediation playbook the very last step was to `run insights`.  +
 This had the system check back into Insights after making a fix and as a result if you look at the list of Recommendations, the postgresql issue that you resolved is no longer showing. +
-
 Another way to check this is by going to the system inventory. +
 8. On the left-hand navigation bar, click Inventory then Systems. +
 9. Look through the list of systems and locate yours: `node-{guid}-1.example.com` +

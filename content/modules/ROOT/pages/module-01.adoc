@@ -9,7 +9,7 @@ In this lab we have already provided for you a pre-configured Red Hat Satellite 
 NOTE: For this exercise, the RHEL host will be the primary focus, and you will be using an Insights user account that has access to all of the services of Insights, however to provide the best experience for all users there are some actions you will not be able to do in the lab.  
 
 * Explore the capabilities of Insights inside of the Satellite user interface. +  
-This is a more limited view with access to only the Advisor service of Insights, but it has the benefit of being in a place where you are already working - The Satellite UI.  
+This is a more limited view with access to only the advisor service of Insights, but it has the benefit of being in a place where you are already working - The Satellite UI.  
 
 * Log into the Satellite server and install the newest tech preview feature - `Insights on premise`.  +
 Customers have been specifically asking for Insights on premise for several years, but to really draw a distinction between what Red Hat manages on the Hybrid Cloud Console and what you would manage in your own environment, throughout the lab guide you will see this new feature referred to as `Insights advisor in Satellite`.
@@ -23,7 +23,7 @@ There is a podman container that we will need to install on the Satellite which 
 ### Insights connectivity options.
 With the introduction of Insights advisor in Satellite capabilities in Satellite, there are now three high level modes for Insights.
 
-1. *Not using Insights.*  In this state you are not using any of the services of capabilities of Insights.  Data may be still being sent to Red Hat for telemetry, subscription manager, or other similar capabilities outside of Insights.
+1. *Not using Insights.*  In this state you are not using any of the services or capabilities of Insights.  Data may be sent to Red Hat for telemetry, subscription manager, or other similar capabilities outside of Insights.
 2. *Connected to Insights.*  Your systems are connected to Insights and you are sending a small amount of metadata to Red Hat that is analyzed and information is returned to you via the Hybrid Cloud Console or via third party integrations. This could take one of several forms:
 ** Host directly connected to Insights.  In this case a host is directly connected to Insights over port 443.
 ** Host connected via Red Hat Satellite.  In this case the host is connected to a Satellite and the Satellite is acting as a proxy to send the data to Insights.  Data flows from the host, to a capsule server, to the Satellite server, and to Insights.

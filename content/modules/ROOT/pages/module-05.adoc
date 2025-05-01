@@ -69,7 +69,7 @@ sudo insights-client
 
 Running the insights-client command will run the advisor analysis locally on the Satellite. 
 
-image::self-managed_insights-client_output.png[self-managed_insights-client_output.png,80%,80%]
+image::self-managed_insights-client_output.png[link=self, window=blank, width=100%]
 
 NOTE: Due to the tech preview status of this feature, the insights-client will still report some information as if it is connected to console.redhat.com. 
 

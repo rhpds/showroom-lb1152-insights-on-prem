@@ -61,7 +61,7 @@ Let’s look at a host specific view. +
 
 image::Sat_Insights_Connected_AllHosts.png[link=self, window=blank, width=100%]
 
-NOTE: you will see either 3 or 4 Recommendations listed.  This seems to vary depending on the lab deployment.  If you see a different number than shown in the image above this is fine and will not impact your lab experience.
+NOTE: You will see either 3 or 4 Recommendations listed.  This seems to vary depending on the lab deployment.  If you see a different number than shown in the image above this is fine and will not impact your lab experience.
 
 [start=4]
 4. Click on `node-{guid}-1.example.com`. +

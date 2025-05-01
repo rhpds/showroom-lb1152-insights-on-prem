@@ -44,7 +44,7 @@ Insights advisor in Satellite does not send any data outside of the Satellite fo
 In the image below you see a representation of the lab environment with Insights advisor in Satellite enabled.  The Insights advisor capability is a podman container on the Satellite server. When the two RHEL hosts connected to the Satellite perform an analysis, that analysis is done on the Satellite server, in the container, without sending any data to Red Hat.
 
 
-image::Self-managed_Insights.png[Self-managed_Insights.png,100%,100%]
+image::Self-managed_Insights.png[link=self, window=blank, width=100%]
 
 
 === Data Collection and Security information for Insights at the Hybrid Cloud Console 

@@ -26,7 +26,7 @@ R3dh4t2025!
 [start=3]
 3. On the main page locate the `Red Hat Enterprise Linux` tile in the upper left and click https://console.redhat.com/insights/[Insights for RHEL^]. +
 
-image::HCC_HomePage_RHEL.png[HCC_HomePage_RHEL,80%,80%]
+image::HCC_HomePage_RHEL.png[link=self, window=blank, width=100%]
 
 [start=4]
 4. On the left hand navigation bar go to `Security → Vulnerability → CVEs`
@@ -35,7 +35,7 @@ NOTE: Depending on your screen resolution the left hand navigation bar may autom
 
 The summary bar at the top of the page helps you focus on the most impactful issues in your environment.  If you have a high number of CVEs in your environment, this summary bar highlights the biggest risks that you should likely focus on addressing first.  Clicking on any of the numbers in the summary bar will apply filters that will show you these CVEs.
 
-image::Vuln_SummaryBar.png[Vuln_SummaryBar,100%,100%]
+image::Vuln_SummaryBar.png[link=self, window=blank, width=100%]
 
 NOTE: The numbers you see may not match what is shown in the screenshot above.  That is expected.
 
@@ -49,7 +49,7 @@ Here is an explanation of the items in the summary bar: +
 
 The default view also applies a number of filters.
 
-image::Vuln_DefaultFilters.png[Vuln_DefaultFilters,100%,100%]
+image::Vuln_DefaultFilters.png[link=self, window=blank, width=100%]
 
 * The first filter chips show you only CVEs that affect `1 or more systems` in your infrastructure.  This could be a Conventional (RPM-DNF based) system or an Immutable (OSTree based) system.  
 * The second filter only shows you CVEs with an `Advisory Available`.  That means you are looking at vulnerabilities that you can fix.
@@ -67,7 +67,7 @@ From the vulnerability page the default filter is CVE (located to the right of t
 3. In the row with the CVE ID you will see basic information about the CVE including the number of systems that are impacted by the CVE. +
 4. Click on the CVE ID for https://console.redhat.com/insights/vulnerability/cves/CVE-2023-7104[CVE-2023-7104^] 
 
-image::Vuln_CVE20237104.png[Vuln_CVE20237104,100%,100%]
+image::Vuln_CVE20237104.png[link=self, window=blank, width=100%]
 
 NOTE: The next few steps will reference the number in the screenshot above - not the number you see in your environment. You will see a different number and that is expected!  
 
@@ -117,7 +117,7 @@ You can also add a justification note to indicate any details about the status t
 
 9. Locate the export button (just to the right of the `Plan remediation` button).  It looks like this:
 
-image::Insights_Export_Button.png[ExportButton,85%,85%] 
+image::Insights_Export_Button.png[link=self, window=blank, width=100%]
 
 [start=10]
 10. Click the export button which will give you the option to export this list into CSV or JSON formats. +
@@ -175,7 +175,7 @@ Insights can show you this information as well. +
 4. Take note of the number of CVEs listed for the host.  These are shown in the upper right side of the list of CVEs. +
 In the image below there are 1241 CVEs with errata on the host in the image - the number you see may differ. +
 
-image::Vuln-CVE_w_errata.png[Vuln-CVE_w_errata,85%,85%] 
+image::Vuln-CVE_w_errata.png[link=self, window=blank, width=100%]
 
 [start=5]
 5. Now - click the `x` to the right of the `Advisory: Available` filter chip to remove it.   +
@@ -183,7 +183,7 @@ This will show you all CVEs in the database that affect this system - with and w
 6. Look again at the number of CVEs - the number is significantly larger, probably more than double! +
 In the image below there are 3440 CVEs when looking at the full picture - these are CVEs with and without errata.  Having this information gives us a full view of all of the issues that affect your RHEL hosts - the ones you can fix as well as the ones you can’t.
 
-image::Vuln-CVE_wo_errata.png[Vuln-CVE_wo_errata,85%,85%] 
+image::Vuln-CVE_wo_errata.png[link=self, window=blank, width=100%]
 
 The advisory column will tell you if the CVE has an advisory available to resolve the CVE.  
 [start=7]
@@ -213,7 +213,7 @@ Let’s say you have been asked to provide your security team with a list of all
 1. Under `Report by CVEs` click `Create report`. +
 This opens a window where you can identify what you want the report to contain. +
 
-image::Vuln_CustomReport.png[Vuln_CustomerReport,100%,100%]
+image::Vuln_CustomReport.png[link=self, window=blank, width=100%]
 
 [start=2]
 2. Complete the report wizard +

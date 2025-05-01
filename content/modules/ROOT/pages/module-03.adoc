@@ -120,7 +120,7 @@ For each match you can set the match status. +
 * No action - risk accepted
 * Resolved - malware removed
 
-image::Malware_MatchStatus_Options.png[Malware_MatchStatus_Options.png,100%,100%]
+image::Malware_MatchStatus_Options.png[link=self, window=blank, width=100%]
 
 If you scroll down the page you can download the details as a text file or copy it to your clipboard for the purposes of sending these details to your security team.  
 

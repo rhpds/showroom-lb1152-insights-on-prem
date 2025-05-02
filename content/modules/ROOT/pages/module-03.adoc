@@ -30,6 +30,7 @@ NOTE: If you run the command above it won't hurt anything - you will just receiv
 
 [start=2]
 2. Initiate yara by running the malware detection collector command: +
+
 [source,sh,role=execute]
 ----
 sudo insights-client --collector malware-detection
@@ -57,9 +58,10 @@ On your host we will use the curl command to copy the files from the eicar webpa
 
 [start=2]
 2. Run the following command: +
+
 [source,sh,role=execute]
 ----
-curl -O "https://secure.eicar.org/{eicar.com,eicar.com.txt,eicar_com.zip,eicar_com2.zip}"
+curl -O "https://secure.eicar.org/{eicar.com,eicar.com.txt,eicar_com.zip,eicarcom2.zip}"
 ----
 
 [start=3]

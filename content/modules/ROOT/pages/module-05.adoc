@@ -67,18 +67,17 @@ ssh lab-user@node-{guid}-2.example.com
 sudo insights-client
 ----
 
-Running the insights-client command will run the advisor analysis locally on the Satellite. 
+Running the insights-client command will collect and upload data to Satellite which will run the advisor analysis locally.'
 
 image::self-managed_insights-client_output.png[link=self, window=blank, width=100%]
 
-NOTE: Due to the tech preview status of this feature, the insights-client will still report some information as if it is connected to console.redhat.com. 
+NOTE: Due to the tech preview status of this feature, the insights-client will still include output information as if it is connected to console.redhat.com. No information is actually sent to the Hybrid Cloud Console.
 
 === Viewing the results
 Now that you have performed the analysis on the host, you can see the results in the Satellite user environment.  +
 To validate that no data was sent, let’s first go to the Hybrid Cloud Console and check the timestamp of the last data packet transmission.
 
-1. Switch to the Hybrid Cloud Console. + 
-Hopefully you still have the previous Hybrid Cloud Console tab open.  +
+1. Switch to the https://console.redhat.com[Hybrid Cloud Console^]. + 
 2. On the left-hand navigation bar, click Inventory then Systems. 
 3. Look through the list of systems and locate yours: `node-{guid}-2.example.com` +
 To the right of the name there is a `Last seen` time.  The last seen time should be from much earlier in the day, when the environment was first instantiated. + 

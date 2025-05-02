@@ -42,9 +42,9 @@ NOTE: The numbers you see may not match what is shown in the screenshot above.  
 Here is an explanation of the items in the summary bar: +
 
 * `CVEs with known exploits` indicate unpatched CVEs with known public exploits.  CVEs with this label should be addressed with high priority due to the risks posed by them. "Known exploit" does not mean we have taken steps to determine if the CVE has been exploited in your environment.
-* `CVEs with Security rules` indicate CVEs that have gone through the "Product Security Incident Response Plan" that takes a deeper look at impactful CVEs and adds deep threat intelligence on how the vulnerability impacts Red Hat systems.  This could include things like executive summaries, alternative mitigation strategies, and related CVEs that need to be considered.  Insights takes this information and makes it more succinct through the use of what we call security rules.  
-* `CVEs with critical severity` are CVEs with critical severity.  Critical ratings are given to flaws that could be easily exploited by a remote unauthenticated attacker and lead to system compromise (arbitrary code execution) without requiring user interaction. These are the types of vulnerabilities that can be exploited by worms. 
-* `CVEs with Important severity` are CVEs with important severity.  Important ratings are given to flaws that can easily compromise the confidentiality, integrity, or availability of resources. These are the types of vulnerabilities that allow local users to gain privileges, allow unauthenticated remote users to view resources that should otherwise be protected by authentication, allow authenticated remote users to execute arbitrary code, or allow remote users to cause a denial of service.
+* `CVEs with security rules` indicate CVEs that have gone through the "Product Security Incident Response Plan" that takes a deeper look at impactful CVEs and adds deep threat intelligence on how the vulnerability impacts Red Hat systems.  This could include things like executive summaries, alternative mitigation strategies, and related CVEs that need to be considered.  Insights takes this information and makes it more succinct through the use of what we call security rules.  
+* `CVEs with critical severity`.  Critical ratings are given to flaws that could be easily exploited by a remote unauthenticated attacker and lead to system compromise (arbitrary code execution) without requiring user interaction. These are the types of vulnerabilities that can be exploited by worms. 
+* `CVEs with important severity`.  Important ratings are given to flaws that can easily compromise the confidentiality, integrity, or availability of resources. These are the types of vulnerabilities that allow local users to gain privileges, allow unauthenticated remote users to view resources that should otherwise be protected by authentication, allow authenticated remote users to execute arbitrary code, or allow remote users to cause a denial of service.
 
 
 The default view also applies a number of filters.
@@ -72,7 +72,7 @@ image::Vuln_CVE20237104.png[link=self, window=blank, width=100%]
 NOTE: The next few steps will reference the number in the screenshot above - not the number you see in your environment. You will see a different number and that is expected!  
 
 In the image above you will see that this CVE impacts 37 total systems in the environment.  You will have a different number. + 
-Some of these are conventional systems.  If you were to click the ‘Immutable (OSTree)` tab there would be an additional systems. +
+Some of these are conventional systems.  If you were to click the ‘Immutable (OSTree)` tab there would be additional systems. +
 
 In the upper right of the page you will see a `Business risk` and a `Status`.  In the screenshot above they are shown as `Not defined` and `Not reviewed` respectively.  
 
@@ -129,12 +129,14 @@ In other words, getting a list of systems impacted by a vulnerability takes just
 
 To fix this issue you will need to create a remediation plan for this CVE.   +
 
-1. Click the checkbox at the top of the page (to the left of the Name filter in the screenshot above) then choose `Select all`.  
+1. Find and locate your system, then click the checkbox to the left of your system's name. +
+Reminder: your system name is: `node-{guid}-1.example.com`
 
 NOTE: The following steps are for Conventional (RPM-DNF) based systems.  Immutable (OSTree) systems are image based and you update the image vs making system changes.
 
 [start=2]
-2. Once you have hosts selected, click the `Plan remediation` button which will launch a wizard that will create a playbook for you. + You can add this fix to an existing playbook or you can create a new playbook.  Insights defaults to Create new playbook.   
+2. Once you have hosts selected, click the `Plan remediation` button which will launch a wizard that will create a playbook for you. + 
+You can add this fix to an existing playbook or you can create a new playbook.  Insights defaults to Create new playbook.   
 3. Give your playbook a name like: `7104 fix {guid}`
 
 Reminder: your system name is: `node-{guid}-1.example.com`
@@ -142,17 +144,24 @@ Reminder: your system name is: `node-{guid}-1.example.com`
 NOTE: Please add some sort of unique identifier to the playbook name.  Above we suggest using your environment’s unique ID even if you are selecting multiple hosts.  
 
 [start=4]
-4. Click `Next`. + At this time you are fixing this issue on all affected systems.  
-5. Click `Next`. + Review the summary.  Notice that a reboot is required to resolve this issue. + You do have the option to disable the reboot in the playbook by clicking the `Turn off autoreboot` text in blue. +
-6. Click `Submit`. +At the bottom of the wizard there is a link that will allow you to `Open playbook 7104 fix {guid}`.   +
-7. Click the link.  This will redirect you to the Remediations section of the Hybrid Cloud Console. + For context, in the left hand navigation bar you have just been redirected to `Automation Toolkit → Remediations`. +
+4. Click `Next`. + 
+At this time you are fixing this issue on all affected systems.  
+5. Click `Next`. + 
+Review the summary.  Notice that a reboot is required to resolve this issue. + 
+You do have the option to disable the reboot in the playbook by clicking the `Turn off autoreboot` text with a blue toggle. +
+6. Click `Submit`. +
+At the bottom of the wizard there is a link that will allow you to `Open playbook 7104 fix {guid}`.   +
+7. Click the link.  This will redirect you to the Remediations section of the Hybrid Cloud Console. + 
+For context, in the left hand navigation bar you have just been redirected to `Automation Toolkit → Remediations`. +
 
 From the remediations page, while looking at your remediation plan you created, you have a couple of options in the upper right. +
 The `Execute playbook` button is unavailable.  Your user in this lab does not have permission to execute remediation.  No user gets this permission by default - it has to be explicitly provided, With so many people taking this lab at the same time we have opted to not enable this feature. +
 
 We do have an interactive demo that can show you how this works, end to end that will be at the end of this module. +
 [start=8]
-8. Click the Download playbook button. + The playbook is downloaded via your browser.  You will need to extract the file then open the .yaml. + This playbook can help simplify the resolution of this issue - you could easily adapt this to run via ansible automation or sync this playbook with Ansible Automation Platform (AAP) - this is covered in the AAP documentation but we are not covering it in this lab.
+8. Click the Download playbook button. + 
+The playbook is downloaded via your browser.  You will need to extract the file then open the .yaml. + 
+This playbook can help simplify the resolution of this issue - you could easily adapt this to run via ansible automation or sync this playbook with Ansible Automation Platform (AAP) - this is covered in the AAP documentation but we are not covering it in this lab.
 
 9. Close the playbook and return to the Hybrid Cloud Console browser window.
 

@@ -32,7 +32,7 @@ Password:
 ----
 
 [start=3]
-3. Once logged in, on the left hand navigation bar expand the Insights menu. +
+3. Once logged in, on the left hand navigation bar expand the `Insights` menu. +
 You will see `Inventory Upload` and `Recommendations`.  
 4. Select `Recommendations`.
 
@@ -55,9 +55,9 @@ WARNING: While you see results from both hosts, only work on `node-{guid}-1.exam
 
 Let’s look at a host specific view. +
 
-1. In the left hand navigation menu of Red Hat Satellite, click Hosts then All Hosts +
+1. In the left hand navigation menu of Red Hat Satellite, click Hosts -> All Hosts +
 2. Look at the recommendations column on `node-{guid}-1.example.com`. +
-3. You should see recommendations listed in the table. +
+3. You should see a recommendations count listed in the table. +
 
 image::Sat_Insights_Connected_AllHosts.png[link=self, window=blank, width=100%]
 
@@ -126,8 +126,8 @@ Now we are going to fix the PostgreSQL Server recommendation inside of the Satel
 If not, repeat the earlier steps of going to Hosts → All hosts then selecting `node-{guid}-1.example.com` and then the Insights tab. +
 
 2. To start the process of fixing an issue, select the checkbox to the left of `The postgresql database performance decreases when the tuned best practices are not applied`. +
-Notice that the Remediate button at the top turns blue once a Recommendation is selected. +
-3. Click the Remediate button. 
+Notice that the `Remediate` button at the top turns blue once a Recommendation is selected. +
+3. Click the `Remediate` button. 
 
 image::Sat_Insights_Connected_Remediate1.png[link=self, window=blank, width=100%]
 
@@ -135,7 +135,7 @@ This will open a window that will summarize the recommendation, the resolution, 
 In this case the resolution is to install the tuned package and set the proper tuned profile which does not require a reboot.
 
 [start=4]
-4. Click Remediate.
+4. Click `Remediate`.
 
 image::Sat_Insights_Connected_Remediate2.png[link=self, window=blank, width=100%]
 
@@ -160,16 +160,16 @@ If you closed this, open a new tab and go to the https://console.redhat.com/insi
 7. Take a look at the `Last seen` time.  Notice that has been updated and the system has recently checked in with Insights.  In the remediation playbook the very last step was to `run insights`.  +
 This had the system check back into Insights after making a fix and as a result if you look at the list of Recommendations, the postgresql issue that you resolved is no longer showing. +
 Another way to check this is by going to the system inventory. +
-8. On the left-hand navigation bar, click Inventory then Systems. +
+8. On the left-hand navigation bar, click Inventory -> Systems. +
 9. Look through the list of systems and locate yours: `node-{guid}-1.example.com` +
 To the right of the name there is a `Last seen` time that should be within the last few minutes. +
 10. Return to the Satellite UI.
-11. On the Satellite left hand navigation bar, select Insights then  Recommendations. +
+11. On the Satellite left hand navigation bar, select Insights -> Recommendations. +
 Look at the number of risks listed - it probably has not changed.  The remediation that you just completed is not synchronized from Insights, so you need to manually do this by clicking the three dots and selecting `Sync recommendations`.  
 
 NOTE: Synchronizing data with Insights is a scheduled job on the Satellite server that by default only happens once daily. 
 
-After the recommendations have been synchronized the postgresql issue that you fixed on the first host is no longer listed.  You will still see the issue for the other host which we will resolve in the next module.
+After the recommendations have been synchronized the `postgresql database performance decreases when the tuned best practices are not applied` recommendation that you fixed on the first host is no longer listed.  You will still see the issue for the other host which we will resolve in the next module.
 
 You have identified a situation that is outside of the best practices for your workload, you have resolved the issue, and Insights no longer reports it as being an issue for `node-{guid}-1.example.com`. 
 

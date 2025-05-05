@@ -117,7 +117,7 @@ You can also add a justification note to indicate any details about the status t
 
 9. Locate the export button (just to the right of the `Plan remediation` button).  It looks like this:
 
-image::Insights_Export_Button.png[link=self, window=blank, width=100%]
+image::Insights_Export_Botton_and_Bar.png[link=self, window=blank, width=100%]
 
 [start=10]
 10. Click the export button which will give you the option to export this list into CSV or JSON formats. +
@@ -172,7 +172,7 @@ Let’s return to the vulnerability page and look at your specific host with the
 NOTE: Depending on your screen resolution the left hand navigation bar may automatically minimize.  You may need to click the hamburger menu (3 lines stacked on top of each other) in the upper left corner in order to see the menu bar.
 
 1. On the left hand navigation bar go to `Security → Vulnerability → Systems` +
-2. Locate your host and select it. +
+2. Locate your host and click on the hostname. +
 Reminder: your system name is: `node-{guid}-1.example.com` +
 This view will show you all of the vulnerabilities present on this specific host.    +
 3. Notice that the default filter applied is `Advisory: Available`.   +
@@ -196,9 +196,11 @@ image::Vuln-CVE_wo_errata.png[link=self, window=blank, width=100%]
 
 The advisory column will tell you if the CVE has an advisory available to resolve the CVE.  
 [start=7]
-7. Click the export button (just to the right of the Plan remediation button) you have the option to export this list into CSV or JSON formats.
-
+7. Click the export button (just to the right of the Plan remediation button) you have the option to export this list into CSV or JSON formats. +
 Again - you can get a list of all of the CVEs that impact a specific system very quickly.
+
+image::Insights_Export_Button.png[link=self, window=blank, width=100%]
+
 
 == Reporting on CVEs
 

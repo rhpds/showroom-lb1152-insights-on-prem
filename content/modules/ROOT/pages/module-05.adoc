@@ -77,11 +77,15 @@ NOTE: Due to the tech preview status of this feature, the insights-client will s
 Now that you have performed the analysis on the host, you can see the results in the Satellite user environment.  +
 To validate that no data was sent, let’s first go to the Hybrid Cloud Console and check the timestamp of the last data packet transmission.
 
-1. Switch to the https://console.redhat.com[Hybrid Cloud Console^]. + 
-2. On the left-hand navigation bar, click Inventory then Systems. 
+1. Switch to the https://console.redhat.com/insights/dashboard[Hybrid Cloud Console^]. + 
+2. On the left-hand navigation bar, click Inventory -> Systems. 
 3. Look through the list of systems and locate yours: `node-{guid}-2.example.com` +
 To the right of the name there is a `Last seen` time.  The last seen time should be from much earlier in the day, when the environment was first instantiated. + 
 The timestamp did not update when you ran the insights-client command since the system is no longer connected to console.redhat.com. +
+
+NOTE: It may be helpful to use the search capability to quickly find your system.  Enter your system name in the `Filter by name` box to quickly search the inventory.
+
+[start=4]
 4. Return to the Satellite UI in your browser. +
 If you’ve been following along you should still be in the Insights → Recommendations menu. +
 Previously The Insights menu contained both Inventory Upload and Recommendations sub menus. This might still be visible in your browser. +
@@ -94,18 +98,19 @@ While you are here, go ahead and fix this PostgreSQL issue.
 
 1. While in the Recommendations section, locate the postgresql issue that remains from the other host.  
 2. Select the checkbox to the left of the issue. +
-Notice that the Remediate button at the top turns blue once a Recommendation is selected. +
-3. Click the Remediate button. +
+Notice that the `Remediate` button at the top turns blue once a Recommendation is selected. +
+3. Click the `Remediate` button. +
 This will open a window that will summarize the recommendation, the resolution, and will let you know if a reboot of the system is needed. +
 In this case the resolution is to install the tuned package and set the proper tuned profile which does not require a reboot. +
 4. Click Remediate. +
 This will redirect you to Monitor → Jobs where you can see the job running that you just initiated. This job may take 2-5 minutes to complete. Wait for the results to show success. +
-Insights will perform its daily analysis of a system just like it does in the hosted model. +
-If you wish to perform a manual analysis, you would need to manually run `insights-client` on the host. +
 Let’s return to the list of Insights recommendations. 
 
+NOTE: Insights will perform its daily analysis of a system just like it does in the hosted model. +
+If you wish to perform a manual analysis, you would need to manually run `insights-client` on the host. +
+
 [start=5]
-5. In the left hand navigation bar, click Insights then Recommendations. +
+5. In the left hand navigation bar, click Insights -> Recommendations. +
 You should notice that the `The postgresql database performance decreases when the tuned best practices are not applied` recommendation no longer appears.  +
 No synchronization is required since this was processed locally.
 

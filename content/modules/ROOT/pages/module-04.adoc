@@ -116,7 +116,7 @@ You will return to Red Hat Satellite to perform a remediation of this issue.
 [start=10]
 10. Before leaving, take note of the `Last seen` time and date of this system right above the word `Recommendations`, near the host name of the system.   This was the last time the host checked in with Insights.  By default this is a systemd process that happens once daily.
 
-Do not close the Hybrid Cloud Console tab as you will return to it shortly.
+Close the Hybrid Cloud Console tab.
 
 == Fixing an issue that Insights finds
 
@@ -154,9 +154,11 @@ image::Sat_Insights_Connected_JobDetails.png[link=self, window=blank, width=100%
 This job made sure the right repo was enabled, it installed the necessary package, it enabled the tuned profile, then it re-ran insights to detect that the issue was resolved.
 
 [start=6]
-6. Return to the Hybrid Cloud Console tab.  +
-If you closed this, open a new tab and go to the https://console.redhat.com/insights/advisor/systems[Systems page in the advisor service^] and select `node-{guid}-1.example.com`. +
+6. Open a new tab and go to the https://console.redhat.com/insights/advisor/systems[Systems page in the advisor service^] and select `node-{guid}-1.example.com`. +
 
+NOTE: If you have the Hybrid Cloud Console still open from earlier, you should refresh the page just to be sure you are seeing the latest information.
+
+[start=7]
 7. Take a look at the `Last seen` time.  Notice that has been updated and the system has recently checked in with Insights.  In the remediation playbook the very last step was to `run insights`.  +
 This had the system check back into Insights after making a fix and as a result if you look at the list of Recommendations, the postgresql issue that you resolved is no longer showing. +
 Another way to check this is by going to the system inventory. +

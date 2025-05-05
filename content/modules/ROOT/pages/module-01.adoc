@@ -12,7 +12,7 @@ NOTE: For this exercise, the RHEL host will be the primary focus, and you will b
 This is a more limited view with access to only the advisor service of Insights, but it has the benefit of being in a place where you are already working - The Satellite UI.  
 
 * Log into the Satellite server and install the newest tech preview feature - `Insights on premise`.  +
-Customers have been specifically asking for Insights on premise for several years, but to really draw a distinction between what Red Hat manages on the Hybrid Cloud Console and what you would manage in your own environment, throughout the lab guide you will see this new feature referred to as `Insights advisor in Satellite`.
+The Insights product team has been specifically asked about Insights on premise for several years, but to really draw a distinction between what Red Hat manages on the Hybrid Cloud Console and what you would manage in your own environment, throughout the lab guide you will see this new feature referred to as `Insights advisor in Satellite`.
 +
 There is a podman container that we will need to install on the Satellite which in turn will handle the Insights analysis.   Once this is configured, your Satellite will no longer be sending any data to the Hybrid Cloud Console - the local Satellite handles the analysis without sending any data.  For this technical preview, only the Insights advisor service is included, which provides configuration analysis for your RHEL hosts including best practices, identifying misconfigurations, workload optimization, and performance recommendations from Red Hat’s years of expertise supporting our customers.   
 
@@ -39,7 +39,7 @@ NOTE: For your convenience, the image above and all images in this lab can be op
 === Insights advisor in Satellite - a new technical preview feature!
 This lab introduces a tech preview capability, Insights advisor in Satellite.  
 Insights will use Red Hat Satellite to process and deliver the Insights advisor in Satellite capability.
-While in tech preview, only the Adviser capability of Insights will be available through the Satellite user interface. i
+While in tech preview, only the Adviser capability of Insights will be available through the Satellite user interface. +
 Other services and capabilities may be added in future releases, but feature parity with the Insights experience at the https://console.redhat.com/[Red Hat Hybrid Cloud Console^] should not be expected.
 Insights advisor in Satellite does not send any data outside of the Satellite for the processing of Insights data.  
 
@@ -50,7 +50,7 @@ image::Self-managed_Insights.png[link=self, window=blank, width=100%]
 
 
 === Data Collection and Security information for Insights at the Hybrid Cloud Console 
-One of the most common questions about Insights has to do with the data collected, so the Insights team wanted to include a brief discussion on data collection and security information +
+One of the most common questions about Insights has to do with the data collected, so the Insights team wanted to include a brief discussion on data collection and security information. +
 
 Insights on the https://console.redhat.com/[Red Hat Hybrid Cloud Console^] is considered a connected experience and requires that a small amount of data (around 500 kb on average) is sent to Red Hat for analysis.  If you want to know more about what is collected, please ask one of our instructors or visit the https://www.redhat.com/en/technologies/management/insights/data-application-security[Red Hat Insights data and application security page^] (specifically the article on https://access.redhat.com/articles/1598863[System Information Collected by Red Hat Insights^]) for more details.
 

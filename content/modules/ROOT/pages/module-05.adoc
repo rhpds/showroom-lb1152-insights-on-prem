@@ -118,4 +118,19 @@ No synchronization is required since this was processed locally.
 In Red Hat Insights, at the Hybrid Cloud Console, new recommendations are added weekly or more frequently if needed.
 With Red Hat Insights advisor in Satellite, new recommendations are delivered with Satellite updates.  When you upgrade your Satellite server to the latest release you will get the latest recommendations and any updates to the advisor engine itself.
 
+=== Changing back to the connected experience
+
+Note:  This section is informational only.  These are not steps for you to take in the lab, but this is a commonly asked question that we wanted to include.
+
+If you decide that you want to switch back to the connected experience, this is very simple to do.
+Log into the Satellite terminal and run the command: 
+`satellite-installer --foreman-plugin-rh-cloud-enable-iop-advisor-engine false`
+
+This will disable the Insights advisor in Satellite functionality and enable the Satellite to send data to Red Hat and the Hybrid Cloud Console. 
+To have your systems report to Insights on the Hybrid Cloud Console, on each host you will need to register those systems by running the command: 
+`insights-client --register`
+
+Satellite also contains a built-in playbook for insights-client if you have imported it. +
+This is the `RedHatInsights.insights-client` ansible role that you can run on the hosts.
+
 This module is complete.

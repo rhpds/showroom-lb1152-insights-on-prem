@@ -14,13 +14,13 @@ There are thousands of CVEs - Insights helps you to focus on CVE information tha
 User:
 [source,sh,role=execute]
 ----
-lab-434C
+rhdp-insights-demo
 ----
 
 Password:
 [source,sh,role=execute]
 ----
-R3dh4t2025!
+rhdp*insights2025!
 ----
 
 [start=3]

@@ -50,7 +50,7 @@ exit
 While in self-hosted mode, you can manually perform a system analysis by running the insights-client command on the host. +  
 This should already be scheduled to be done automatically, but for the purposes of the lab we will go ahead and log into the second RHEL host and manually run this command.
 
-WARNING: Skipping this step will cause a failure in Tech Preview mode.
+WARNING: Skipping this step will cause a failure in a later exercise.
 
 1. From your showroom environment, ssh into `node-{guid}-2.example.com`:
 
@@ -67,7 +67,7 @@ ssh lab-user@node-{guid}-2.example.com
 sudo insights-client
 ----
 
-Running the insights-client command will collect and upload data to Satellite which will run the advisor analysis locally.'
+Running the insights-client command will collect and upload data to Satellite which will run the advisor analysis locally.
 
 image::self-managed_insights-client_output.png[link=self, window=blank, width=100%]
 
@@ -104,13 +104,14 @@ This will open a window that will summarize the recommendation, the resolution, 
 In this case the resolution is to install the tuned package and set the proper tuned profile which does not require a reboot. +
 4. Click Remediate. +
 This will redirect you to Monitor → Jobs where you can see the job running that you just initiated. This job may take 2-5 minutes to complete. Wait for the results to show success. +
-Let’s return to the list of Insights recommendations. 
+
 
 NOTE: Insights will perform its daily analysis of a system just like it does in the hosted model. +
 If you wish to perform a manual analysis, you would need to manually run `insights-client` on the host. +
 
 [start=5]
-5. In the left hand navigation bar, click Insights -> Recommendations. +
+5. Let’s return to the list of Insights recommendations. + 
+In the left hand navigation bar, click Insights -> Recommendations. +
 You should notice that the `The postgresql database performance decreases when the tuned best practices are not applied` recommendation no longer appears.  +
 No synchronization is required since this was processed locally.
 
@@ -120,7 +121,7 @@ With Red Hat Insights advisor in Satellite, new recommendations are delivered wi
 
 === Changing back to the connected experience
 
-Note:  This section is informational only.  These are not steps for you to take in the lab, but this is a commonly asked question that we wanted to include.
+NOTE: This section is informational only.  These are not steps for you to take in the lab, but this is a commonly asked question that we wanted to include.
 
 If you decide that you want to switch back to the connected experience, this is very simple to do.
 Log into the Satellite terminal and run the command: 

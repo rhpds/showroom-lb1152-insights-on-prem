@@ -154,19 +154,15 @@ image::Sat_Insights_Connected_JobDetails.png[link=self, window=blank, width=100%
 This job made sure the right repo was enabled, it installed the necessary package, it enabled the tuned profile, then it re-ran insights to detect that the issue was resolved.
 
 [start=6]
-6. Open a new tab and go to the https://console.redhat.com/insights/advisor/systems[Systems page in the advisor service^] and select `node-{guid}-1.example.com`. +
+6. Open a new tab and go to the https://console.redhat.com/insights/advisor/systems[Systems page in the advisor service^].  Locate `node-{guid}-1.example.com` and look at the `Last seen` column and notice that the time of the last update was very recent.  Click the host name to see more details. +
 
 NOTE: If you have the Hybrid Cloud Console still open from earlier, you should refresh the page just to be sure you are seeing the latest information.
 
 [start=7]
-7. Take a look at the `Last seen` time.  Notice that has been updated and the system has recently checked in with Insights.  In the remediation playbook the very last step was to `run insights`.  +
+7. Again, take a look at the `Last seen` time.  Notice that has been updated and the system has recently checked in with Insights.  In the remediation playbook the very last step was to `run insights`.  +
 This had the system check back into Insights after making a fix and as a result if you look at the list of Recommendations, the postgresql issue that you resolved is no longer showing. +
-Another way to check this is by going to the system inventory. +
-8. On the left-hand navigation bar, click Inventory -> Systems. +
-9. Look through the list of systems and locate yours: `node-{guid}-1.example.com` +
-To the right of the name there is a `Last seen` time that should be within the last few minutes. +
-10. Return to the Satellite UI.
-11. On the Satellite left hand navigation bar, select Insights -> Recommendations. +
+8. Return to the Satellite UI.
+9. On the Satellite left hand navigation bar, select Insights -> Recommendations. +
 Look at the number of risks listed - it probably has not changed.  The remediation that you just completed is not synchronized from Insights, so you need to manually do this by clicking the three dots and selecting `Sync recommendations`.  
 
 NOTE: Synchronizing data with Insights is a scheduled job on the Satellite server that by default only happens once daily. 

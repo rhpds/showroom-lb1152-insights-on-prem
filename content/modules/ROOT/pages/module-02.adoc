@@ -155,11 +155,11 @@ At the bottom of the wizard there is a link that will allow you to `Open playboo
 For context, in the left hand navigation bar you have just been redirected to `Automation Toolkit → Remediations`. +
 
 From the remediations page, while looking at your remediation plan you created, you have a couple of options in the upper right. +
-The `Execute playbook` button is unavailable.  Your user in this lab does not have permission to execute remediation.  No user gets this permission by default - it has to be explicitly provided, With so many people taking this lab at the same time we have opted to not enable this feature. +
+The `Execute` button is unavailable.  Your user in this lab does not have permission to execute remediation.  No user gets this permission by default - it has to be explicitly provided, With so many people taking this lab at the same time we have opted to not enable this feature. +
 
-We do have an interactive demo that can show you how this works, end to end that will be at the end of this module. +
+We do have an interactive demo that can show you how this works, end to end that is at the end of this module. +
 [start=8]
-8. Click the Download playbook button. + 
+8. Click the Download button. + 
 The playbook is downloaded via your browser.  You will need to extract the file then open the .yaml. + 
 This playbook can help simplify the resolution of this issue - you could easily adapt this to run via ansible automation or sync this playbook with Ansible Automation Platform (AAP) - this is covered in the AAP documentation but we are not covering it in this lab.
 
@@ -197,18 +197,19 @@ image::Vuln-CVE_wo_errata.png[link=self, window=blank, width=100%]
 The advisory column will tell you if the CVE has an advisory available to resolve the CVE.  
 [start=7]
 7. Click the export button (just to the right of the Plan remediation button) you have the option to export this list into CSV or JSON formats. +
-Again - you can get a list of all of the CVEs that impact a specific system very quickly.
 
 image::Insights_Export_Button.png[link=self, window=blank, width=100%]
 
+Again - you can get a list of all of the CVEs that impact a specific system very quickly.
 
 == Reporting on CVEs
 
 
 The vulnerability service has some built in reporting capability - you will finish up this module by generating some reports.
 
+=== Executive Report
 1. On the left hand navigation bar go to `Security → Vulnerability → Reports` +
-There are two types of reports - an executive report and a customizable CVE report. +
+There are three types of reports - an executive report, a customizable CVE report, and a report by operating system versions. +
 2. Start with the executive report - click `Download PDF`. +
 The PDF file will be downloaded via your browser.   +
 3. Locate and open the report. +
@@ -217,6 +218,7 @@ The report then breaks down the CVEs by CVSS (Common Vulnerability Scoring Syste
 This is a nice pre canned report that you can send to your management or security team.  +
 4. Close the report and return to the reports page of the Hybrid Cloud Console. +
 
+=== Report by CVEs
 
 The information in the executive report may not exactly meet your needs, which is where the customizable report comes in.   +
 Let’s say you have been asked to provide your security team with a list of all vulnerabilities with a CVSS score from 6-10 that have been released in the last 90 days.
@@ -237,6 +239,28 @@ The PDF file will be downloaded via your browser.
 3. Locate and open the report. +
 This report will show you the information that you selected - in this case all CVEs with a CVSS base score between 6.0 and 10 within the last 90 days. +
 4. When finished reviewing, close the report and return to the Hybrid Cloud Console.
+
+=== Report by operating system versions
+
+This report will provide you a breakdown of vulnerabilities affecting the minor operating system versions of your RHEL systems.  
+
+1. Under `Report by operating system versions` click `Create report`. +
+This opens a window where you can identify what you want the report to contain. +
+
+[start=2]
+2. Complete the report wizard +
+* If desired you can change the `Report title`.
+* Select `RHEL 9.5` (The Satellite servers are running on thie version), `RHEL 9.1` (Your RHEL nodes are running on this version), and `RHEL 9.0` (you don't have any systems running this version of RHEL).
+* Notice that you can filter the CVE severity - Critical, Important, Moderate, and/or Low.  Leave this as the default of All.
+* Notice that you can filter the `Advisory:Available` option to `Not Available` or All (Select both options).  This would allow you to report on CVEs without errata.  Leave this as the default of All. 
+* If desired, add user notes about the report. 
+* You can export to PDF of CSV.  Click `Export PDF`.
+* The report will take several seconds to generate.  Once done, click `Save`.
+3. Locate and open the report.
+4. Notice that the report will show you the CVEs reported for the specific minor versions of RHEL that you selected. + 
+If you scroll to the second page of the report you can see a graph of the severity breakdown. +
+Unsurprisingly, newer versions of RHEL have less CVEs. +
+
 
 If you want to see this work end-to-end including the remediation, please check out this https://app.arcade.software/share/Rj6M0j5j34kdlq5KGiAz?embed&embed_mobile=tab&embed_desktop=inline&show_copy_link=true[interactive demo on Evaluating systems for Common Vulnerabilities and Exposures (CVEs)^]: +
 

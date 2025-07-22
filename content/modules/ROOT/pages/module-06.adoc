@@ -12,7 +12,7 @@ In module 4 (Advisor recommendations in Satellite while connected) you experienc
 In module 5 you installed the Insights advisor in Satellite technical preview.  This is a podman container that disables some of the connectivity menu items inside of the Satellite user interface, but otherwise looks very similar to what you experienced in module 4.   The Insights analysis happens right on the Satellite and no information leaves the Satellite.   
 
 Insights advisor in Satellite is available as a technical preview with the release of Satellite 6.17.
-Updates to Insights advisor in Satellite will be delivered in future Satellite releases - to get new advisor recommendations or newer Insights capabilities in future releases you will need to upgrade to the latest Satellite z-stream.  
+Updates to Insights advisor in Satellite will be delivered in future Satellite releases - to get new advisor recommendations or newer Insights capabilities in future releases you will need to upgrade to the latest container image.  
 
 We encourage you to use Insights advisor in Satellite and share your feedback with the Insights team by emailing us at insights@redhat.com.  
 

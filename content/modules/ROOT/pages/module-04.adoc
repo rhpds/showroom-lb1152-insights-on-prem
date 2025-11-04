@@ -33,8 +33,11 @@ Password:
 
 [start=3]
 3. Once logged in, on the left hand navigation bar expand the `Insights` menu. +
-(Note: Red Hat Lightspeed was formerly known as Red Hat Insights.  In Satellite 6.17 the UI still will say Insights. This is expected.)
-You will see `Inventory Upload` and `Recommendations`.  
+
+NOTE: Red Hat Lightspeed was formerly known as Red Hat Insights.  In Satellite 6.17 the UI will read Insights. This is expected and will change to Red Hat Lightspeed in Satellite 6.18 and beyond.
+
+You will see `Inventory Upload` and `Recommendations`.  +
+[start=4]
 4. Select `Recommendations`.
 
 image::Sat_Insights_Connected_Menu.png[link=self, window=blank, width=100%]
@@ -47,7 +50,7 @@ Depending on how long your lab has been running, the page might be empty - We wa
 image::Sat_Insights_Connected_Sync_zoomed_v2.png[link=self, window=blank, width=100%]
 
 If your page was already populated you may not see any difference.  If your page was blank, after a few seconds the view will update and advisor recommendations will be displayed in the Satellite UI.  +  
-These are the same ones that you would see in the advisor service of the Hybrid Cloud Console.  
+These are the same ones that you would see in the advisor service on the Hybrid Cloud Console.  
 In this instance the analysis is being done on the Hybrid Cloud Console and the results are being synchronized with your Red Hat Satellite.
 
 WARNING: While you see results from both hosts, only work on `node-{guid}-1.example.com` in this module.  You  will use `node-{guid}-2.example.com` in the next module.

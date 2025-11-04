@@ -1,15 +1,15 @@
-= Insights advisor in Satellite 
+= Red Hat Lightspeed advisor in Satellite 
 
-In the first several modules of this lab you have done Insights exercises while your system is connected to the Hybrid Cloud Console.  However Red Hat is aware that this connectivity can be challenging for some industries or geographies due to company or even governmental policies that restrict the sharing of data.  
+In the first several modules of this lab you have done Red Hat Lightspeed exercises while your system is connected to the Hybrid Cloud Console.  However Red Hat is aware that this connectivity can be challenging for some industries or geographies due to company or even governmental policies that restrict the sharing of data.  
 
-The Insights advisor in Satellite feature that we are releasing in tech preview does not have all of the features and capabilities that Insights on the Hybrid Cloud Console has.  In its tech preview status the Insights advisor in Satellite feature only offers the advisor capability that is already available in the Satellite UI, much like what you saw in module 4. +
+The Red Hat Lightspeed advisor in Satellite feature that we are releasing in tech preview does not have all of the features and capabilities that Red Hat Lightspeed on the Hybrid Cloud Console has.  In its tech preview status the Red Hat Lightspeed advisor in Satellite feature only offers the advisor capability that is already available in the Satellite UI, much like what you saw in module 4. +
 Please refer to this support document for more information about https://access.redhat.com/support/offerings/techpreview[Technology Preview Features - Scope of Support^].
 
-However once Insights advisor in Satellite is enabled the Satellite will no longer be able to send *any data* to Red Hat.  
+However once Red Hat Lightspeed advisor in Satellite is enabled the Satellite will no longer be able to send *any data* to Red Hat.  
 This will remove some of the UI elements of the Satellite UI as they are no longer needed.  
-It should also be noted that since we are no longer connecting to Insights, this means capabilities like the subscription service in the Hybrid Cloud Console will stop working.  This is an all or nothing change.
+It should also be noted that since we are no longer connecting to Red Hat Lightspeed, this means capabilities like the subscription service in the Hybrid Cloud Console will stop working.  This is an all or nothing change.
 
-Insights advisor in Satellite is only enabled through the use of Red Hat Satellite and it is delivered as a podman container that runs on the Satellite. +
+Red Hat Lightspeed advisor in Satellite is only enabled through the use of Red Hat Satellite and it is delivered as a podman container that runs on the Satellite. +
 In this lab, Satellite is already pre-installed for you. +
 
 === Installing the container
@@ -36,7 +36,7 @@ sudo satellite-installer --foreman-plugin-rh-cloud-enable-iop-advisor-engine tru
 NOTE: This will take about 2-5 minutes to complete.  
 
 The 'satellite-installer' command only adds the advisor engine and reconfigures the Satellite server to use it. +
-Once completed your Satellite is running in the Insights advisor in Satellite mode and the analytics are performed locally. +
+Once completed your Satellite is running in the Red Hat Lightspeed advisor in Satellite mode and the analytics are performed locally. +
 
 [start=5]
 5. To exit the Satellite terminal, type exit to log out of the Satellite ssh session.
@@ -51,6 +51,8 @@ While in self-hosted mode, you can manually perform a system analysis by running
 This should already be scheduled to be done automatically, but for the purposes of the lab we will go ahead and log into the second RHEL host and manually run this command.
 
 WARNING: Skipping this step will cause a failure in a later exercise.
+
+NOTE: Though the name of Insights changed to Red Hat Lightspeed, packages, command lines, and APIs still refer to 'insights'.  As such, the 'insights-client' command is still the correct one to use. 
 
 1. From your showroom environment, ssh into `node-{guid}-2.example.com`:
 
@@ -91,7 +93,7 @@ If you’ve been following along you should still be in the Insights → Recomme
 Previously The Insights menu contained both Inventory Upload and Recommendations sub menus. This might still be visible in your browser. +
 5. Refresh your browser. +
 You should notice that the `Inventory Upload` sub menu is now gone from the UI.  
-With Insights advisor in Satellite configured there is no information being sent to the Hybrid Cloud Console, so this menu is no longer needed.
+With Red Hat Lightspeed advisor in Satellite configured there is no information being sent to the Hybrid Cloud Console, so this menu is no longer needed.
 
 === Fixing the issue
 While you are here, go ahead and fix this PostgreSQL issue.
@@ -106,18 +108,18 @@ In this case the resolution is to install the tuned package and set the proper t
 This will redirect you to Monitor → Jobs where you can see the job running that you just initiated. This job may take 2-5 minutes to complete. Wait for the results to show success. +
 
 
-NOTE: Insights will perform its daily analysis of a system just like it does in the hosted model. +
+NOTE: Red Hat Lightspeed will perform its daily analysis of a system just like it does in the hosted model. +
 If you wish to perform a manual analysis, you would need to manually run `insights-client` on the host. +
 
 [start=5]
-5. Let’s return to the list of Insights recommendations. + 
+5. Let’s return to the list of Red Hat Lightspeed recommendations. + 
 In the left hand navigation bar, click Insights -> Recommendations. +
 You should notice that the `The postgresql database performance decreases when the tuned best practices are not applied` recommendation no longer appears.  +
 No synchronization is required since this was processed locally.
 
 === Updates to the list of Recommendations
-In Red Hat Insights, at the Hybrid Cloud Console, new recommendations are added weekly or more frequently if needed.
-With Red Hat Insights advisor in Satellite, new recommendations are delivered with Satellite updates.  When you upgrade your Satellite server to the latest release you will get the latest recommendations and any updates to the advisor engine itself.
+In Red Hat Lightspeed, at the Hybrid Cloud Console, new recommendations are added weekly or more frequently if needed.
+With Red Hat Lightspeed advisor in Satellite, new recommendations are delivered with container updates.  When you upgrade your Satellite server to the latest release you will need to update the container image to get the latest recommendations and any updates to the advisor engine itself.
 
 === Changing back to the connected experience
 
@@ -127,8 +129,8 @@ If you decide that you want to switch back to the connected experience, this is 
 Log into the Satellite terminal and run the command: 
 `satellite-installer --foreman-plugin-rh-cloud-enable-iop-advisor-engine false`
 
-This will disable the Insights advisor in Satellite functionality and enable the Satellite to send data to Red Hat and the Hybrid Cloud Console. 
-To have your systems report to Insights on the Hybrid Cloud Console, on each host you will need to register those systems by running the command: 
+This will disable the Red Hat Lightspeed advisor in Satellite functionality and enable the Satellite to send data to Red Hat and the Hybrid Cloud Console. 
+To have your systems report to Red Hat Lightspeed on the Hybrid Cloud Console, on each host you will need to register those systems by running the command: 
 `insights-client --register`
 
 Satellite also contains a built-in playbook for insights-client if you have imported it. +

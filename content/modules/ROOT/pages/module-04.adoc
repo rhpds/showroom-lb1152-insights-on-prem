@@ -1,11 +1,11 @@
 = Advisor in Satellite while connected.
 
-In this module you will look at the advisor service of Insights.   
-Advisor is the original Insights service that focuses on predictive and proactive recommendations that can help keep your systems running smoothly.
+In this module you will look at the advisor service of Red Hat Lightspeed.   
+Advisor is the original Red Hat Lightspeed service that focuses on predictive and proactive recommendations that can help keep your systems running smoothly.
 The advisor service is available via the Hybrid Cloud Console or inside of the Satellite user interface. 
 In this module you will use the Satellite user interface to identify and resolve an issue.  
-In this module you are still connected to Insights and the analysis is being done in the Hybrid Cloud Console.
-This module will help you see the difference between the Insights section of the Satellite user interface when using the connected services at console.redhat.com versus using the Insights section of the Satellite user interface when Insights is being used in on premise mode.
+In this module you are still connected to Red Hat Lightspeed and the analysis is being done in the Hybrid Cloud Console.
+This module will help you see the difference between the Red Hat Lightspeed section of the Satellite user interface when using the connected services at console.redhat.com versus using the Red Hat Lightspeed section of the Satellite user interface when Red Hat Lightspeed is being used in on premise mode.
 
 Your RHEL hosts are RHEL 9 systems that were created with a few packages pre-installed.  One of these is postgresql server, an object-relational database management system.  The postgresql server was started on the host, but no other actions have been taken for the postgresql environment.
 
@@ -33,6 +33,7 @@ Password:
 
 [start=3]
 3. Once logged in, on the left hand navigation bar expand the `Insights` menu. +
+(Note: Red Hat Lightspeed was formerly known as Red Hat Insights.  In Satellite 6.17 the UI still will say Insights. This is expected.)
 You will see `Inventory Upload` and `Recommendations`.  
 4. Select `Recommendations`.
 
@@ -70,7 +71,7 @@ NOTE: You will see either 3 or 4 Recommendations listed.  This seems to vary dep
 
 image::Sat_Insights_Connected_Widget.png[link=self, window=blank, width=100%]
 
-* This information is being populated by the Insights advisor service. +
+* This information is being populated by the Red Hat Lightspeed advisor service. +
 * You have moderate and important risks, but no low or critical risks. +
 * Observe that the risk levels are hyperlinks - do not click, but you should know that you could select the risk category from this widget to see a filtered view of the risks. +
 
@@ -83,8 +84,8 @@ image::Sat_Insights_Connected_InsightsTab.png[link=self, window=blank, width=100
 * You will see a recommendation for postgresql listed: +
 `The postgresql database performance decreases when the tuned best practices are not applied` +
 The Satellite view doesn’t provide much information - the name of the recommendation, the severity of the risk, and if the recommendation has a playbook available to resolve the issue.  +
-Not every recommendation or issue that Insights finds has a playbook, but most do. +
-If you want to see more details you either need to go to Insights on the Hybrid Cloud Console or view the associated knowledgebase article. +
+Not every recommendation or issue that Red Hat Lightspeed finds has a playbook, but most do. +
+If you want to see more details you either need to go to Red Hat Lightspeed on the Hybrid Cloud Console or view the associated knowledgebase article. +
 
 [start=7]
 7. At the end of the row, to the right of `Playbook`, you will see three vertical dots - click this then select `View in Red Hat Insights`. +
@@ -92,7 +93,7 @@ If you want to see more details you either need to go to Insights on the Hybrid 
 image::Sat_Insights_Connected_ViewInsights.png[link=self, window=blank, width=100%]
 
 * This will open a new browser tab and prompt you to log in if you are not already logged in. +
-Once logged in you will see the view of your host in the advisor service in Insights. + 
+Once logged in you will see the view of your host in the advisor service in Red Hat Lightspeed. + 
 This looks similar to what you saw in the Satellite UI, but more information is available. +
 
 [start=8]
@@ -109,16 +110,16 @@ In this case, the postgresql server was started, but a tuned profile was not app
 
 image::Sat_Insights_Connected_HCCView.png[link=self, window=blank, width=100%]
 
-Insights tells you that to fix this, you need to install the tuned package then apply the tuned profile for postgresql. + 
-Insights includes step by step directions, or you can generate an ansible playbook inside of Insights. +
+Red Hat Lightspeed tells you that to fix this, you need to install the tuned package then apply the tuned profile for postgresql. + 
+Red Hat Lightspeed includes step by step directions, or you can generate an ansible playbook inside of Red Hat Lightspeed. +
 You will return to Red Hat Satellite to perform a remediation of this issue.
 
 [start=10]
-10. Before leaving, take note of the `Last seen` time and date of this system right above the word `Recommendations`, near the host name of the system.   This was the last time the host checked in with Insights.  By default this is a systemd process that happens once daily.
+10. Before leaving, take note of the `Last seen` time and date of this system right above the word `Recommendations`, near the host name of the system.   This was the last time the host checked in with Red Hat Lightspeed.  By default this is a systemd process that happens once daily.
 
 Close the Hybrid Cloud Console tab.
 
-== Fixing an issue that Insights finds
+== Fixing an issue that Red Hat Lightspeed finds
 
 Now we are going to fix the PostgreSQL Server recommendation inside of the Satellite user interface
 
@@ -151,7 +152,7 @@ At the bottom of the page you will see a table that lists Host, Status, and Acti
 
 image::Sat_Insights_Connected_JobDetails.png[link=self, window=blank, width=100%]
 
-This job made sure the right repo was enabled, it installed the necessary package, it enabled the tuned profile, then it re-ran insights to detect that the issue was resolved.
+This job made sure the right repo was enabled, it installed the necessary package, it enabled the tuned profile, then it re-ran Red Hat Lightspeed to detect that the issue was resolved.
 
 [start=6]
 6. Open a new tab and go to the https://console.redhat.com/insights/advisor/systems[Systems page in the advisor service^].  Locate `node-{guid}-1.example.com` and look at the `Last seen` column and notice that the time of the last update was very recent.  Click the host name to see more details. +
@@ -159,16 +160,16 @@ This job made sure the right repo was enabled, it installed the necessary packag
 NOTE: If you have the Hybrid Cloud Console still open from earlier, you should refresh the page just to be sure you are seeing the latest information.
 
 [start=7]
-7. Again, take a look at the `Last seen` time.  Notice that has been updated and the system has recently checked in with Insights.  In the remediation playbook the very last step was to `run insights`.  +
-This had the system check back into Insights after making a fix and as a result if you look at the list of Recommendations, the postgresql issue that you resolved is no longer showing. +
+7. Again, take a look at the `Last seen` time.  Notice that has been updated and the system has recently checked in with Red Hat Lightspeed.  In the remediation playbook the very last step was to `run insights`.  +
+This had the system check back into Red Hat Lightspeed after making a fix and as a result if you look at the list of Recommendations, the postgresql issue that you resolved is no longer showing. +
 8. Return to the Satellite UI.
 9. On the Satellite left hand navigation bar, select Insights -> Recommendations. +
-Look at the number of risks listed - it probably has not changed.  The remediation that you just completed is not synchronized from Insights, so you need to manually do this by clicking the three dots and selecting `Sync recommendations`.  
+Look at the number of risks listed - it probably has not changed.  The remediation that you just completed is not synchronized from Red Hat Lightspeed, so you need to manually do this by clicking the three dots and selecting `Sync recommendations`.  
 
-NOTE: Synchronizing data with Insights is a scheduled job on the Satellite server that by default only happens once daily. 
+NOTE: Synchronizing data with Red Hat Lightspeed is a scheduled job on the Satellite server that by default only happens once daily. 
 
 After the recommendations have been synchronized the `postgresql database performance decreases when the tuned best practices are not applied` recommendation that you fixed on the first host is no longer listed.  You will still see the issue for the other host which we will resolve in the next module.
 
-You have identified a situation that is outside of the best practices for your workload, you have resolved the issue, and Insights no longer reports it as being an issue for `node-{guid}-1.example.com`. 
+You have identified a situation that is outside of the best practices for your workload, you have resolved the issue, and Red Hat Lightspeed no longer reports it as being an issue for `node-{guid}-1.example.com`. 
 
 This module is complete.

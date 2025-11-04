@@ -63,7 +63,7 @@ Let’s say your security team knows about a vulnerability that affects SQLlite3
 From the vulnerability page the default filter is CVE (located to the right of the empty checkbox in the image above).  You can type the CVE number in the search box OR even a common search term that might be present in the CVE description like `sqlite`.   +
 
 1. In the search box type `7104`. +
-2. This will return `CVE-2023-7104` (as well as others). + Notice that a new filter chip has been added for `Search term: 7104` +
+2. This will return `CVE-2023-7104` (as well as others). Notice that a new filter chip has been added for `Search term: 7104` +
 3. In the row with the CVE ID you will see basic information about the CVE including the number of systems that are impacted by the CVE. +
 4. Click on the CVE ID for https://console.redhat.com/insights/vulnerability/cves/CVE-2023-7104[CVE-2023-7104^] 
 

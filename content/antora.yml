@@ -1,5 +1,5 @@
 name: modules
-title: "LB1152: Red Hat Ligthspeed advisor in Red Hat Satellite: Bringing valuable insights on-premise"
+title: "LB1152: Red Hat Lightspeed advisor in Red Hat Satellite: Bringing valuable insights on-premise"
 version: master
 nav:
   - modules/ROOT/nav.adoc

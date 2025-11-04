@@ -1,11 +1,11 @@
-= Insights via the Hybrid Cloud Console - Evaluate and remediate CVEs.
+= Red Hat Lightspeed via the Hybrid Cloud Console - Evaluate and remediate CVEs.
 
-While this is an Insights advisor in Satellite lab, this software is only a part of the overall Insights offering.  
-In this module and the next you will explore some of the Insights capabilities on the https://console.redhat.com[Hybrid Cloud Console^].
+While this is a Red Hat Lightspeed advisor in Satellite lab, this software is only a part of the overall Red Hat Lightspeed offering.  
+In this module and the next you will explore some of the Red Hat Lightspeed capabilities on the https://console.redhat.com[Hybrid Cloud Console^].
 
-You will start by evaluating common vulnerabilities and exposures (CVEs) that are present in your environment and on your system using the Insights vulnerability service.
+You will start by evaluating common vulnerabilities and exposures (CVEs) that are present in your environment and on your system using the Red Hat Lightspeed vulnerability service.
 
-There are thousands of CVEs - Insights helps you to focus on CVE information that pertains to Red Hat systems and some CVEs have gone through additional evaluation to share impact specific to the version of RHEL your system is running.
+There are thousands of CVEs - Red Hat Lightspeed helps you to focus on CVE information that pertains to Red Hat systems and some CVEs have gone through additional evaluation to share impact specific to the version of RHEL your system is running.
 
 
 1. Please use a web browser to navigate to the https://console.redhat.com[Hybrid Cloud Console^] . +
@@ -24,7 +24,7 @@ rhdp*insights2025!
 ----
 
 [start=3]
-3. On the main page locate the `Red Hat Enterprise Linux` tile in the upper left and click https://console.redhat.com/insights/[Insights for RHEL^]. +
+3. On the main page locate the `Red Hat Enterprise Linux` tile in the upper left and click https://console.redhat.com/insights/[RHEL^]. +
 
 image::HCC_HomePage_RHEL.png[link=self, window=blank, width=100%]
 
@@ -42,7 +42,7 @@ NOTE: The numbers you see may not match what is shown in the screenshot above.  
 Here is an explanation of the items in the summary bar: +
 
 * `CVEs with known exploits` indicate unpatched CVEs with known public exploits.  CVEs with this label should be addressed with high priority due to the risks posed by them. "Known exploit" does not mean we have taken steps to determine if the CVE has been exploited in your environment.
-* `CVEs with security rules` indicate CVEs that have gone through the "Product Security Incident Response Plan" that takes a deeper look at impactful CVEs and adds deep threat intelligence on how the vulnerability impacts Red Hat systems.  This could include things like executive summaries, alternative mitigation strategies, and related CVEs that need to be considered.  Insights takes this information and makes it more succinct through the use of what we call security rules.  
+* `CVEs with security rules` indicate CVEs that have gone through the "Product Security Incident Response Plan" that takes a deeper look at impactful CVEs and adds deep threat intelligence on how the vulnerability impacts Red Hat systems.  This could include things like executive summaries, alternative mitigation strategies, and related CVEs that need to be considered.  Red Hat Lightspeed takes this information and makes it more succinct through the use of what we call security rules.  
 * `CVEs with critical severity`.  Critical ratings are given to flaws that could be easily exploited by a remote unauthenticated attacker and lead to system compromise (arbitrary code execution) without requiring user interaction. These are the types of vulnerabilities that can be exploited by worms. 
 * `CVEs with important severity`.  Important ratings are given to flaws that can easily compromise the confidentiality, integrity, or availability of resources. These are the types of vulnerabilities that allow local users to gain privileges, allow unauthenticated remote users to view resources that should otherwise be protected by authentication, allow authenticated remote users to execute arbitrary code, or allow remote users to cause a denial of service.
 
@@ -136,7 +136,7 @@ NOTE: The following steps are for Conventional (RPM-DNF) based systems.  Immutab
 
 [start=2]
 2. Once you have hosts selected, click the `Plan remediation` button which will launch a wizard that will create a playbook for you. + 
-You can add this fix to an existing playbook or you can create a new playbook.  Insights defaults to Create new playbook.   
+You can add this fix to an existing playbook or you can create a new playbook.  Red Hat Lightspeed defaults to Create new playbook.   
 3. Give your playbook a name like: `7104 fix {guid}`
 
 Reminder: your system name is: `node-{guid}-1.example.com`
@@ -177,10 +177,10 @@ Reminder: your system name is: `node-{guid}-1.example.com` +
 This view will show you all of the vulnerabilities present on this specific host.    +
 3. Notice that the default filter applied is `Advisory: Available`.   +
 This means we are showing you all CVEs that have an advisory available (in other words - we are showing you all of the vulnerabilities that you can fix). +
-Because we are showing you only CVEs with advisories, in the remediation column on the far right, almost every CVE has the option for a remediation playbook - meaning Insights can generate a playbook for almost all of these CVEs. +
+Because we are showing you only CVEs with advisories, in the remediation column on the far right, almost every CVE has the option for a remediation playbook - meaning Red Hat Lightspeed can generate a playbook for almost all of these CVEs. +
 If you just need the list of CVEs that you can fix - exporting this list will get you what you need. +
 However, sometimes you need a complete list of system vulnerabilities - the CVEs with and without errata. + 
-Insights can show you this information as well. +
+Red Hat Lightspeed can show you this information as well. +
 4. Take note of the number of CVEs listed for the host.  These are shown in the upper right side of the list of CVEs. +
 In the image below there are 1241 CVEs with errata on the host in the image - the number you see may differ. +
 
